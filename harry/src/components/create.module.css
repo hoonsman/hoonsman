@@ -1,0 +1,127 @@
+.container {
+    display: flex;
+    background-color: #fedad8;
+}
+
+.left,
+.right {
+    display: flex;
+    width: 50%;
+    padding: 30px;
+    border: 1px solid black;
+    flex-direction: column;
+}
+
+.right_title {
+    font-weight: bold;
+    font-size: 20px;
+    margin-bottom: 20px;
+    transform: translate3d(-15px, -10px, 0);
+}
+
+.display_container {
+    width: 100%;
+}
+
+/* Global Styles*/
+
+.input_btn {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    font-weight: bold;
+    font-size: 20px;
+    border: 3px dashed #fedad8;
+    color: #fedad8;
+    background-color: #fdf1ef;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 30px;
+}
+
+.input_btn:hover {
+    border-color: #ffb1ad;
+    color: #ffb1ad;
+}
+
+/* Scene Container*/
+
+.scene_container {
+    background-color: #fdf7f7;
+}
+.scene_info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fcf0ee;
+    padding: 15px;
+}
+
+.scene_name {
+    font-weight: bold;
+    font-size: 23px;
+}
+
+.info_btn {
+    padding: 5px;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-size: 20px;
+    border: 1px solid gray;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.info_btn:hover {
+    background-color: gray;
+}
+
+/* Setting Page */
+.setting_page {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 15px;
+}
+.setting_title {
+    font-weight: bold;
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+/* Video input*/
+
+.video_input {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.video_setting {
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+}
+
+.video_title {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* Message Setting */
+
+.message_input {
+    margin-bottom: 20px;
+}
+
+.message_bar {
+    display: flex;
+    padding-left: 20px;
+}
