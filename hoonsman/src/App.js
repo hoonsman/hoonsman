@@ -5,8 +5,12 @@ import MainBody from './maincomponent/body/body'
 function App() {
   return (
     <div className="App">
-      <Header />
-      <MainBody />
+      <div>
+        <Header />
+      </div>
+      <div>
+        <MainBody />
+      </div>
     </div>
   )
 }
