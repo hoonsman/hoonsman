@@ -11,7 +11,7 @@ const SampleList = () => {
           <button className={Styles.box2}>box2</button>
         </div>
         <div className={Styles.second__line}>
-          <button className={Styles.box3}>box3</ button>
+          <button className={Styles.box3}>box3</button>
           <button className={Styles.box4}>box4</button>
         </div>
       </div>
