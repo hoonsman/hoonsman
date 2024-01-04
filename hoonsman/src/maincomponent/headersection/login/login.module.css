@@ -1,0 +1,53 @@
+.loginContainer {
+  display: flex;
+  align-items: center;
+}
+
+.signin__button {
+  font-size: 8px;
+  font-family: 'Arial', sans-serif;
+  cursor: pointer;
+  padding: 8px 16px;
+  border: none;
+  color: black;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  transition-duration: 0.4s;
+  border-radius: 4px;
+  margin-right: 4px;
+}
+
+.signup__button {
+  font-size: 8px;
+  font-family: 'Arial', sans-serif;
+  cursor: pointer;
+  padding: 8px 16px;
+  border: none;
+  background-color: #2196f3; /* 머터리얼 디자인 색상 예시 */
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  transition-duration: 0.4s;
+  border-radius: 4px;
+  margin-right: 4px;
+  transition: background-color 0.4s, color 0.4s;
+}
+
+.separator {
+  font-size: 8px;
+  margin-right: 4px;
+  margin-left: 4px;
+  color: #333;
+}
+
+.signin__button:hover {
+  box-shadow: 0 0 40px 40px #2196f3 inset; /* 여기에 원하는 색상을 추가하세요 */
+  color: #f5f7f9; /* 호버 시 글자 색상 변경 예시 */
+}
+/* 기존 코드에 추가할 부분 */
+.signup__button:hover {
+  background-color: #fff; /* 변경하고자 하는 배경 색상 */
+  color: #030303; /* 변경하고자 하는 글자 색상 */
+}
