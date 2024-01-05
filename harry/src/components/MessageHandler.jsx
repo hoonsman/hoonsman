@@ -1,6 +1,49 @@
 import React from 'react'
 import Styles from './messagehandler.module.css'
 
+const SizeOptions = [
+    { val: 'small', text: '작게' },
+    { val: 'middle', text: '중간' },
+    { val: 'large', text: '크게' },
+]
+
+const ColorOptions = [
+    { val: 'white', text: 'white' },
+    { val: 'black', text: 'black' },
+]
+
+const SortOptions = [
+    { val: 'left', text: '왼쪽' },
+    { val: 'middle', text: '중간' },
+    { val: 'right', text: '오른쪽' },
+]
+
+const OptBtn = ({ attr, val, text, now, setVal }) => {
+    const onBtnClick = () => {
+        setVal(attr, val)
+    }
+    return (
+        <div
+            onClick={onBtnClick}
+            data-val={val}
+            data-attr={attr}
+            className={` ${now === val && Styles.opt_focus} ${Styles.opt}`}
+        >
+            {text}
+        </div>
+    )
+}
+
+const OptBar = ({ attr, options, now, setVal }) => {
+    return (
+        <div className={Styles.option_bar}>
+            {options.map((option) => (
+                <OptBtn now={now} attr={attr} {...option} setVal={setVal} />
+            ))}
+        </div>
+    )
+}
+
 export default function MessageHandler({
     content,
     size,
@@ -8,11 +51,9 @@ export default function MessageHandler({
     sort,
     changeControlInfo,
 }) {
-    const onOptClick = (e) => {
-        console.log(e.target.dataset)
-        if (!e.target.dataset?.val) return
+    const setVal = (attr, val) => {
         changeControlInfo({
-            [`${e.target.dataset.attr}`]: e.target.dataset.val,
+            [attr]: val,
         })
     }
 
@@ -25,93 +66,33 @@ export default function MessageHandler({
 
     return (
         <div className={Styles.container}>
-            <div className={Styles.left} onClick={onOptClick}>
+            <div className={Styles.left}>
                 <div className={Styles.message_option}>
                     <div className={Styles.title}>글자 크기</div>
-                    <div className={Styles.option_bar}>
-                        <div
-                            data-val={'small'}
-                            data-attr="size"
-                            className={` ${
-                                size === 'small' && Styles.opt_focus
-                            } ${Styles.opt}`}
-                        >
-                            작게
-                        </div>
-                        <div
-                            data-val={'middle'}
-                            data-attr="size"
-                            className={` ${
-                                size === 'middle' && Styles.opt_focus
-                            } ${Styles.opt}`}
-                        >
-                            중간
-                        </div>
-                        <div
-                            data-val={'large'}
-                            data-attr="size"
-                            className={` ${
-                                size === 'large' && Styles.opt_focus
-                            } ${Styles.opt}`}
-                        >
-                            크게
-                        </div>
-                    </div>
+                    <OptBar
+                        setVal={setVal}
+                        options={SizeOptions}
+                        attr="size"
+                        now={size}
+                    />
                 </div>
                 <div className={Styles.message_option}>
                     <div className={Styles.title}>글자 색</div>
-                    <div className={Styles.option_bar}>
-                        <div
-                            data-attr="color"
-                            data-val="white"
-                            className={`${
-                                color === 'white' && Styles.opt_focus
-                            } ${Styles.opt}`}
-                        >
-                            White
-                        </div>
-                        <div
-                            data-attr="color"
-                            data-val="black"
-                            className={`${
-                                color === 'black' && Styles.opt_focus
-                            } ${Styles.opt}`}
-                        >
-                            Black
-                        </div>
-                    </div>
+                    <OptBar
+                        setVal={setVal}
+                        options={ColorOptions}
+                        attr="color"
+                        now={color}
+                    />
                 </div>
                 <div className={Styles.message_option}>
                     <div className={Styles.title}>글자 정렬</div>
-                    <div className={Styles.option_bar}>
-                        <div
-                            data-attr="sort"
-                            data-val="left"
-                            className={`${
-                                sort === 'left' && Styles.opt_focus
-                            } ${Styles.opt}`}
-                        >
-                            왼쪽
-                        </div>
-                        <div
-                            data-attr="sort"
-                            data-val="middle"
-                            className={`${
-                                sort === 'middle' && Styles.opt_focus
-                            } ${Styles.opt}`}
-                        >
-                            가운데
-                        </div>
-                        <div
-                            data-attr="sort"
-                            data-val="right"
-                            className={`${
-                                sort === 'right' && Styles.opt_focus
-                            } ${Styles.opt}`}
-                        >
-                            오른쪽
-                        </div>
-                    </div>
+                    <OptBar
+                        setVal={setVal}
+                        options={SortOptions}
+                        attr="sort"
+                        now={sort}
+                    />
                 </div>
                 <div className={Styles.submit_btn}>저장</div>
             </div>
