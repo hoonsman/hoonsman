@@ -58,7 +58,7 @@
     border-radius: 15px;
     overflow: hidden;
 }
-.scene_info {
+.editor_header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -83,7 +83,7 @@
     cursor: pointer;
 }
 .info_btn:hover {
-    background-color: gray;
+    color: gray;
 }
 
 /* Setting Page */

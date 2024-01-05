@@ -25,8 +25,6 @@ const OptBtn = ({ attr, val, text, now, setVal }) => {
     return (
         <div
             onClick={onBtnClick}
-            data-val={val}
-            data-attr={attr}
             className={` ${now === val && Styles.opt_focus} ${Styles.opt}`}
         >
             {text}
