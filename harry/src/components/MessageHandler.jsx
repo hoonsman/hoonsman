@@ -35,13 +35,13 @@ export default function MessageHandler() {
                     <textarea
                         name="message"
                         id="message"
-                        cols="30"
-                        rows="10"
+                        cols="20"
+                        rows="6"
                         placeholder="입력해주세용"
                     ></textarea>
                     <div className={Styles.recommend_container}>
                         <div className={Styles.recommend_title}>
-                            이런 문구는 어때요?
+                            이런 문구는 어때영??
                         </div>
                         <div className={Styles.recommend_content}>
                             Lorem ipsum ..
