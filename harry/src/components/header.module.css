@@ -22,13 +22,13 @@
 }
 
 .btn {
-    border: 1px solid #555555;
+    border: 1px solid #777777;
     padding: 10px;
     margin-left: 10px;
     border-radius: 5px;
     font-weight: bold;
     cursor: pointer;
-    color: #555555;
+    color: #777777;
     transition: all 0.1s linear;
 }
 
