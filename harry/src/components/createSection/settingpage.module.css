@@ -1,0 +1,86 @@
+/* Setting Page */
+.setting_page {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 15px;
+}
+.setting_title {
+    font-weight: bold;
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+/* src input*/
+
+.video_input {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.video_setting {
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+}
+
+.video_title {
+    position: absolute;
+    top: 0;
+    left: 100%;
+    text-wrap: nowrap;
+    font-size: 20px;
+    padding: 10px;
+    border-radius: 10px;
+    font-weight: bold;
+    background-color: #ffa1a1;
+    color: white;
+    text-align: center;
+    display: none;
+    z-index: 1;
+}
+
+/* Message Setting */
+
+.message_input {
+    margin-bottom: 20px;
+}
+
+.message_bar {
+    display: flex;
+    padding-left: 20px;
+}
+
+.input_btn {
+    position: relative;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    font-weight: bold;
+    font-size: 20px;
+    border: 3px dashed #fedad8;
+    color: #fedad8;
+    background-color: #fdf1ef;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 30px;
+}
+
+.input_btn:hover {
+    border-color: #ffb1ad;
+    color: #ffb1ad;
+}
+
+.input_btn:hover .video_title {
+    display: block;
+}
+
+.btn_focus {
+    border-color: #ffb1ad;
+    color: #ffb1ad;
+}
