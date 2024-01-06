@@ -37,23 +37,16 @@ const sizeItemList = [
     },
 ]
 
-const SizeItem = ({ name, index, setSizeListIndex, setIsBar }) => {
-    const onItemClick = () => {
-        setSizeListIndex(index)
-        setIsBar(false)
-    }
-    return (
-        <div onClick={onItemClick} className={`${Styles.bar_item}`}>
-            {name}
-        </div>
-    )
-}
-
 const SizeBar = ({ sizeList, listIndex, setSizeListIndex }) => {
     const [isBar, setIsBar] = useState(false)
 
     const onBarClick = () => {
         setIsBar((v) => !v)
+    }
+
+    const onItemClick = (index) => {
+        setSizeListIndex(index)
+        setIsBar(false)
     }
 
     return (
@@ -70,15 +63,14 @@ const SizeBar = ({ sizeList, listIndex, setSizeListIndex }) => {
                 {isBar && (
                     <div className={`${Styles.bar_items}`}>
                         {sizeList
-                            .filter((_, ind) => ind !== listIndex)
-                            .map((i, ind) => (
-                                <SizeItem
-                                    name={i.name}
-                                    key={ind}
-                                    index={i.index}
-                                    setSizeListIndex={setSizeListIndex}
-                                    setIsBar={setIsBar}
-                                />
+                            .filter((_, index) => index !== listIndex)
+                            .map((item, index) => (
+                                <div
+                                    onClick={() => onItemClick(index)}
+                                    className={`${Styles.bar_item}`}
+                                >
+                                    {item.name}
+                                </div>
                             ))}
                     </div>
                 )}
