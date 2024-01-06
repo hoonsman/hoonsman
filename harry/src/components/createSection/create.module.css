@@ -177,7 +177,8 @@
     justify-content: center;
     align-items: center;
     width: 70%;
-    overflow: hidden;
+    font-weight: bold;
+    color: white;
 }
 
 .bar_items {
@@ -196,8 +197,15 @@
     align-items: center;
     width: 100%;
     padding: 6px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.bar_items .bar_item:hover {
+    background-color: #f78277;
 }
 .bar_now {
+    background-color: #f78277;
     border-radius: 10px;
     transition: all 0.1s linear;
 }

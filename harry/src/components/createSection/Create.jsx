@@ -2,6 +2,91 @@ import React, { useState } from 'react'
 import Styles from './create.module.css'
 import SettingPage from './SettingPage'
 
+const sizeItemList = [
+    {
+        name: 'Iphone 13 pro max (428 x 926)',
+        size: {
+            width: 428,
+            height: 926,
+        },
+        index: 0,
+    },
+    {
+        name: 'Android small (360 x 640)',
+        size: {
+            width: 360,
+            height: 640,
+        },
+        index: 1,
+    },
+    {
+        name: 'Android Large (360 x 800)',
+        size: {
+            width: 360,
+            height: 800,
+        },
+        index: 2,
+    },
+    {
+        name: 'iPhone SE (320 x 568)',
+        size: {
+            width: 320,
+            height: 568,
+        },
+        index: 3,
+    },
+]
+
+const SizeItem = ({ name, index, setSizeListIndex, setIsBar }) => {
+    const onItemClick = () => {
+        setSizeListIndex(index)
+        setIsBar(false)
+    }
+    return (
+        <div onClick={onItemClick} className={`${Styles.bar_item}`}>
+            {name}
+        </div>
+    )
+}
+
+const SizeBar = ({ sizeList, listIndex, setSizeListIndex }) => {
+    const [isBar, setIsBar] = useState(false)
+
+    const onBarClick = () => {
+        setIsBar((v) => !v)
+    }
+
+    return (
+        <div className={Styles.sizebar}>
+            <div className={`${Styles.bar_container}`}>
+                <div
+                    onClick={onBarClick}
+                    className={`${Styles.bar_item} ${Styles.bar_now} ${
+                        isBar && Styles.bar_focus
+                    }`}
+                >
+                    {sizeList[listIndex].name}
+                </div>
+                {isBar && (
+                    <div className={`${Styles.bar_items}`}>
+                        {sizeList
+                            .filter((_, ind) => ind !== listIndex)
+                            .map((i, ind) => (
+                                <SizeItem
+                                    name={i.name}
+                                    key={ind}
+                                    index={i.index}
+                                    setSizeListIndex={setSizeListIndex}
+                                    setIsBar={setIsBar}
+                                />
+                            ))}
+                    </div>
+                )}
+            </div>
+        </div>
+    )
+}
+
 export default function Create() {
     const [sceneData, setSceneData] = useState([
         {
@@ -103,6 +188,7 @@ export default function Create() {
     ])
     const [sceneIndex, setSceneIndex] = useState(0)
     const [messageFocus, setMessageFocus] = useState(0)
+    const [sizeListIndex, setSizeListIndex] = useState(0)
 
     const onLeftClick = () => {
         if (sceneIndex <= 0) return
@@ -124,28 +210,11 @@ export default function Create() {
                     <div className={Styles.display__box}>
                         <div className={Styles.display}>Sample</div>
                     </div>
-                    <div className={Styles.sizebar}>
-                        <div
-                            className={`${Styles.bar_container} ${Styles.bar_container_focus}`}
-                        >
-                            <div
-                                className={`${Styles.bar_item} ${Styles.bar_now}`}
-                            >
-                                Iphone 13 pro max (428 x 926)
-                            </div>
-                            <div className={`${Styles.bar_items}`}>
-                                <div className={`${Styles.bar_item}`}>
-                                    Android small (360 x 640)
-                                </div>
-                                <div className={`${Styles.bar_item}`}>
-                                    Android Large (360 x 800)
-                                </div>
-                                <div className={`${Styles.bar_item}`}>
-                                    iPhone SE (320 x 568)
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <SizeBar
+                        sizeList={sizeItemList}
+                        listIndex={sizeListIndex}
+                        setSizeListIndex={setSizeListIndex}
+                    />
                 </div>
             </div>
             <div className={Styles.right}>
