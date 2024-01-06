@@ -12,7 +12,7 @@
     margin-bottom: 10px;
 }
 
-/* Video input*/
+/* src input*/
 
 .video_input {
     display: flex;
@@ -27,8 +27,19 @@
 }
 
 .video_title {
+    position: absolute;
+    top: 0;
+    left: 100%;
+    text-wrap: nowrap;
     font-size: 20px;
+    padding: 10px;
+    border-radius: 10px;
     font-weight: bold;
+    background-color: #ffa1a1;
+    color: white;
+    text-align: center;
+    display: none;
+    z-index: 1;
 }
 
 /* Message Setting */
@@ -43,6 +54,7 @@
 }
 
 .input_btn {
+    position: relative;
     width: 50px;
     height: 50px;
     display: flex;
@@ -62,6 +74,10 @@
 .input_btn:hover {
     border-color: #ffb1ad;
     color: #ffb1ad;
+}
+
+.input_btn:hover .video_title {
+    display: block;
 }
 
 .btn_focus {

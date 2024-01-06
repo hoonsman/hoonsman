@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Styles from './settingpage.module.css'
 import MessageHandler from '../MessageHandler'
 
@@ -10,6 +10,14 @@ const MessageBtn = ({ index, focus }) => {
             className={`${Styles.input_btn} ${isfocus && Styles.btn_focus}`}
         >
             M{index + 1}
+        </div>
+    )
+}
+
+const SrcInputBtn = ({ index, srcName }) => {
+    return (
+        <div className={Styles.input_btn}>
+            +<div className={Styles.video_title}>{srcName}</div>
         </div>
     )
 }
@@ -39,10 +47,17 @@ export default function SettingPage({
         <div className={Styles.setting_page}>
             {/* Video Input */}
             <div className={Styles.video_input}>
-                <div className={Styles.setting_title}>비디오</div>
+                <div className={Styles.setting_title}>
+                    {sceneData.src.type === 'video' ? '비디오' : '이미지'}
+                </div>
                 <div className={Styles.video_setting}>
-                    <div className={Styles.input_btn}>+</div>
-                    <div className={Styles.video_title}>No video</div>
+                    {sceneData.src.src.map((srcName, ind) => (
+                        <SrcInputBtn
+                            key={ind}
+                            index={index}
+                            srcName={srcName}
+                        />
+                    ))}
                 </div>
             </div>
 
@@ -62,7 +77,9 @@ export default function SettingPage({
 
             {/* Message Setting */}
             <div className={Styles.message_setting}>
-                <div className={Styles.setting_title}>메시지 1</div>
+                <div className={Styles.setting_title}>
+                    메시지 {messageFocus + 1}
+                </div>
                 <MessageHandler
                     changeControlInfo={changeControlInfo}
                     {...sceneData.message[messageFocus]}

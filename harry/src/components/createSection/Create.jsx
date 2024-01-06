@@ -7,7 +7,7 @@ export default function Create() {
         {
             src: {
                 type: 'video',
-                src: 'None',
+                src: ['None'],
             },
             message: [
                 {
@@ -71,7 +71,7 @@ export default function Create() {
         {
             src: {
                 type: 'video',
-                video: 'None',
+                src: ['None'],
             },
             message: [
                 {
@@ -119,18 +119,45 @@ export default function Create() {
     return (
         <div className={Styles.container}>
             <div className={Styles.left}>
+                <div className={Styles.right_title}>Preview</div>
                 <div className={Styles.display_container}>
                     <div className={Styles.display__box}>
-                        <div className={Styles.display}>1</div>
+                        <div className={Styles.display}>Sample</div>
                     </div>
-                    <div className={Styles.sizebar}></div>
+                    <div className={Styles.sizebar}>
+                        <div
+                            className={`${Styles.bar_container} ${Styles.bar_container_focus}`}
+                        >
+                            <div
+                                className={`${Styles.bar_item} ${Styles.bar_now}`}
+                            >
+                                Iphone 13 pro max (428 x 926)
+                            </div>
+                            <div className={`${Styles.bar_items}`}>
+                                <div className={`${Styles.bar_item}`}>
+                                    Android small (360 x 640)
+                                </div>
+                                <div className={`${Styles.bar_item}`}>
+                                    Android Large (360 x 800)
+                                </div>
+                                <div className={`${Styles.bar_item}`}>
+                                    iPhone SE (320 x 568)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div className={Styles.right}>
                 <div className={Styles.right_title}>Editor</div>
                 <div className={Styles.scene_container}>
                     <div className={Styles.editor_header}>
-                        <div onClick={onLeftClick} className={Styles.info_btn}>
+                        <div
+                            onClick={onLeftClick}
+                            className={`${Styles.info_btn} ${
+                                sceneIndex === 0 && Styles.btn_disabled
+                            }`}
+                        >
                             {'<'}
                         </div>
 
@@ -138,7 +165,13 @@ export default function Create() {
                             Scene {sceneIndex + 1}
                         </div>
 
-                        <div onClick={onRightClick} className={Styles.info_btn}>
+                        <div
+                            onClick={onRightClick}
+                            className={`${Styles.info_btn} ${
+                                sceneIndex === sceneData.length - 1 &&
+                                Styles.btn_disabled
+                            }`}
+                        >
                             {'>'}
                         </div>
                     </div>
