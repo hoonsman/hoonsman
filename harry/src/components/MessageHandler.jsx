@@ -32,15 +32,6 @@ const OptBtn = ({ attr, val, text, now, setVal }) => {
     )
 }
 
-const OptBar = ({ attr, options, now, setVal }) => {
-    return (
-        <div className={Styles.option_bar}>
-            {options.map((option) => (
-                <OptBtn now={now} attr={attr} {...option} setVal={setVal} />
-            ))}
-        </div>
-    )
-}
 
 export default function MessageHandler({
     content,
@@ -67,31 +58,44 @@ export default function MessageHandler({
             <div className={Styles.left}>
                 <div className={Styles.message_option}>
                     <div className={Styles.title}>글자 크기</div>
-                    <OptBar
-                        setVal={setVal}
-                        options={SizeOptions}
-                        attr="size"
-                        now={size}
-                    />
+                    <div className={Styles.option_bar}>
+                        {SizeOptions.map((option) => (
+                            <OptBtn
+                                now={size}
+                                attr="size"
+                                {...option}
+                                setVal={setVal}
+                            />
+                        ))}
+                    </div>
                 </div>
                 <div className={Styles.message_option}>
                     <div className={Styles.title}>글자 색</div>
-                    <OptBar
-                        setVal={setVal}
-                        options={ColorOptions}
-                        attr="color"
-                        now={color}
-                    />
+                    <div className={Styles.option_bar}>
+                        {ColorOptions.map((option) => (
+                            <OptBtn
+                                now={color}
+                                attr="color"
+                                {...option}
+                                setVal={setVal}
+                            />
+                        ))}
+                    </div>
                 </div>
                 <div className={Styles.message_option}>
                     <div className={Styles.title}>글자 정렬</div>
-                    <OptBar
-                        setVal={setVal}
-                        options={SortOptions}
-                        attr="sort"
-                        now={sort}
-                    />
+                    <div className={Styles.option_bar}>
+                        {SortOptions.map((option) => (
+                            <OptBtn
+                                now={sort}
+                                attr="sort"
+                                {...option}
+                                setVal={setVal}
+                            />
+                        ))}
+                    </div>
                 </div>
+
                 <div className={Styles.submit_btn}>저장</div>
             </div>
             <div className={Styles.right}>
