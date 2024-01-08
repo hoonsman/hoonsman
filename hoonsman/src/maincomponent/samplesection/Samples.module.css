@@ -1,0 +1,29 @@
+.container {
+  display: flex;
+  max-width: 1280px;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(109, 109, 109, 0.541);
+  margin: 0 auto;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
+}
+
+.main__container {
+  display: flex;
+  max-width: 720px;
+  justify-content: center;
+  background-color: white;
+  margin: 0 auto;
+  position: fixed;
+  top: 30px;
+  bottom: 30px;
+  left: 0;
+  right: 0;
+  z-index: 1002;
+  border-radius: 3%;
+}

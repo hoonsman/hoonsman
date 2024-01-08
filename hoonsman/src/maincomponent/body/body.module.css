@@ -1,13 +1,10 @@
-.container {
-  display: flex;
-  flex-direction: column;
-}
-
 .intro__container {
   display: flex;
   background-color: #f7f5fd;
+  padding: 60px;
 }
 
 .sample__container {
-  align-items: center;
+  display: flex;
+  /**/
 }
