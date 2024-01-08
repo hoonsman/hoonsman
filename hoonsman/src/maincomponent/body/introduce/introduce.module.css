@@ -1,7 +1,8 @@
 .container {
   display: flex;
-  flex-direction: row;
-  justify-content: space-around; /* 필요에 따라 조정하세요 */
+  justify-content: space-between;
+  background-color: #f7f5fd;
+  width: 100%;
 }
 
 .text__container {
@@ -10,6 +11,7 @@
   justify-content: space-between; /* 상단과 하단에 여백을 줘서 중앙에 위치하도록 */
   padding: 50px;
   height: 80%; /* 부모의 높이에 맞게 조정 */
+  width: 50%;
 }
 .main__text__intro {
   font-size: 24px;
@@ -22,16 +24,19 @@
 }
 
 .img__container {
-  flex: 1; /* 컨테이너가 자라게 합니다 */
-
   justify-content: center; /* 이미지를 수평으로 중앙에 배치합니다 */
   align-items: center; /* 이미지를 수직으로 중앙에 배치합니다 */
+  width: 50%;
+}
+
+.img__intro {
+  width: 100%;
 }
 
 .img__container img {
   padding-top: 40px;
   padding-left: 80px;
-  max-height: 420px;
+  max-width: 420px;
 }
 
 .custombtn_btn3 {
