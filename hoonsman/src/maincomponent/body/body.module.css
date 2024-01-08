@@ -1,0 +1,13 @@
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.intro__container {
+  display: flex;
+  background-color: #f7f5fd;
+}
+
+.sample__container {
+  align-items: center;
+}
