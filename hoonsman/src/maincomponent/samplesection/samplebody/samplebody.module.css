@@ -1,0 +1,13 @@
+.container {
+  display: flex;
+  background-color: violet;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.container__1 {
+  display: flex;
+  background-color: red;
+  height: 1000px;
+}
