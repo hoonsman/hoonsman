@@ -1,7 +1,22 @@
 .container {
   display: flex;
-  background-color: rgb(0, 0, 0);
+  background-color: white;
   max-height: 80px;
   width: 720px;
+  justify-content: flex-end;
+}
+
+.exit__container {
+  display: flex;
+  align-items: center;
   justify-content: center;
+  height: 40px;
+  width: 40px;
+}
+
+.exit__button {
+  display: flex;
+  font-size: 20px;
+  background-color: transparent; /* 배경색을 투명으로 설정합니다. */
+  border: none; /* 테두리를 없앱니다. */
 }
