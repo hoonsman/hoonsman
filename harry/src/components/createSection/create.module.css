@@ -8,7 +8,6 @@
     display: flex;
     width: 50%;
     padding: 30px;
-    border: 1px solid black;
     flex-direction: column;
 }
 
@@ -47,12 +46,19 @@
     color: #ffb1ad;
 }
 
+.btn_focus {
+    border-color: #ffb1ad;
+    color: #ffb1ad;
+}
+
 /* Scene Container*/
 
 .scene_container {
     background-color: #fdf7f7;
+    border-radius: 15px;
+    overflow: hidden;
 }
-.scene_info {
+.editor_header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -74,15 +80,16 @@
     align-items: center;
     font-weight: bold;
     font-size: 20px;
-    border: 1px solid gray;
-    border-radius: 5px;
     cursor: pointer;
+    user-select: none;
 }
+
 .info_btn:hover {
-    background-color: gray;
+    color: gray;
 }
 
 /* Setting Page */
+
 .setting_page {
     width: 100%;
     display: flex;
@@ -90,13 +97,14 @@
     flex-direction: column;
     padding: 15px;
 }
+
 .setting_title {
     font-weight: bold;
     font-size: 20px;
     margin-bottom: 10px;
 }
 
-/* Video input*/
+/* Video input */
 
 .video_input {
     display: flex;
@@ -124,4 +132,92 @@
 .message_bar {
     display: flex;
     padding-left: 20px;
+}
+
+.btn_disabled {
+    color: #fcf1ef;
+    cursor: default;
+}
+
+.btn_disabled:hover {
+    color: #fcf1ef;
+}
+
+/* Left Section */
+
+.display_container {
+    display: flex;
+    flex-direction: column;
+}
+
+.display__box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f5e4e1;
+}
+
+.display {
+    background-color: #fdf7f7;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
+.sizebar {
+    background-color: #fefefe;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+}
+
+.bar_container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 70%;
+    font-weight: bold;
+    color: white;
+}
+
+.bar_items {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    overflow: hidden;
+    bottom: 100%;
+}
+
+.bar_item {
+    background-color: #ffa9a2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 6px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.bar_items .bar_item:hover {
+    background-color: #f78277;
+}
+.bar_now {
+    background-color: #f78277;
+    border-radius: 10px;
+    transition: all 0.1s linear;
+}
+
+.bar_now:hover {
+    border-radius: 0px;
+}
+
+.bar_focus {
+    border-radius: 0px;
+}
+
+.bar_container_focus {
+    overflow: visible;
 }

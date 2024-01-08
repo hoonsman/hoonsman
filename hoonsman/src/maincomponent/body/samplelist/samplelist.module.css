@@ -177,7 +177,7 @@ input:hover + label:after {
   top: 0;
   width: 60px;
   height: 42px;
-} 
+}
 
 .model8 .checkbox:checked + label {
   background: #ff980f;
