@@ -1,22 +1,26 @@
 .container {
   display: flex;
   background-color: white;
-  max-height: 80px;
+  max-height: 60px;
   width: 720px;
-  justify-content: flex-end;
-}
-
-.exit__container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 40px;
-  width: 40px;
+  justify-content: space-between;
+  align-self: center;
+  position: sticky;
+  top: 0;
 }
 
 .exit__button {
-  display: flex;
-  font-size: 20px;
-  background-color: transparent; /* 배경색을 투명으로 설정합니다. */
-  border: none; /* 테두리를 없앱니다. */
+  padding: 20px;
+  font-size: 25px;
+  border: none;
+  outline: none;
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.create__button {
+  padding: 20px;
+  font-size: 25px;
+  border: none;
+  outline: none;
+  background-color: rgba(0, 0, 0, 0);
 }

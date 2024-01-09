@@ -1,10 +1,11 @@
 import React from 'react'
 import Style from './samplebody.module.css'
+import Container1 from './container1/container1'
 
 const SampleBody = () => {
   return (
     <div className={Style.container}>
-      <div className={Style.container__1}>asdfadf</div>
+      <Container1 />
     </div>
   )
 }
