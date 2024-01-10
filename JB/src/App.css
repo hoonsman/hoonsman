@@ -1,0 +1,7 @@
+.App {
+  display: flex;
+  flex-direction: column; /* 수직으로 정렬 */
+  max-width: 1280px;
+  margin: 0 auto; /* 좌우 중앙 정렬을 위한 margin 추가 */
+  background-color: black;
+}
