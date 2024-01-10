@@ -15,7 +15,7 @@
 
 .main__container {
   display: flex;
-  /*max-width: 720px;*/
+  max-width: 2000px;
   flex-direction: column;
   justify-content: flex-start;
   background-color: white;

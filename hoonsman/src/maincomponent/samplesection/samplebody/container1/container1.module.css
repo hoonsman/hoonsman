@@ -1,7 +1,7 @@
 .container {
   display: flex;
-  width: 720px;
-  height: 1200px;
+  width: 2000px;
+  height: 2000px;
   align-items: center;
   justify-content: center;
   background-color: sandybrown;
@@ -18,4 +18,5 @@
 
 .intro__image {
   display: flex;
+  height: 2000px;
 }

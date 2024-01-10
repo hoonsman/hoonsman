@@ -5,3 +5,14 @@
   align-items: center;
   height: 2000px;
 }
+
+/* Add any additional styling for when the scroll position changes */
+.scroll-text {
+  /* Your desired style when scrolled past a certain point */
+  color: red; /* Example color change */
+}
+
+.scrolled-text {
+  /* Your style before scrolling past the certain point */
+  color: black; /* Example default color */
+}
