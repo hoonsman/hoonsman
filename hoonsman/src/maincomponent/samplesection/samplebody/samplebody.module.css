@@ -1,13 +1,18 @@
 .container {
   display: flex;
-  background-color: violet;
+  background-color: red;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
+  height: 2000px;
 }
 
-.container__1 {
-  display: flex;
-  background-color: red;
-  height: 1000px;
+/* Add any additional styling for when the scroll position changes */
+.scroll-text {
+  /* Your desired style when scrolled past a certain point */
+  color: red; /* Example color change */
+}
+
+.scrolled-text {
+  /* Your style before scrolling past the certain point ddd*/
+  color: black; /* Example default color */
 }
