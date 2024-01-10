@@ -13,7 +13,7 @@
   justify-content: center; /* 가운데 정렬 */
   align-items: center; /* 가운데 정렬 */
   overflow: hidden; /* 이미지가 컨테이너를 넘어갈 경우 숨김 */
-  width: 100%; /* 컨테이너 전체 너비 사용 */
+  width: 100%; /* 컨테이너 전체 너비 사용dd */
   height: 100%; /* 컨테이너 전체 높이 사용 */
 }
 
