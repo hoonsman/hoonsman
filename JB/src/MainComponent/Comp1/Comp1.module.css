@@ -1,12 +1,17 @@
+/* Comp1.module.css */
 .container {
+  position: sticky;
+  top: 0;
+  left: 0;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-shrink: 0;
   height: 100vh;
   background-color: red;
-  scroll-snap-align: start; /* 스크롤 스냅 정렬 추가 */
 }
+
+/* 기타 필요한 스타일링 */
 
 .imageContainer {
   display: flex;
