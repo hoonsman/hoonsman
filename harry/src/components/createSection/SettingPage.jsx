@@ -1,6 +1,6 @@
 import React from 'react'
 import Styles from './settingpage.module.css'
-import MessageHandler from '../MessageHandler'
+import MessageHandler from './MessageHandler'
 
 const MessageBtn = ({ index, focus }) => {
     const isfocus = index === focus

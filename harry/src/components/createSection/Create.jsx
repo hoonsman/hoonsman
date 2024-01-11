@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import Styles from './create.module.css'
 import SettingPage from './SettingPage'
+import Preview from './Preview'
 
 const sizeItemList = [
     {
@@ -66,6 +67,7 @@ const SizeBar = ({ sizeList, listIndex, setSizeListIndex }) => {
                             .filter((_, index) => index !== listIndex)
                             .map((item, index) => (
                                 <div
+                                    key={index}
                                     onClick={() => onItemClick(index)}
                                     className={`${Styles.bar_item}`}
                                 >
@@ -198,9 +200,10 @@ export default function Create() {
         <div className={Styles.container}>
             <div className={Styles.left}>
                 <div className={Styles.right_title}>Preview</div>
+
                 <div className={Styles.display_container}>
                     <div className={Styles.display__box}>
-                        <div className={Styles.display}>Sample</div>
+                        <Preview size={sizeItemList[sizeListIndex].size} />
                     </div>
                     <SizeBar
                         sizeList={sizeItemList}

@@ -32,7 +32,6 @@ const OptBtn = ({ attr, val, text, now, setVal }) => {
     )
 }
 
-
 export default function MessageHandler({
     content,
     size,
@@ -59,8 +58,9 @@ export default function MessageHandler({
                 <div className={Styles.message_option}>
                     <div className={Styles.title}>글자 크기</div>
                     <div className={Styles.option_bar}>
-                        {SizeOptions.map((option) => (
+                        {SizeOptions.map((option, index) => (
                             <OptBtn
+                                key={index}
                                 now={size}
                                 attr="size"
                                 {...option}
@@ -72,8 +72,9 @@ export default function MessageHandler({
                 <div className={Styles.message_option}>
                     <div className={Styles.title}>글자 색</div>
                     <div className={Styles.option_bar}>
-                        {ColorOptions.map((option) => (
+                        {ColorOptions.map((option, index) => (
                             <OptBtn
+                                key={index}
                                 now={color}
                                 attr="color"
                                 {...option}
@@ -85,8 +86,9 @@ export default function MessageHandler({
                 <div className={Styles.message_option}>
                     <div className={Styles.title}>글자 정렬</div>
                     <div className={Styles.option_bar}>
-                        {SortOptions.map((option) => (
+                        {SortOptions.map((option, index) => (
                             <OptBtn
+                                key={index}
                                 now={sort}
                                 attr="sort"
                                 {...option}

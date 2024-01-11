@@ -148,6 +148,7 @@
 .display_container {
     display: flex;
     flex-direction: column;
+    height: 100%;
 }
 
 .display__box {
@@ -155,6 +156,9 @@
     justify-content: center;
     align-items: center;
     background-color: #f5e4e1;
+    flex-grow: 1;
+    margin-bottom: 20px;
+    border-radius: 20px;
 }
 
 .display {
