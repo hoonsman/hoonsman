@@ -1,0 +1,15 @@
+.container {
+    position: relative;
+    flex-direction: column;
+    background-color: aqua;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height: 10px;
+}
+
+.scene_canvas {
+    position: sticky;
+    top: 0;
+    left: 0;
+    transform-origin: top left;
+}
