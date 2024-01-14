@@ -23,7 +23,6 @@
 .s1message {
     position: absolute;
     z-index: 2;
-    top: 50%;
     left: 50%;
     transform: translate3d(-50%, -50%, 0);
     color: black;
@@ -43,4 +42,19 @@
     position: sticky;
     top: 0;
     left: 0;
+}
+
+.intro_img {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+
+.intro_img img {
+    height: 100%;
 }

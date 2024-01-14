@@ -14,11 +14,14 @@ const imgArr = [img1, img2, img3, img4, img5, img6, img7, img8]
 const heightArr = []
 let canv1W
 let canv1H
-
+const defaultMessageStyle = { top: `0px`, opacity: 0 }
 const s1HeightSize = 5
 
 const sceneActive = {
     s1: {
+        intro: {
+            img: img8,
+        },
         opAction: {
             opacityIn: [0, 1],
             opacityOut: [1, 0],
@@ -28,39 +31,42 @@ const sceneActive = {
         img1: {
             drawRangeX: '',
             drawRangeY: '',
-            drawIn: [0, 0.1],
-            drawOut: [0.15, 0.25],
+            drawIn: [0.15, 0.2],
+            drawOut: [0.3, 0.4],
         },
         img2: {
             drawRangeX: '',
             drawRangeY: '',
-            drawIn: [0.2, 0.25],
-            drawOut: [0.3, 0.4],
+            drawIn: [0.35, 0.4],
+            drawOut: [0.5, 0.6],
         },
         img3: {
             drawRangeX: '',
             drawRangeY: '',
-            drawIn: [0.35, 0.4],
-            drawOut: [0.45, 0.55],
+            drawIn: [0.55, 0.6],
+            drawOut: [0.65, 0.75],
         },
         img4: {
             drawRangeX: '',
             drawRangeY: '',
-            drawIn: [0.5, 0.55],
-            drawOut: [0.6, 0.65],
+            drawIn: [0.7, 0.75],
+            drawOut: [0.8, 0.85],
         },
         messages: [
             {
                 context: 'hello!',
-                opOut: [0, 0.05],
+                opIn: [0, 0.05],
+                opOut: [0.15, 0.2],
+                trIn: [20, 0],
+                trOut: [0, -20],
                 color: 'black',
                 size: 'large',
                 sort: 'middle',
             },
             {
                 context: '잘 지냄 수과',
-                opIn: [0.1, 0.15],
-                opOut: [0.2, 0.25],
+                opIn: [0.2, 0.25],
+                opOut: [0.35, 0.4],
                 trIn: [20, 0],
                 trOut: [0, -20],
                 color: 'black',
@@ -69,8 +75,8 @@ const sceneActive = {
             },
             {
                 context: '나도 잘 지내영',
-                opIn: [0.3, 0.35],
-                opOut: [0.4, 0.45],
+                opIn: [0.4, 0.45],
+                opOut: [0.55, 0.6],
                 trIn: [20, 0],
                 trOut: [0, -20],
                 color: 'black',
@@ -79,8 +85,8 @@ const sceneActive = {
             },
             {
                 context: '잘 지냄 수과',
-                opIn: [0.5, 0.55],
-                opOut: [0.6, 0.65],
+                opIn: [0.6, 0.65],
+                opOut: [0.75, 0.8],
                 trIn: [20, 0],
                 trOut: [0, -20],
                 color: 'black',
@@ -149,17 +155,7 @@ const paintImage = (sRatio, ctx, rangeInfo, paintImg) => {
 }
 
 const drawS1 = (sRatio, ctx, scene, imgs) => {
-    const { opAction, img1, img2, img3, img4 } = scene
-    // opacity
-    const opaB = (opAction.opacityInRatio[1] + opAction.opacityOutRatio[0]) / 2
-    let opNow
-    if (sRatio < opaB) {
-        opNow = sRatio * 10
-    } else {
-        opNow = 1 - (sRatio - opAction.opacityOutRatio[0]) / 0.1
-    }
-    if (opNow > 1) opNow = 1
-    else if (opNow < 0) opNow = 1
+    const { img1, img2, img3, img4 } = scene
 
     paintImage(sRatio, ctx, img1, imgs[imgArr[0]].img)
     paintImage(sRatio, ctx, img2, imgs[imgArr[1]].img)
@@ -188,13 +184,58 @@ const s1ImgSizing = (vWidth, vHeight, imgs) => {
     })
 }
 
-const activeScene = (currentscene, sRatio, ctx, imgs) => {
+const drawMessage = (sRatio, currentScene, mp, setmp, vheight) => {
+    const sceneMessage = sceneActive[`s${currentScene + 1}`].messages
+    const newMessagePosition = { s1: [] }
+    sceneMessage.forEach((message, index) => {
+        const border = (message.opIn[1] + message.opOut[0]) / 2
+        let opacity
+        let top
+        if (sRatio < border) {
+            opacity =
+                (sRatio - message.opIn[0]) / (message.opIn[1] - message.opIn[0])
+            if (opacity < 0) opacity = 0
+            else if (opacity > 1) opacity = 1
+            top =
+                message.trIn[0] + (message.trIn[1] - message.trIn[0]) * opacity
+        } else {
+            opacity =
+                1 -
+                (sRatio - message.opOut[0]) /
+                    (message.opOut[1] - message.opOut[0])
+            if (opacity < 0) opacity = 0
+            else if (opacity > 1) opacity = 1
+            top =
+                message.trOut[0] +
+                (message.trOut[1] - message.trOut[0]) * (1 - opacity)
+        }
+
+        newMessagePosition[`s${currentScene + 1}`].push({
+            ...mp[index],
+            top: `${vheight / 2 + top}px`,
+            opacity,
+        })
+    })
+    setmp(newMessagePosition)
+}
+
+const activeScene = (currentscene, sRatio, ctx, imgs, mp, setmp, vheight) => {
     switch (currentscene) {
         case 0:
             drawS1(sRatio, ctx, sceneActive.s1, imgs)
+            drawMessage(sRatio, currentscene, mp, setmp, vheight)
             break
         default:
     }
+}
+const messagePositionInitial = (vWidth, vHeight, setMessagePosition) => {
+    const newStyles = {
+        s1: [],
+    }
+    for (let i = 0; i < sceneActive.s1.messages.length; i++) {
+        newStyles.s1.push({ top: `${vHeight / 2}px`, opacity: 0 })
+    }
+    setMessagePosition(newStyles)
 }
 
 export default function Preview({ size }) {
@@ -203,7 +244,15 @@ export default function Preview({ size }) {
     const s1Ref = useRef()
     const [isLoading, setIsLoading] = useState(true)
     const [imgs, setImgs] = useState({})
-    const s1MessageRef = useRef([])
+    const [messagePosition, setMessagePosition] = useState({
+        s1: [
+            defaultMessageStyle,
+            defaultMessageStyle,
+            defaultMessageStyle,
+            defaultMessageStyle,
+            defaultMessageStyle,
+        ],
+    })
 
     useEffect(() => {
         if (!vRef || !cRef || !s1Ref || isLoading) return
@@ -225,11 +274,7 @@ export default function Preview({ size }) {
         vContainer.style.height = `${vHeight}px`
         canv1W = cRef.current.width = vWidth
         canv1H = cRef.current.height = vHeight
-
-        // s1 message position initialization
-        for (let i = 0; i < sceneActive.s1.messages.length; i++)
-            s1MessageRef[i].style.top = `${vHeight / 2}px`
-
+        messagePositionInitial(vWidth, vHeight, setMessagePosition)
         s1ImgSizing(vWidth, vHeight, [
             imgs[img1],
             imgs[img2],
@@ -258,10 +303,17 @@ export default function Preview({ size }) {
                     currentStartY += heightArr[i]
                 }
             }
-            const messageBoxes = []
             const sRatio = (scrollY - currentStartY) / heightArr[currentScene]
             ctx.clearRect(0, 0, canv1W, canv1H)
-            activeScene(currentScene, sRatio, ctx, imgs)
+            activeScene(
+                currentScene,
+                sRatio,
+                ctx,
+                imgs,
+                messagePosition,
+                setMessagePosition,
+                vHeight,
+            )
         }
 
         vContainer.addEventListener('scroll', handleViewScroll)
@@ -305,6 +357,9 @@ export default function Preview({ size }) {
     return (
         <div ref={vRef} className={Styles.container}>
             <div ref={s1Ref} className={Styles.s1}>
+                <div className={Styles.intro_img}>
+                    <img src={sceneActive.s1.intro.img} alt="" />
+                </div>
                 <div className={Styles.sticky_box}>
                     <canvas
                         ref={cRef}
@@ -316,9 +371,7 @@ export default function Preview({ size }) {
                             <div
                                 key={index}
                                 className={Styles.s1message}
-                                ref={(el) => {
-                                    s1MessageRef[index] = el
-                                }}
+                                style={{ ...messagePosition.s1[index] }}
                             >
                                 {message.context}
                             </div>
