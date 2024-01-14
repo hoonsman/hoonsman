@@ -1,3 +1,29 @@
+.fade-in {
+  animation: fadeIn 1s;
+}
+
+.fade-out {
+  animation: fadeOut 1s;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
 /* Comp1.module.css */
 .container {
   position: sticky;
@@ -8,7 +34,7 @@
   align-items: center;
   flex-shrink: 0;
   height: 100vh;
-  background-color: red;
+  background-color: violet;
 }
 
 /* 기타 필요한 스타일링 */
@@ -18,7 +44,7 @@
   justify-content: center; /* 가운데 정렬 */
   align-items: center; /* 가운데 정렬 */
   overflow: hidden; /* 이미지가 컨테이너를 넘어갈 경우 숨김 */
-  width: 100%; /* 컨테이너 전체 너비 사용 */
+  width: 100%; /* 컨테이너 전체 너비 사용dd */
   height: 100%; /* 컨테이너 전체 높이 사용 */
 }
 
