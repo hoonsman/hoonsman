@@ -1,0 +1,172 @@
+.body,
+.html {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+.wrapper {
+  max-width: 380px;
+  margin: 0 auto;
+  overflow-x: hidden;
+}
+
+.container {
+  scroll-snap-type: y mandatory;
+  overflow-y: scroll;
+  height: 100vh;
+}
+.half-height-block {
+  height: 50vh; /* 이미지 높이의 절반 */
+  background-color: transparent; /* 투명 배경 */
+}
+
+.section {
+  scroll-snap-align: start;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+  margin-top: 200px;
+  margin-bottom: 200px;
+  animation: backgroundFade 5s ease-in-out infinite;
+  overflow: hidden;
+}
+.slider {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 380px;
+  display: flex;
+  transition: all 1s cubic-bezier(0.3, 0.49, 0.37, 0.88);
+}
+
+.background-image {
+  max-width: 380px;
+
+  object-fit: cover;
+  z-index: -1;
+  transition: transform 0.5s ease-in-out;
+}
+
+/* .background-image:hover {
+  transform: scale(1.05); 
+} */
+
+.section p {
+  color: white;
+}
+
+@keyframes backgroundFade {
+  0% {
+    background-color: #ffffff;
+  }
+  50% {
+    background-color: #f0f0f0;
+  }
+  100% {
+    background-color: #ffffff;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.fade-in {
+  animation: fadeIn 2s ease-in-out forwards;
+}
+
+.fade-out {
+  animation: fadeOut 2s ease-in-out forwards;
+}
+
+.section .text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 24px;
+  font-weight: bold;
+  color: white;
+  text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000,
+    2px 2px 0 #000; /* 텍스트 아웃라인 효과 */
+  opacity: 0; /* 초기 상태는 투명 */
+  z-index: 1;
+}
+
+.text-fade-in {
+  animation: fadeIn 1s ease-in-out forwards;
+  animation-delay: 0.5s;
+}
+
+.text-fade-out {
+  animation: fadeOut 1s ease-in-out forwards;
+  animation-delay: 0.5s;
+}
+
+/* 키워드와 설명 텍스트의 공통 스타일 */
+.keyword,
+.description-text {
+  position: absolute; /* 절대 위치 */
+  top: 50%; /* 섹션의 수직 중앙 */
+  left: 50%; /* 섹션의 수평 중앙 */
+  transform: translate(-50%, -50%); /* 정확한 중앙 정렬을 위해 */
+  color: black;
+  opacity: 0;
+  z-index: 2; /* 이미지 위에 오도록 z-index 증가 */
+}
+
+/* 키워드 스타일 */
+.keyword {
+  position: absolute;
+  top: 50%; /* 섹션의 수직 중앙 */
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 24px; /* 크기 증가 */
+  font-weight: bold;
+  color: black;
+  opacity: 0;
+  z-index: 2;
+}
+
+/* 설명 텍스트 스타일 */
+.description-text {
+  position: absolute;
+  top: calc(50% + 60px); /* 키워드 아래에 위치하도록 조정 */
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 16px;
+  color: black;
+  opacity: 0;
+  z-index: 2;
+}
+
+/* 애니메이션 타이밍 조정 */
+.text-fade-in {
+  animation: fadeIn 1s ease-in-out forwards;
+}
+
+.keyword.text-fade-in {
+  animation-delay: 0.5s; /* 키워드가 먼저 나타남 */
+}
+
+.description-text.text-fade-in {
+  animation-delay: 1.5s; /* 설명 텍스트가 뒤따라 나타남 */
+}
