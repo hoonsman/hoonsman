@@ -1,10 +1,9 @@
 import React from 'react'
-import Style from './Comp3.module.css'
+import Style from './Blank.module.css'
 
 const Comp3 = () => {
   return (
     <div className={Style.container}>
-      <div className={Style.message}>Thank you</div>
       <div className={Style.imageContainer}>
         <img src={`${process.env.PUBLIC_URL}/image3.png`} />
       </div>

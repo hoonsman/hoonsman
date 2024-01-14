@@ -27,3 +27,12 @@
   max-height: 100%; /* 이미지가 컨테이너 높이를 넘지 않도록 설정 */
   object-fit: contain; /* 이미지 비율을 유지하면서 최대 크기에 맞춤 */
 }
+
+.message {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 24px;
+  color: white; /* 적절한 색상 설정 */
+}
