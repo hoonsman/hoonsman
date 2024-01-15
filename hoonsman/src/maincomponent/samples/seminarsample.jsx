@@ -63,7 +63,7 @@ function SeminarSample() {
       <div className="container">
         <section
           ref={(el) => (sectionRefs.current[0] = el)}
-          className="section intro"
+          className="section"
         >
           <img src="img/intro.png" alt="Intro" className="background-image" />
           <p className={`text ${textAnimationStatus[0] || ''}`}>
@@ -73,7 +73,7 @@ function SeminarSample() {
         <div className="half-height-block"></div>
         <section
           ref={(el) => (sectionRefs.current[1] = el)}
-          className="section intro"
+          className="section"
         >
           <div ref={sliderRef1} className="slider">
             <img
@@ -100,7 +100,7 @@ function SeminarSample() {
         <div className="half-height-block"></div>
         <section
           ref={(el) => (sectionRefs.current[2] = el)}
-          className="section intro"
+          className="section"
         >
           <div ref={sliderRef2} className="slider">
             <img
@@ -127,21 +127,24 @@ function SeminarSample() {
         <div className="half-height-block"></div>
         <section
           ref={(el) => (sectionRefs.current[3] = el)}
-          className="section intro"
+          className="section"
         >
           <img
             src="img/location.png"
             alt="Location n Time"
             className="background-image"
           />
-          <p className={`text ${textAnimationStatus[3] || ''}`}>
-            세미나의 위치와 날짜
+          <p className={`keyword ${textAnimationStatus[3] || ''}`}>
+            세미나 위치
+          </p>
+          <p className={`description-text ${textAnimationStatus[3] || ''}`}>
+            시간과 날짜
           </p>
         </section>
 
         <section
           ref={(el) => (sectionRefs.current[4] = el)}
-          className="section intro"
+          className="section"
         >
           <img
             src="img/conclusion.png"

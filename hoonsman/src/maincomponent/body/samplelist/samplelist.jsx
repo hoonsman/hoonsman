@@ -7,12 +7,31 @@ const SampleBox = () => {
   const [selectedSampleId, setSelectedSampleId] = useState(null)
 
   const samples = [
-    //샘플 미리보기 이미지 배열임니둥
-    //사이즈 임의로 300에 300사이즈
-    { id: 1, imageUrl: 'img/intro.png' },
-    { id: 2, imageUrl: 'images/intro2.png' },
-    { id: 3, imageUrl: 'images/intro3.png' },
-    { id: 4, imageUrl: 'images/intro4.png' },
+    {
+      id: 1,
+      imageUrl: 'img/intro.png',
+      title: '세미나 초대장',
+      description:
+        '이 샘플은 5개의 섹션 소개, 설명1, 설명2, 시간 및 위치, 맺음말로 구성되어있으며, 인터랙티브하지만 간단한 초대장을 만들 수 있습니다.',
+    },
+    {
+      id: 2,
+      imageUrl: 'images/intro2.png',
+      title: '제목 2',
+      description: '샘플에 대한 설명 2',
+    },
+    {
+      id: 3,
+      imageUrl: 'images/intro3.png',
+      title: '제목 3',
+      description: '샘플에 대한 설명 3',
+    },
+    {
+      id: 4,
+      imageUrl: 'images/intro4.png',
+      title: '제목 4',
+      description: '샘플에 대한 설명 4',
+    },
   ]
 
   const handleSampleBoxClick = (sampleId) => {
@@ -44,7 +63,10 @@ const SampleBox = () => {
               onClick={() => handleSampleBoxClick(sample.id)}
             >
               <img src={sample.imageUrl} alt={`Sample ${sample.id}`} />
-              <p>box{sample.id}</p>
+              <div className={Styles.textContainer}>
+                <h2>{sample.title}</h2>
+                <p>{sample.description}</p>
+              </div>
             </div>
           ))}
         </div>

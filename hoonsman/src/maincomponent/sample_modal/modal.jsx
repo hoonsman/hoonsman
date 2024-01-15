@@ -1,6 +1,7 @@
 import React from 'react'
 import styles from './modal.module.css'
 import SeminarSample from '../samples/seminarsample'
+import Promotion from '../samples/ProductPromotion/product_promotion'
 
 function Modal({ isOpen, closeModal, selectedSampleId }) {
   const handleBackdropClick = (e) => {
@@ -19,7 +20,8 @@ function Modal({ isOpen, closeModal, selectedSampleId }) {
           X
         </button>
         {selectedSampleId === 1 && <SeminarSample />}
-        <button className={styles.applyButton}>이 샘플로 생성하기</button>
+        {selectedSampleId === 2 && <Promotion />}
+        <button className={styles.applyButton}>생성하기</button>
       </div>
     </div>
   )

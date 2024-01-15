@@ -16,9 +16,10 @@
   overflow-y: scroll;
   height: 100vh;
 }
+
 .half-height-block {
-  height: 50vh; /* 이미지 높이의 절반 */
-  background-color: transparent; /* 투명 배경 */
+  height: 50vh;
+  background-color: transparent;
 }
 
 .section {
@@ -34,6 +35,7 @@
   animation: backgroundFade 5s ease-in-out infinite;
   overflow: hidden;
 }
+
 .slider {
   position: relative;
   top: 0;
@@ -45,15 +47,10 @@
 
 .background-image {
   max-width: 380px;
-
   object-fit: cover;
   z-index: 0;
   transition: transform 0.5s ease-in-out;
 }
-
-/* .background-image:hover {
-  transform: scale(1.05); 
-} */
 
 .section p {
   color: white;
@@ -94,79 +91,44 @@
 }
 
 .fade-out {
-  animation: fadeOut 2s ease-in-out forwards;
+  animation: fadeOut 2s ease-in -out forwards;
 }
 
-.section .text {
+.section .text,
+.section .keyword,
+.section .description-text {
   position: absolute;
-  top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translateX(-50%);
   font-size: 24px;
   font-weight: bold;
   color: white;
   text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000,
-    2px 2px 0 #000; /* 텍스트 아웃라인 효과 */
-  opacity: 0; /* 초기 상태는 투명 */
+    2px 2px 0 #000;
+  opacity: 0;
   z-index: 5;
+  padding: 10px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.section .keyword {
+  top: 40%;
+  font-size: 2em;
+}
+
+.section .description-text {
+  top: 50%;
+  font-size: 1.5em;
 }
 
 .text-fade-in {
   animation: fadeIn 1s ease-in-out forwards;
-  animation-delay: 0.5s;
+  animation-delay: 0.5s; /* 애니메이션 딜레이 */
 }
 
 .text-fade-out {
   animation: fadeOut 1s ease-in-out forwards;
-  animation-delay: 0.5s;
-}
-
-/* 키워드와 설명 텍스트의 공통 스타일 */
-.keyword,
-.description-text {
-  position: absolute; /* 절대 위치 */
-  top: 50%; /* 섹션의 수직 중앙 */
-  left: 50%; /* 섹션의 수평 중앙 */
-  transform: translate(-50%, -50%); /* 정확한 중앙 정렬을 위해 */
-  color: black;
-  opacity: 0;
-  z-index: 2; /* 이미지 위에 오도록 z-index 증가 */
-}
-
-/* 키워드 스타일 */
-.keyword {
-  position: absolute;
-  top: 50%; /* 섹션의 수직 중앙 */
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 24px; /* 크기 증가 */
-  font-weight: bold;
-  color: black;
-  opacity: 0;
-  z-index: 5;
-}
-
-/* 설명 텍스트 스타일 */
-.description-text {
-  position: absolute;
-  top: calc(50% + 60px); /* 키워드 아래에 위치하도록 조정 */
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 16px;
-  color: black;
-  opacity: 0;
-  z-index: 5;
-}
-
-/* 애니메이션 타이밍 조정 */
-.text-fade-in {
-  animation: fadeIn 1s ease-in-out forwards;
-}
-
-.keyword.text-fade-in {
-  animation-delay: 0.5s; /* 키워드가 먼저 나타남 */
-}
-
-.description-text.text-fade-in {
-  animation-delay: 1.5s; /* 설명 텍스트가 뒤따라 나타남 */
+  animation-delay: 0.5s; /* 애니메이션 딜레이 */
 }
