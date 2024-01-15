@@ -395,3 +395,35 @@ export const paintLRCustomOut = (
 
     ctx.drawImage(paintImg, PSX, PSY, PDX, PDY, CSX, CSY, CDX, CDY)
 }
+
+export const paintBottomPartOut = (
+    sRatio,
+    ctx,
+    rangeInfo,
+    paintImg,
+    canvasWidth,
+    canvasHeight,
+    drawRange,
+    from,
+    range,
+) => {
+    const [drawInStart, drawInEnd] = drawRange
+    const [drawRangeX1, drawRangeX2] = rangeInfo.drawRangeX
+    const [drawRangeY1, drawRangeY2] = rangeInfo.drawRangeY
+
+    let drawRatio = (sRatio - drawInStart) / (drawInEnd - drawInStart)
+
+    if (drawRatio < 0) drawRatio = 0
+    else if (drawRatio > 1) drawRatio = 1
+
+    const PSX = drawRangeX1 + (drawRangeX2 - drawRangeX1) * from
+    const PSY = drawRangeY1
+    const PDX = (drawRangeX2 - drawRangeX1) * range
+    const PDY = (drawRangeY2 - drawRangeY1) * (1 - drawRatio)
+    const CSX = canvasWidth * from
+    const CSY = 0
+    const CDX = canvasWidth * range
+    const CDY = canvasHeight - canvasHeight * drawRatio
+
+    ctx.drawImage(paintImg, PSX, PSY, PDX, PDY, CSX, CSY, CDX, CDY)
+}

@@ -11,6 +11,7 @@ import {
     paintVerticalPartIn,
     paintLRCustomIn,
     paintLRCustomOut,
+    paintBottomPartOut,
 } from './paintAction.js'
 
 import img1 from '../../imgs/img1.png'
@@ -338,8 +339,18 @@ const drawS3 = (sRatio, ctx3, scene, imgs) => {
             img7.drawLRCustomOut,
             0.1,
         )
-        // else
-
+    else
+        paintBottomPartOut(
+            sRatio,
+            ctx3,
+            img7,
+            imgs[imgArr[6]].img,
+            canvasWidth,
+            canvasHeight,
+            img7.drawBottomPartOut,
+            0.9,
+            0.1,
+        )
 }
 
 const imgSizing = (vWidth, vHeight, imgs) => {
