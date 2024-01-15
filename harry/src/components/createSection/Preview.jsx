@@ -1,5 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react'
 import Styles from './preview.module.css'
+import { paintLRInOut, paintMidIn } from './paintAction.js'
 
 import img1 from '../../imgs/img1.png'
 import img2 from '../../imgs/img2.png'
@@ -12,8 +13,8 @@ import img8 from '../../imgs/img8.png'
 
 const imgArr = [img1, img2, img3, img4, img5, img6, img7, img8]
 const heightArr = []
-let canv1W
-let canv1H
+let canvasWidth
+let canvasHeight
 const defaultMessageStyle = { top: `0px`, opacity: 0 }
 const s1HeightSize = 5
 const s2HeightSize = 5
@@ -122,70 +123,54 @@ const sceneActive = {
     },
 }
 
-const paintImage = (sRatio, ctx, rangeInfo, paintImg) => {
-    const [drawInStart, drawInEnd] = rangeInfo.drawIn
-    const [drawOutStart, drawOutEnd] = rangeInfo.drawOut
-    const [drawRangeX1, drawRangeX2] = rangeInfo.drawRangeX
-    const [drawRangeY1, drawRangeY2] = rangeInfo.drawRangeY
-
-    const paintingBorder = (drawInEnd + drawOutStart) / 2
-    if (sRatio < paintingBorder) {
-        let drawCX =
-            (canv1W * (sRatio - drawInStart)) / (drawInEnd - drawInStart)
-
-        let drawIX =
-            ((drawRangeX2 - drawRangeX1) * (sRatio - drawInStart)) /
-            (drawInEnd - drawInStart)
-        if (drawCX < 0) drawCX = 0
-        else if (drawCX > canv1W) drawCX = canv1W
-
-        if (drawIX < 0) drawIX = 0
-        else if (drawIX > drawRangeX2 - drawRangeX1)
-            drawIX = drawRangeX2 - drawRangeX1
-        ctx.drawImage(
-            paintImg,
-            drawRangeX1,
-            drawRangeY1,
-            drawIX,
-            drawRangeY2 - drawRangeY1,
-            0,
-            0,
-            drawCX,
-            canv1H,
-        )
-    } else {
-        let drawCX =
-            (canv1W * (sRatio - drawOutStart)) / (drawOutEnd - drawOutStart)
-        let drawIX =
-            ((drawRangeX2 - drawRangeX1) * (sRatio - drawOutStart)) /
-            (drawOutEnd - drawOutStart)
-        if (drawCX < 0) drawCX = 0
-        else if (drawCX > canv1W) drawCX = canv1W
-
-        if (drawIX < 0) drawIX = 0
-        else if (drawIX > drawRangeX2 - drawRangeX1)
-            drawIX = drawRangeX2 - drawRangeX1
-        ctx.drawImage(
-            paintImg,
-            drawRangeX1 + drawIX,
-            drawRangeY1,
-            drawRangeX2 - (drawRangeX1 + drawIX),
-            drawRangeY2 - drawRangeY1,
-            drawCX,
-            0,
-            canv1W - drawCX,
-            canv1H,
-        )
-    }
-}
-
 const drawS1 = (sRatio, ctx, scene, imgs) => {
     const { img1, img2, img3, img4 } = scene
 
-    paintImage(sRatio, ctx, img1, imgs[imgArr[0]].img)
-    paintImage(sRatio, ctx, img2, imgs[imgArr[1]].img)
-    paintImage(sRatio, ctx, img3, imgs[imgArr[2]].img)
-    paintImage(sRatio, ctx, img4, imgs[imgArr[3]].img)
+    paintLRInOut(
+        sRatio,
+        ctx,
+        img1,
+        imgs[imgArr[0]].img,
+        canvasWidth,
+        canvasHeight,
+    )
+    paintLRInOut(
+        sRatio,
+        ctx,
+        img2,
+        imgs[imgArr[1]].img,
+        canvasWidth,
+        canvasHeight,
+    )
+    paintLRInOut(
+        sRatio,
+        ctx,
+        img3,
+        imgs[imgArr[2]].img,
+        canvasWidth,
+        canvasHeight,
+    )
+    paintLRInOut(
+        sRatio,
+        ctx,
+        img4,
+        imgs[imgArr[3]].img,
+        canvasWidth,
+        canvasHeight,
+    )
+}
+
+const drawS2 = (sRatio, ctx2, scene, imgs) => {
+    const { img5, img6, img7 } = scene
+
+    paintMidIn(
+        sRatio,
+        ctx2,
+        img5,
+        imgs[imgArr[4]].img,
+        canvasWidth,
+        canvasHeight,
+    )
 }
 
 const imgSizing = (vWidth, vHeight, imgs) => {
@@ -271,6 +256,7 @@ const activeScene = (
             drawMessage(sRatio, currentscene, mp, setmp, vheight)
             break
         case 1:
+            drawS2(sRatio, ctx2, sceneActive.s2, imgs)
             break
         default:
     }
@@ -321,8 +307,8 @@ export default function Preview({ size }) {
         const vWidth = vHeight * whRatio
         vContainer.style.width = `${vWidth}px`
         vContainer.style.height = `${vHeight}px`
-        canv1W = cRef.current.width = vWidth
-        canv1H = cRef.current.height = vHeight
+        canvasWidth = cRef.current.width = c2Ref.current.width = vWidth
+        canvasHeight = cRef.current.height = c2Ref.current.height = vHeight
 
         messagePositionInitial(vWidth, vHeight, setMessagePosition)
 
@@ -360,7 +346,8 @@ export default function Preview({ size }) {
                 }
             }
             const sRatio = (scrollY - currentStartY) / heightArr[currentScene]
-            ctx.clearRect(0, 0, canv1W, canv1H)
+            ctx.clearRect(0, 0, canvasWidth, canvasHeight)
+            ctx2.clearRect(0, 0, canvasWidth, canvasHeight)
             activeScene(
                 currentScene,
                 sRatio,
