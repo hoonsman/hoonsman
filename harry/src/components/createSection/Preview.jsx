@@ -1,5 +1,14 @@
 import React, { useRef, useEffect, useState } from 'react'
 import Styles from './preview.module.css'
+import {
+    paintLRInOut,
+    paintMidIn,
+    paintMidToAll,
+    paintBottomUpOut,
+    paintLRPartIn,
+    paintLRPartOut,
+    paintBottomPartIn,
+} from './paintAction.js'
 
 import img1 from '../../imgs/img1.png'
 import img2 from '../../imgs/img2.png'
@@ -12,45 +21,45 @@ import img8 from '../../imgs/img8.png'
 
 const imgArr = [img1, img2, img3, img4, img5, img6, img7, img8]
 const heightArr = []
-let canv1W
-let canv1H
+let canvasWidth
+let canvasHeight
 const defaultMessageStyle = { top: `0px`, opacity: 0 }
 const s1HeightSize = 5
+const s2HeightSize = 10
+const s3HeightSize = 5
+
+const s1ImgCount = 4
+const s2ImgCount = 2
+const s3ImgCount = 2
 
 const sceneActive = {
     s1: {
         intro: {
             img: img8,
         },
-        opAction: {
-            opacityIn: [0, 1],
-            opacityOut: [1, 0],
-            opacityInRatio: [0, 0.1],
-            opacityOutRatio: [0.9, 1],
-        },
         img1: {
-            drawRangeX: '',
-            drawRangeY: '',
-            drawIn: [0.15, 0.2],
+            drawRangeX: [],
+            drawRangeY: [],
+            drawIn: [0.2, 0.25],
             drawOut: [0.3, 0.4],
         },
         img2: {
-            drawRangeX: '',
-            drawRangeY: '',
+            drawRangeX: [],
+            drawRangeY: [],
             drawIn: [0.35, 0.4],
             drawOut: [0.5, 0.6],
         },
         img3: {
-            drawRangeX: '',
-            drawRangeY: '',
+            drawRangeX: [],
+            drawRangeY: [],
             drawIn: [0.55, 0.6],
             drawOut: [0.65, 0.75],
         },
         img4: {
-            drawRangeX: '',
-            drawRangeY: '',
+            drawRangeX: [],
+            drawRangeY: [],
             drawIn: [0.7, 0.75],
-            drawOut: [0.8, 0.85],
+            drawOut: [0.9, 0.95],
         },
         messages: [
             {
@@ -95,91 +104,231 @@ const sceneActive = {
             },
         ],
     },
-}
-
-const paintImage = (sRatio, ctx, rangeInfo, paintImg) => {
-    const paintingBorder = (rangeInfo.drawIn[1] + rangeInfo.drawOut[0]) / 2
-    if (sRatio < paintingBorder) {
-        let drawCX =
-            (canv1W * (sRatio - rangeInfo.drawIn[0])) /
-            (rangeInfo.drawIn[1] - rangeInfo.drawIn[0])
-
-        let drawIX =
-            ((rangeInfo.drawRangeX[1] - rangeInfo.drawRangeX[0]) *
-                (sRatio - rangeInfo.drawIn[0])) /
-            (rangeInfo.drawIn[1] - rangeInfo.drawIn[0])
-        if (drawCX < 0) drawCX = 0
-        else if (drawCX > canv1W) drawCX = canv1W
-
-        if (drawIX < 0) drawIX = 0
-        else if (drawIX > rangeInfo.drawRangeX[1] - rangeInfo.drawRangeX[0])
-            drawIX = rangeInfo.drawRangeX[1] - rangeInfo.drawRangeX[0]
-        ctx.drawImage(
-            paintImg,
-            rangeInfo.drawRangeX[0],
-            rangeInfo.drawRangeY[0],
-            drawIX,
-            rangeInfo.drawRangeY[1] - rangeInfo.drawRangeY[0],
-            0,
-            0,
-            drawCX,
-            canv1H,
-        )
-    } else {
-        let drawCX =
-            (canv1W * (sRatio - rangeInfo.drawOut[0])) /
-            (rangeInfo.drawOut[1] - rangeInfo.drawOut[0])
-        let drawIX =
-            ((rangeInfo.drawRangeX[1] - rangeInfo.drawRangeX[0]) *
-                (sRatio - rangeInfo.drawOut[0])) /
-            (rangeInfo.drawOut[1] - rangeInfo.drawOut[0])
-        if (drawCX < 0) drawCX = 0
-        else if (drawCX > canv1W) drawCX = canv1W
-
-        if (drawIX < 0) drawIX = 0
-        else if (drawIX > rangeInfo.drawRangeX[1] - rangeInfo.drawRangeX[0])
-            drawIX = rangeInfo.drawRangeX[1] - rangeInfo.drawRangeX[0]
-        console.log(drawCX)
-        ctx.drawImage(
-            paintImg,
-            rangeInfo.drawRangeX[0] + drawIX,
-            rangeInfo.drawRangeY[0],
-            rangeInfo.drawRangeX[1] - (rangeInfo.drawRangeX[0] + drawIX),
-            rangeInfo.drawRangeY[1] - rangeInfo.drawRangeY[0],
-            drawCX,
-            0,
-            canv1W - drawCX,
-            canv1H,
-        )
-    }
+    s2: {
+        img5: {
+            drawRangeX: [],
+            drawRangeY: [],
+            drawMidIn: [0, 0.1],
+            drawMidToAllIn: [0.12, 0.18],
+            drawBottomUpOut: [0.33, 0.4],
+        },
+        img6: {
+            drawRangeX: [],
+            drawRangeY: [],
+            drawLRPartIn1: [0.42, 0.48],
+            drawLRPartIn2: [0.45, 0.51],
+            drawLRPartIn3: [0.48, 0.54],
+            drawLRPartIn4: [0.51, 0.57],
+            drawLRPartIn5: [0.54, 0.6],
+            drawLRPartOut1: [0.87, 0.93],
+            drawLRPartOut2: [0.84, 0.9],
+            drawLRPartOut3: [0.81, 0.87],
+            drawLRPartOut4: [0.78, 0.84],
+            drawLRPartOut5: [0.75, 0.81],
+        },
+    },
+    s3: {
+        img7: {
+            drawRangeX: [],
+            drawRangeY: [],
+            drawBottomPartIn: [0, 0.1],
+            drawVerticalPartIn: [0.12, 0.2],
+            drawLRCustomIn: [0.21, 0.3],
+            drawLRCustomOut: [0.5, 0.55],
+            drawBottomPartOut: [0.56, 0.6],
+        },
+        img8: {
+            drawRangeX: [],
+            drawRangeY: [],
+            drawLRPartIn: [0.58, 0.62],
+            drawLRHorizontalPartIn: [0.63, 0.7],
+            drawBottomCuntomIn: [0.71, 0.8],
+        },
+    },
 }
 
 const drawS1 = (sRatio, ctx, scene, imgs) => {
     const { img1, img2, img3, img4 } = scene
 
-    paintImage(sRatio, ctx, img1, imgs[imgArr[0]].img)
-    paintImage(sRatio, ctx, img2, imgs[imgArr[1]].img)
-    paintImage(sRatio, ctx, img3, imgs[imgArr[2]].img)
-    paintImage(sRatio, ctx, img4, imgs[imgArr[3]].img)
+    paintLRInOut(
+        sRatio,
+        ctx,
+        img1,
+        imgs[imgArr[0]].img,
+        canvasWidth,
+        canvasHeight,
+    )
+    paintLRInOut(
+        sRatio,
+        ctx,
+        img2,
+        imgs[imgArr[1]].img,
+        canvasWidth,
+        canvasHeight,
+    )
+    paintLRInOut(
+        sRatio,
+        ctx,
+        img3,
+        imgs[imgArr[2]].img,
+        canvasWidth,
+        canvasHeight,
+    )
+    paintLRInOut(
+        sRatio,
+        ctx,
+        img4,
+        imgs[imgArr[3]].img,
+        canvasWidth,
+        canvasHeight,
+    )
 }
 
-const s1ImgSizing = (vWidth, vHeight, imgs) => {
+const drawS2 = (sRatio, ctx2, scene, imgs) => {
+    const { img5, img6 } = scene
+
+    // Img5
+
+    const img5Action1Border = (img5.drawMidIn[1] + img5.drawMidToAllIn[0]) / 2
+    const img5Action2Border =
+        (img5.drawMidToAllIn[1] + img5.drawBottomUpOut[0]) / 2
+    if (sRatio < img5Action1Border)
+        paintMidIn(
+            sRatio,
+            ctx2,
+            img5,
+            imgs[imgArr[4]].img,
+            canvasWidth,
+            canvasHeight,
+        )
+    else if (sRatio < img5Action2Border)
+        paintMidToAll(
+            sRatio,
+            ctx2,
+            img5,
+            imgs[imgArr[4]].img,
+            canvasWidth,
+            canvasHeight,
+        )
+    else
+        paintBottomUpOut(
+            sRatio,
+            ctx2,
+            img5,
+            imgs[imgArr[4]].img,
+            canvasWidth,
+            canvasHeight,
+        )
+
+    // img6
+    const img6ActionBorder =
+        (img6.drawLRPartIn5[1] + img6.drawLRPartOut5[0]) / 2
+    if (sRatio < img6ActionBorder) {
+        paintLRPartIn(
+            sRatio,
+            ctx2,
+            img6,
+            imgs[imgArr[5]].img,
+            canvasWidth,
+            canvasHeight,
+            img6[`drawLRPartIn${1}`],
+            0,
+            0.2,
+        )
+        for (let i = 0; i < 4; i++) {
+            const from = 0.1 + i * 0.2
+            paintLRPartIn(
+                sRatio,
+                ctx2,
+                img6,
+                imgs[imgArr[5]].img,
+                canvasWidth,
+                canvasHeight,
+                img6[`drawLRPartIn${i + 2}`],
+                from,
+                0.3,
+            )
+        }
+    } else {
+        paintLRPartOut(
+            sRatio,
+            ctx2,
+            img6,
+            imgs[imgArr[5]].img,
+            canvasWidth,
+            canvasHeight,
+            img6[`drawLRPartOut${1}`],
+            0,
+            0.2,
+        )
+        for (let i = 0; i < 4; i++) {
+            const from = 0.1 + i * 0.2
+            paintLRPartOut(
+                sRatio,
+                ctx2,
+                img6,
+                imgs[imgArr[5]].img,
+                canvasWidth,
+                canvasHeight,
+                img6[`drawLRPartOut${i + 2}`],
+                from,
+                0.3,
+            )
+        }
+    }
+}
+
+const drawS3 = (sRatio, ctx3, scene, imgs) => {
+    const { img7, img8 } = scene
+    const img7Action1Border =
+        (img7.drawBottomPartIn[1] + img7.drawVerticalPartIn[0]) / 2
+
+    if (sRatio < img7Action1Border)
+        paintBottomPartIn(
+            sRatio,
+            ctx3,
+            img7,
+            imgs[imgArr[6]].img,
+            canvasWidth,
+            canvasHeight,
+            img7.drawBottomPartIn,
+            0.8,
+            0.2,
+        )
+}
+
+const imgSizing = (vWidth, vHeight, imgs) => {
     const whRatio = vWidth / vHeight
-    // img draw Range - img1, img2
-    imgs.forEach((i) => {
+    imgs.forEach((i, index) => {
         const imgVHRatio = i.width / i.height
         if (whRatio < imgVHRatio) {
             const fixedScaleRatio = vHeight / i.height
             const fixedWidth = i.width * fixedScaleRatio
             const xDiff = (fixedWidth - vWidth) / fixedScaleRatio / 2
-            sceneActive.s1[i.name].drawRangeX = [xDiff, i.width - xDiff]
-            sceneActive.s1[i.name].drawRangeY = [0, i.height]
+            if (index < s1ImgCount) {
+                sceneActive.s1[i.name].drawRangeX = [xDiff, i.width - xDiff]
+                sceneActive.s1[i.name].drawRangeY = [0, i.height]
+            } else if (index < s1ImgCount + s2ImgCount) {
+                sceneActive.s2[i.name].drawRangeX = [xDiff, i.width - xDiff]
+                sceneActive.s2[i.name].drawRangeY = [0, i.height]
+            } else if (index < s1ImgCount + s2ImgCount + s3ImgCount) {
+                sceneActive.s3[i.name].drawRangeX = [xDiff, i.width - xDiff]
+                sceneActive.s3[i.name].drawRangeY = [0, i.height]
+            }
         } else {
             const fixedScaleRatio = vWidth / i.width
             const fixedHeight = i.height * fixedScaleRatio
             const yDiff = (fixedHeight - vHeight) / fixedScaleRatio / 2
-            sceneActive.s1[i.name].drawRangeX = [0, i.width]
-            sceneActive.s1[i.name].drawRangeY = [yDiff, i.height - yDiff]
+            if (index < s1ImgCount) {
+                sceneActive.s1[i.name].drawRangeX = [0, i.width]
+                sceneActive.s1[i.name].drawRangeY = [yDiff, i.height - yDiff]
+            } else if (index < s1ImgCount + s2ImgCount) {
+                sceneActive.s2[i.name].drawRangeX = [0, i.width]
+                sceneActive.s2[i.name].drawRangeY = [yDiff, i.height - yDiff]
+            } else if (index < s1ImgCount + s2ImgCount + s2ImgCount) {
+                sceneActive.s3[i.name].drawRangeX = [0, i.width]
+                sceneActive.s3[i.name].drawRangeY = [yDiff, i.height - yDiff]
+            }
         }
     })
 }
@@ -219,11 +368,30 @@ const drawMessage = (sRatio, currentScene, mp, setmp, vheight) => {
     setmp(newMessagePosition)
 }
 
-const activeScene = (currentscene, sRatio, ctx, imgs, mp, setmp, vheight) => {
+const activeScene = (
+    currentscene,
+    sRatio,
+    ctx,
+    imgs,
+    mp,
+    setmp,
+    vheight,
+    ctx2,
+    ctx3,
+) => {
+    ctx.clearRect(0, 0, canvasWidth, canvasHeight)
+    ctx2.clearRect(0, 0, canvasWidth, canvasHeight)
+    ctx3.clearRect(0, 0, canvasWidth, canvasHeight)
     switch (currentscene) {
         case 0:
             drawS1(sRatio, ctx, sceneActive.s1, imgs)
             drawMessage(sRatio, currentscene, mp, setmp, vheight)
+            break
+        case 1:
+            drawS2(sRatio, ctx2, sceneActive.s2, imgs)
+            break
+        case 2:
+            drawS3(sRatio, ctx3, sceneActive.s3, imgs)
             break
         default:
     }
@@ -242,6 +410,10 @@ export default function Preview({ size }) {
     const vRef = useRef()
     const cRef = useRef()
     const s1Ref = useRef()
+    const s2Ref = useRef()
+    const s3Ref = useRef()
+    const c2Ref = useRef()
+    const c3Ref = useRef()
     const [isLoading, setIsLoading] = useState(true)
     const [imgs, setImgs] = useState({})
     const [messagePosition, setMessagePosition] = useState({
@@ -255,13 +427,24 @@ export default function Preview({ size }) {
     })
 
     useEffect(() => {
-        if (!vRef || !cRef || !s1Ref || isLoading) return
+        if (
+            !vRef ||
+            !cRef ||
+            !s1Ref ||
+            !s2Ref ||
+            !s3Ref ||
+            !c2Ref ||
+            !c3Ref ||
+            isLoading
+        )
+            return
 
         //height 고정, 그에 대한 width 보정
         const vContainer = vRef.current
         // canvas acitve
         const ctx = cRef.current.getContext('2d')
-
+        const ctx2 = c2Ref.current.getContext('2d')
+        const ctx3 = c3Ref.current.getContext('2d')
         // canvas sizing(for scene1)
         // s1 - img1 - 4
         const pHeight = vContainer.parentNode.offsetHeight
@@ -272,18 +455,35 @@ export default function Preview({ size }) {
         const vWidth = vHeight * whRatio
         vContainer.style.width = `${vWidth}px`
         vContainer.style.height = `${vHeight}px`
-        canv1W = cRef.current.width = vWidth
-        canv1H = cRef.current.height = vHeight
+        canvasWidth =
+            cRef.current.width =
+            c2Ref.current.width =
+            c3Ref.current.width =
+                vWidth
+        canvasHeight =
+            cRef.current.height =
+            c2Ref.current.height =
+            c3Ref.current.height =
+                vHeight
+
         messagePositionInitial(vWidth, vHeight, setMessagePosition)
-        s1ImgSizing(vWidth, vHeight, [
+
+        imgSizing(vWidth, vHeight, [
             imgs[img1],
             imgs[img2],
             imgs[img3],
             imgs[img4],
+            imgs[img5],
+            imgs[img6],
+            imgs[img7],
         ])
 
         s1Ref.current.style.height = vHeight * s1HeightSize + 'px'
         heightArr[0] = vHeight * s1HeightSize
+        s2Ref.current.style.height = vHeight * s2HeightSize + 'px'
+        heightArr[1] = vHeight * s2HeightSize
+        s3Ref.current.style.height = vHeight * s3HeightSize + 'px'
+        heightArr[2] = vHeight * s3HeightSize
 
         const handleViewScroll = (e) => {
             // calculate scrollY
@@ -304,7 +504,6 @@ export default function Preview({ size }) {
                 }
             }
             const sRatio = (scrollY - currentStartY) / heightArr[currentScene]
-            ctx.clearRect(0, 0, canv1W, canv1H)
             activeScene(
                 currentScene,
                 sRatio,
@@ -313,6 +512,8 @@ export default function Preview({ size }) {
                 messagePosition,
                 setMessagePosition,
                 vHeight,
+                ctx2,
+                ctx3,
             )
         }
 
@@ -321,7 +522,7 @@ export default function Preview({ size }) {
         return () => {
             vContainer.removeEventListener('scroll', handleViewScroll)
         }
-    }, [vRef, size, cRef, s1Ref, isLoading, imgs])
+    }, [vRef, size, cRef, s1Ref, s2Ref, isLoading, imgs, c2Ref, s3Ref, c3Ref])
 
     // Src Loading
     useEffect(() => {
@@ -356,9 +557,9 @@ export default function Preview({ size }) {
 
     return (
         <div ref={vRef} className={Styles.container}>
-            <div ref={s1Ref} className={Styles.s1}>
+            <div ref={s1Ref} className={Styles.scene}>
                 <div className={Styles.intro_img}>
-                    <img src={sceneActive.s1.intro.img} alt="" />
+                    <img src={sceneActive.s1.intro.img} alt="introimage" />
                 </div>
                 <div className={Styles.sticky_box}>
                     <canvas
@@ -377,6 +578,22 @@ export default function Preview({ size }) {
                             </div>
                         )
                     })}
+                </div>
+            </div>
+            <div ref={s2Ref} className={Styles.scene}>
+                <div className={Styles.sticky_box}>
+                    <canvas
+                        ref={c2Ref}
+                        className={`${Styles.s1_canvas}`}
+                    ></canvas>
+                </div>
+            </div>
+            <div ref={s3Ref} className={Styles.scene}>
+                <div className={Styles.sticky_box}>
+                    <canvas
+                        ref={c3Ref}
+                        className={`${Styles.s1_canvas}`}
+                    ></canvas>
                 </div>
             </div>
         </div>
