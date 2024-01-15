@@ -71,7 +71,7 @@ export const paintMidIn = (
     canvasWidth,
     canvasHeight,
 ) => {
-    const [drawMidInStart, drawMidInEnd] = rangeInfo.action1In
+    const [drawMidInStart, drawMidInEnd] = rangeInfo.drawMidIn
     const [drawRangeX1, drawRangeX2] = rangeInfo.drawRangeX
     const [drawRangeY1, drawRangeY2] = rangeInfo.drawRangeY
     // 위, 아래로 1% - 총 2% 그리기
@@ -113,7 +113,7 @@ export const paintMidToAll = (
     canvasWidth,
     canvasHeight,
 ) => {
-    const [drawInStart, drawInEnd] = rangeInfo.action2In
+    const [drawInStart, drawInEnd] = rangeInfo.drawMidToAllIn
     const [drawRangeX1, drawRangeX2] = rangeInfo.drawRangeX
     const [drawRangeY1, drawRangeY2] = rangeInfo.drawRangeY
     // 위, 아래로 1% - 총 2% 그리기
@@ -163,5 +163,40 @@ export const paintMidToAll = (
         drawYCStart,
         canvasWidth,
         drawYCDefaultRange + drawYC,
+    )
+}
+
+export const drawBottomUpOut = (
+    sRatio,
+    ctx,
+    rangeInfo,
+    paintImg,
+    canvasWidth,
+    canvasHeight,
+) => {
+    const [drawInStart, drawInEnd] = rangeInfo.drawBottomUpOut
+    const [drawRangeX1, drawRangeX2] = rangeInfo.drawRangeX
+    const [drawRangeY1, drawRangeY2] = rangeInfo.drawRangeY
+
+    let drawRatio = (sRatio - drawInStart) / (drawInEnd - drawInStart)
+    if (drawRatio < 0) drawRatio = 0
+    else if (drawRatio > 1) drawRatio = 1
+
+    const drawPRangeX = drawRangeX2 - drawRangeX1
+    const drawPRangeY = drawRangeY2 - drawRangeY1
+
+    const paintPSY = drawPRangeY - drawRatio * drawPRangeY
+    const paintCSY = canvasHeight - drawRatio * canvasHeight
+
+    ctx.drawImage(
+        paintImg,
+        drawRangeX1,
+        drawRangeY1,
+        drawPRangeX,
+        paintPSY,
+        0,
+        0,
+        canvasWidth,
+        paintCSY,
     )
 }
