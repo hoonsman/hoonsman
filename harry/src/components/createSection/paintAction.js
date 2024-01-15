@@ -305,7 +305,6 @@ export const paintVerticalPartIn = (
     const [drawInStart, drawInEnd] = drawRange
     const [drawRangeX1, drawRangeX2] = rangeInfo.drawRangeX
     const [drawRangeY1, drawRangeY2] = rangeInfo.drawRangeY
-    console.log(drawRangeX1, drawRangeX2)
 
     let drawRatio = (sRatio - drawInStart) / (drawInEnd - drawInStart)
 
@@ -320,6 +319,78 @@ export const paintVerticalPartIn = (
     const CSX = (1 - drawRatio) * from * canvasWidth
     const CSY = 0
     const CDX = range * canvasWidth
+    const CDY = canvasHeight
+
+    ctx.drawImage(paintImg, PSX, PSY, PDX, PDY, CSX, CSY, CDX, CDY)
+}
+
+export const paintLRCustomIn = (
+    sRatio,
+    ctx,
+    rangeInfo,
+    paintImg,
+    canvasWidth,
+    canvasHeight,
+    drawRange,
+    from,
+) => {
+    const [drawRangeX1, drawRangeX2] = rangeInfo.drawRangeX
+    const [drawRangeY1, drawRangeY2] = rangeInfo.drawRangeY
+    const [drawInStart, drawInEnd] = drawRange
+
+    let drawRatio = (sRatio - drawInStart) / (drawInEnd - drawInStart)
+
+    if (drawRatio < 0) drawRatio = 0
+    else if (drawRatio > 1) drawRatio = 1
+
+    const PSX = drawRangeX1
+    const PSY = drawRangeY1
+    const PDX =
+        (drawRangeX2 - drawRangeX1) * from +
+        drawRatio * (1 - from) * (drawRangeX2 - drawRangeX1)
+    const PDY = drawRangeY2 - drawRangeY1
+
+    const CSX = 0
+    const CDX = canvasWidth * from + drawRatio * (1 - from) * canvasWidth
+    const CSY = 0
+    const CDY = canvasHeight
+
+    ctx.drawImage(paintImg, PSX, PSY, PDX, PDY, CSX, CSY, CDX, CDY)
+}
+
+export const paintLRCustomOut = (
+    sRatio,
+    ctx,
+    rangeInfo,
+    paintImg,
+    canvasWidth,
+    canvasHeight,
+    drawRange,
+    from,
+) => {
+    const [drawRangeX1, drawRangeX2] = rangeInfo.drawRangeX
+    const [drawRangeY1, drawRangeY2] = rangeInfo.drawRangeY
+    const [drawInStart, drawInEnd] = drawRange
+
+    let drawRatio = (sRatio - drawInStart) / (drawInEnd - drawInStart)
+
+    if (drawRatio < 0) drawRatio = 0
+    else if (drawRatio > 1) drawRatio = 1
+
+    const PSX =
+        drawRangeX1 + drawRatio * (drawRangeX2 - drawRangeX1) * (1 - from)
+    const PSY = drawRangeY1
+    const PDX =
+        (drawRangeX2 - drawRangeX1) * (1 - from) -
+        drawRatio * (drawRangeX2 - drawRangeX1) * (1 - from) +
+        (drawRangeX2 - drawRangeX1) * from
+    const PDY = drawRangeY2 - drawRangeY1
+
+    const CSX = canvasWidth * (1 - from) * drawRatio
+    const CSY = 0
+    const CDX =
+        canvasWidth * from +
+        (1 - from) * (canvasWidth - canvasWidth * drawRatio)
     const CDY = canvasHeight
 
     ctx.drawImage(paintImg, PSX, PSY, PDX, PDY, CSX, CSY, CDX, CDY)
