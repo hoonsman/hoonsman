@@ -166,7 +166,7 @@ export const paintMidToAll = (
     )
 }
 
-export const drawBottomUpOut = (
+export const paintBottomUpOut = (
     sRatio,
     ctx,
     rangeInfo,
@@ -199,4 +199,37 @@ export const drawBottomUpOut = (
         canvasWidth,
         paintCSY,
     )
+}
+
+export const paintLRPartIn = (
+    sRatio,
+    ctx,
+    rangeInfo,
+    paintImg,
+    canvasWidth,
+    canvasHeight,
+    drawRange,
+    from,
+    range,
+) => {
+    const [drawInStart, drawInEnd] = drawRange
+    const [drawRangeX1, drawRangeX2] = rangeInfo.drawRangeX
+    const [drawRangeY1, drawRangeY2] = rangeInfo.drawRangeY
+
+    const PXRange = drawRangeX2 - drawRangeX1
+    const PDY = (drawRangeY2 - drawRangeY1) * range
+    const PSX = drawRangeX1
+    const PSY = drawRangeY1 + (drawRangeY2 - drawRangeY1) * from
+
+    const CSY = canvasHeight * from
+    const CDY = canvasHeight * range
+
+    let drawRatio = (sRatio - drawInStart) / (drawInEnd - drawInStart)
+    if (drawRatio < 0) drawRatio = 0
+    else if (drawRatio > 1) drawRatio = 1
+
+    const PDX = PXRange * drawRatio
+    const CDX = canvasWidth * drawRatio
+
+    ctx.drawImage(paintImg, PSX, PSY, PDX, PDY, 0, CSY, CDX, CDY)
 }

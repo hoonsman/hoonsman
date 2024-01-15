@@ -4,7 +4,8 @@ import {
     paintLRInOut,
     paintMidIn,
     paintMidToAll,
-    drawBottomUpOut,
+    paintBottomUpOut,
+    paintLRPartIn,
 } from './paintAction.js'
 
 import img1 from '../../imgs/img1.png'
@@ -22,7 +23,7 @@ let canvasWidth
 let canvasHeight
 const defaultMessageStyle = { top: `0px`, opacity: 0 }
 const s1HeightSize = 5
-const s2HeightSize = 5
+const s2HeightSize = 7
 
 const s1ImgCount = 4
 const s2ImgCount = 3
@@ -116,8 +117,11 @@ const sceneActive = {
         img6: {
             drawRangeX: [],
             drawRangeY: [],
-            drawUpDownIn: [0.46, 0.54],
-            drawUpDownOut: [0.65, 0.7],
+            drawLRPartIn1: [0.46, 0.54],
+            drawLRPartIn2: [0.5, 0.58],
+            drawLRPartIn3: [0.54, 0.62],
+            drawLRPartIn4: [0.58, 0.64],
+            drawLRPartIn5: [0.62, 0.7],
         },
         img7: {
             drawRangeX: [],
@@ -192,7 +196,7 @@ const drawS2 = (sRatio, ctx2, scene, imgs) => {
             canvasHeight,
         )
     else
-        drawBottomUpOut(
+        paintBottomUpOut(
             sRatio,
             ctx2,
             img5,
@@ -200,6 +204,63 @@ const drawS2 = (sRatio, ctx2, scene, imgs) => {
             canvasWidth,
             canvasHeight,
         )
+
+    // img6
+    paintLRPartIn(
+        sRatio,
+        ctx2,
+        img5,
+        imgs[imgArr[4]].img,
+        canvasWidth,
+        canvasHeight,
+        img6.drawLRPartIn1,
+        0,
+        0.2,
+    )
+    paintLRPartIn(
+        sRatio,
+        ctx2,
+        img5,
+        imgs[imgArr[4]].img,
+        canvasWidth,
+        canvasHeight,
+        img6.drawLRPartIn2,
+        0.2,
+        0.2,
+    )
+    paintLRPartIn(
+        sRatio,
+        ctx2,
+        img5,
+        imgs[imgArr[4]].img,
+        canvasWidth,
+        canvasHeight,
+        img6.drawLRPartIn3,
+        0.4,
+        0.2,
+    )
+    paintLRPartIn(
+        sRatio,
+        ctx2,
+        img5,
+        imgs[imgArr[4]].img,
+        canvasWidth,
+        canvasHeight,
+        img6.drawLRPartIn4,
+        0.6,
+        0.2,
+    )
+    paintLRPartIn(
+        sRatio,
+        ctx2,
+        img5,
+        imgs[imgArr[4]].img,
+        canvasWidth,
+        canvasHeight,
+        img6.drawLRPartIn5,
+        0.8,
+        0.2,
+    )
 }
 
 const imgSizing = (vWidth, vHeight, imgs) => {
@@ -231,7 +292,6 @@ const imgSizing = (vWidth, vHeight, imgs) => {
             }
         }
     })
-    console.log(sceneActive.s1)
 }
 
 const drawMessage = (sRatio, currentScene, mp, setmp, vheight) => {
