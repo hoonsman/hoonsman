@@ -7,6 +7,7 @@ import {
     paintBottomUpOut,
     paintLRPartIn,
     paintLRPartOut,
+    paintBottomPartIn,
 } from './paintAction.js'
 
 import img1 from '../../imgs/img1.png'
@@ -25,21 +26,16 @@ let canvasHeight
 const defaultMessageStyle = { top: `0px`, opacity: 0 }
 const s1HeightSize = 5
 const s2HeightSize = 10
+const s3HeightSize = 5
 
 const s1ImgCount = 4
 const s2ImgCount = 2
-const s3ImgCount = 3
+const s3ImgCount = 2
 
 const sceneActive = {
     s1: {
         intro: {
             img: img8,
-        },
-        opAction: {
-            opacityIn: [0, 1],
-            opacityOut: [1, 0],
-            opacityInRatio: [0, 0.1],
-            opacityOutRatio: [0.9, 1],
         },
         img1: {
             drawRangeX: [],
@@ -135,16 +131,18 @@ const sceneActive = {
         img7: {
             drawRangeX: [],
             drawRangeY: [],
-            drawMidIn: [0, 0.1],
-            drawMidToAllIn: [0.12, 0.18],
-            drawBottomUpOut: [0.33, 0.4],
+            drawBottomPartIn: [0, 0.1],
+            drawVerticalPartIn: [0.12, 0.2],
+            drawLRCustomIn: [0.21, 0.3],
+            drawLRCustomOut: [0.5, 0.55],
+            drawBottomPartOut: [0.56, 0.6],
         },
         img8: {
             drawRangeX: [],
             drawRangeY: [],
-            drawMidIn: [0, 0.1],
-            drawMidToAllIn: [0.12, 0.18],
-            drawBottomUpOut: [0.33, 0.4],
+            drawLRPartIn: [0.58, 0.62],
+            drawLRHorizontalPartIn: [0.63, 0.7],
+            drawBottomCuntomIn: [0.71, 0.8],
         },
     },
 }
@@ -280,9 +278,27 @@ const drawS2 = (sRatio, ctx2, scene, imgs) => {
     }
 }
 
+const drawS3 = (sRatio, ctx3, scene, imgs) => {
+    const { img7, img8 } = scene
+    const img7Action1Border =
+        (img7.drawBottomPartIn[1] + img7.drawVerticalPartIn[0]) / 2
+
+    if (sRatio < img7Action1Border)
+        paintBottomPartIn(
+            sRatio,
+            ctx3,
+            img7,
+            imgs[imgArr[6]].img,
+            canvasWidth,
+            canvasHeight,
+            img7.drawBottomPartIn,
+            0.8,
+            0.2,
+        )
+}
+
 const imgSizing = (vWidth, vHeight, imgs) => {
     const whRatio = vWidth / vHeight
-    // img draw Range - img1, img2
     imgs.forEach((i, index) => {
         const imgVHRatio = i.width / i.height
         if (whRatio < imgVHRatio) {
@@ -295,6 +311,9 @@ const imgSizing = (vWidth, vHeight, imgs) => {
             } else if (index < s1ImgCount + s2ImgCount) {
                 sceneActive.s2[i.name].drawRangeX = [xDiff, i.width - xDiff]
                 sceneActive.s2[i.name].drawRangeY = [0, i.height]
+            } else if (index < s1ImgCount + s2ImgCount + s3ImgCount) {
+                sceneActive.s3[i.name].drawRangeX = [xDiff, i.width - xDiff]
+                sceneActive.s3[i.name].drawRangeY = [0, i.height]
             }
         } else {
             const fixedScaleRatio = vWidth / i.width
@@ -306,6 +325,9 @@ const imgSizing = (vWidth, vHeight, imgs) => {
             } else if (index < s1ImgCount + s2ImgCount) {
                 sceneActive.s2[i.name].drawRangeX = [0, i.width]
                 sceneActive.s2[i.name].drawRangeY = [yDiff, i.height - yDiff]
+            } else if (index < s1ImgCount + s2ImgCount + s2ImgCount) {
+                sceneActive.s3[i.name].drawRangeX = [0, i.width]
+                sceneActive.s3[i.name].drawRangeY = [yDiff, i.height - yDiff]
             }
         }
     })
@@ -355,7 +377,11 @@ const activeScene = (
     setmp,
     vheight,
     ctx2,
+    ctx3,
 ) => {
+    ctx.clearRect(0, 0, canvasWidth, canvasHeight)
+    ctx2.clearRect(0, 0, canvasWidth, canvasHeight)
+    ctx3.clearRect(0, 0, canvasWidth, canvasHeight)
     switch (currentscene) {
         case 0:
             drawS1(sRatio, ctx, sceneActive.s1, imgs)
@@ -363,6 +389,9 @@ const activeScene = (
             break
         case 1:
             drawS2(sRatio, ctx2, sceneActive.s2, imgs)
+            break
+        case 2:
+            drawS3(sRatio, ctx3, sceneActive.s3, imgs)
             break
         default:
     }
@@ -382,7 +411,9 @@ export default function Preview({ size }) {
     const cRef = useRef()
     const s1Ref = useRef()
     const s2Ref = useRef()
+    const s3Ref = useRef()
     const c2Ref = useRef()
+    const c3Ref = useRef()
     const [isLoading, setIsLoading] = useState(true)
     const [imgs, setImgs] = useState({})
     const [messagePosition, setMessagePosition] = useState({
@@ -396,13 +427,24 @@ export default function Preview({ size }) {
     })
 
     useEffect(() => {
-        if (!vRef || !cRef || !s1Ref || !s2Ref || !c2Ref || isLoading) return
+        if (
+            !vRef ||
+            !cRef ||
+            !s1Ref ||
+            !s2Ref ||
+            !s3Ref ||
+            !c2Ref ||
+            !c3Ref ||
+            isLoading
+        )
+            return
 
         //height 고정, 그에 대한 width 보정
         const vContainer = vRef.current
         // canvas acitve
         const ctx = cRef.current.getContext('2d')
         const ctx2 = c2Ref.current.getContext('2d')
+        const ctx3 = c3Ref.current.getContext('2d')
         // canvas sizing(for scene1)
         // s1 - img1 - 4
         const pHeight = vContainer.parentNode.offsetHeight
@@ -413,8 +455,16 @@ export default function Preview({ size }) {
         const vWidth = vHeight * whRatio
         vContainer.style.width = `${vWidth}px`
         vContainer.style.height = `${vHeight}px`
-        canvasWidth = cRef.current.width = c2Ref.current.width = vWidth
-        canvasHeight = cRef.current.height = c2Ref.current.height = vHeight
+        canvasWidth =
+            cRef.current.width =
+            c2Ref.current.width =
+            c3Ref.current.width =
+                vWidth
+        canvasHeight =
+            cRef.current.height =
+            c2Ref.current.height =
+            c3Ref.current.height =
+                vHeight
 
         messagePositionInitial(vWidth, vHeight, setMessagePosition)
 
@@ -432,6 +482,8 @@ export default function Preview({ size }) {
         heightArr[0] = vHeight * s1HeightSize
         s2Ref.current.style.height = vHeight * s2HeightSize + 'px'
         heightArr[1] = vHeight * s2HeightSize
+        s3Ref.current.style.height = vHeight * s3HeightSize + 'px'
+        heightArr[2] = vHeight * s3HeightSize
 
         const handleViewScroll = (e) => {
             // calculate scrollY
@@ -452,8 +504,6 @@ export default function Preview({ size }) {
                 }
             }
             const sRatio = (scrollY - currentStartY) / heightArr[currentScene]
-            ctx.clearRect(0, 0, canvasWidth, canvasHeight)
-            ctx2.clearRect(0, 0, canvasWidth, canvasHeight)
             activeScene(
                 currentScene,
                 sRatio,
@@ -463,6 +513,7 @@ export default function Preview({ size }) {
                 setMessagePosition,
                 vHeight,
                 ctx2,
+                ctx3,
             )
         }
 
@@ -471,7 +522,7 @@ export default function Preview({ size }) {
         return () => {
             vContainer.removeEventListener('scroll', handleViewScroll)
         }
-    }, [vRef, size, cRef, s1Ref, s2Ref, isLoading, imgs, c2Ref])
+    }, [vRef, size, cRef, s1Ref, s2Ref, isLoading, imgs, c2Ref, s3Ref, c3Ref])
 
     // Src Loading
     useEffect(() => {
@@ -533,6 +584,14 @@ export default function Preview({ size }) {
                 <div className={Styles.sticky_box}>
                     <canvas
                         ref={c2Ref}
+                        className={`${Styles.s1_canvas}`}
+                    ></canvas>
+                </div>
+            </div>
+            <div ref={s3Ref} className={Styles.scene}>
+                <div className={Styles.sticky_box}>
+                    <canvas
+                        ref={c3Ref}
                         className={`${Styles.s1_canvas}`}
                     ></canvas>
                 </div>
