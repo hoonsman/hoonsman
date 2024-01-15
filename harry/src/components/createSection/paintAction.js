@@ -271,8 +271,13 @@ export const paintBottomPartIn = (
     const [drawInStart, drawInEnd] = drawRange
     const [drawRangeX1, drawRangeX2] = rangeInfo.drawRangeX
     const [drawRangeY1, drawRangeY2] = rangeInfo.drawRangeY
-    
-    const PSX = (drawRangeX2 - drawRangeX1) * from
+
+    let drawRatio = (sRatio - drawInStart) / (drawInEnd - drawInStart)
+
+    if (drawRatio < 0) drawRatio = 0
+    else if (drawRatio > 1) drawRatio = 1
+
+    const PSX = drawRangeX1 + (drawRangeX2 - drawRangeX1) * from
     const PDX = (drawRangeX2 - drawRangeX1) * range
     const PSY = drawRangeY1
 
@@ -280,13 +285,42 @@ export const paintBottomPartIn = (
     const CDX = canvasWidth * range
     const CSY = 0
 
+    const PDY = (drawRangeY2 - drawRangeY1) * drawRatio
+    const CDY = canvasHeight * drawRatio
+
+    ctx.drawImage(paintImg, PSX, PSY, PDX, PDY, CSX, CSY, CDX, CDY)
+}
+
+export const paintVerticalPartIn = (
+    sRatio,
+    ctx,
+    rangeInfo,
+    paintImg,
+    canvasWidth,
+    canvasHeight,
+    drawRange,
+    from,
+    range,
+) => {
+    const [drawInStart, drawInEnd] = drawRange
+    const [drawRangeX1, drawRangeX2] = rangeInfo.drawRangeX
+    const [drawRangeY1, drawRangeY2] = rangeInfo.drawRangeY
+    console.log(drawRangeX1, drawRangeX2)
+
     let drawRatio = (sRatio - drawInStart) / (drawInEnd - drawInStart)
 
     if (drawRatio < 0) drawRatio = 0
     else if (drawRatio > 1) drawRatio = 1
 
-    const PDY = (drawRangeY2 - drawRangeY1) * drawRatio
-    const CDY = canvasHeight * drawRatio
+    const PSX =
+        (1 - drawRatio) * (drawRangeX2 - drawRangeX1) * from + drawRangeX1
+    const PSY = drawRangeY1
+    const PDX = (drawRangeX2 - drawRangeX1) * range
+    const PDY = drawRangeY2 - drawRangeY1
+    const CSX = (1 - drawRatio) * from * canvasWidth
+    const CSY = 0
+    const CDX = range * canvasWidth
+    const CDY = canvasHeight
 
     ctx.drawImage(paintImg, PSX, PSY, PDX, PDY, CSX, CSY, CDX, CDY)
 }

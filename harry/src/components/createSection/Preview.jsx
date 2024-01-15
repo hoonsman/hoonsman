@@ -8,6 +8,7 @@ import {
     paintLRPartIn,
     paintLRPartOut,
     paintBottomPartIn,
+    paintVerticalPartIn,
 } from './paintAction.js'
 
 import img1 from '../../imgs/img1.png'
@@ -282,6 +283,8 @@ const drawS3 = (sRatio, ctx3, scene, imgs) => {
     const { img7, img8 } = scene
     const img7Action1Border =
         (img7.drawBottomPartIn[1] + img7.drawVerticalPartIn[0]) / 2
+    const img7Action2Border =
+        img7.drawVerticalPartIn[1] + img7.drawLRCustomIn[0]
 
     if (sRatio < img7Action1Border)
         paintBottomPartIn(
@@ -292,8 +295,20 @@ const drawS3 = (sRatio, ctx3, scene, imgs) => {
             canvasWidth,
             canvasHeight,
             img7.drawBottomPartIn,
-            0.8,
-            0.2,
+            0.9,
+            0.1,
+        )
+    else if (sRatio < img7Action2Border)
+        paintVerticalPartIn(
+            sRatio,
+            ctx3,
+            img7,
+            imgs[imgArr[6]].img,
+            canvasWidth,
+            canvasHeight,
+            img7.drawVerticalPartIn,
+            0.9,
+            0.1,
         )
 }
 
