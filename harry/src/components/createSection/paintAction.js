@@ -82,27 +82,16 @@ export const paintMidIn = (
     if (drawRatio < 0) drawRatio = 0
     else if (drawRatio > 1) drawRatio = 1
 
-    const drawCSX = drawRatio * canvasWidth
+    const CDX = drawRatio * canvasWidth
     const drawCDY =
         canvasHeight / 2 - (canvasHeight / 100) * paintingBorderRange
-    const drawCSY = (canvasHeight / 100) * (paintingBorderRange * 2)
-    const drawPSX = drawRatio * (drawRangeX2 - drawRangeX1)
-    const drawPDY =
+    const CDY = (canvasHeight / 100) * (paintingBorderRange * 2)
+    const PDX = drawRatio * (drawRangeX2 - drawRangeX1)
+    const PSY =
         (drawRangeY1 + drawRangeY2) / 2 -
-        ((drawRangeY1 + drawRangeY2) / 2 / 100) * paintingBorderRange
-    const drawPSY =
-        ((drawRangeY1 + drawRangeY2) / 2 / 100) * (paintingBorderRange * 2)
-    ctx.drawImage(
-        paintImg,
-        drawRangeX1,
-        drawPDY,
-        drawPSX,
-        drawPSY,
-        0,
-        drawCDY,
-        drawCSX,
-        drawCSY,
-    )
+        ((drawRangeY1 + drawRangeY2) / 100) * paintingBorderRange
+    const PDY = ((drawRangeY1 + drawRangeY2) / 100) * (paintingBorderRange * 2)
+    ctx.drawImage(paintImg, drawRangeX1, PSY, PDX, PDY, 0, drawCDY, CDX, CDY)
 }
 
 export const paintMidToAll = (
@@ -145,11 +134,11 @@ export const paintMidToAll = (
         drawRangeX1,
         drawYPStart - drawYP,
         drawRangeX2 - drawRangeX1,
-        drawYP,
+        drawYP + drawYPDefaultRange,
         0,
         drawYCStart - drawYC,
         canvasWidth,
-        drawYC,
+        drawYC + drawYCDefaultRange,
     )
 
     // 아랫 부분 그리기
@@ -232,4 +221,38 @@ export const paintLRPartIn = (
     const CDX = canvasWidth * drawRatio
 
     ctx.drawImage(paintImg, PSX, PSY, PDX, PDY, 0, CSY, CDX, CDY)
+}
+
+export const paintLRPartOut = (
+    sRatio,
+    ctx,
+    rangeInfo,
+    paintImg,
+    canvasWidth,
+    canvasHeight,
+    drawRange,
+    from,
+    range,
+) => {
+    const [drawInStart, drawInEnd] = drawRange
+    const [drawRangeX1, drawRangeX2] = rangeInfo.drawRangeX
+    const [drawRangeY1, drawRangeY2] = rangeInfo.drawRangeY
+
+    const PXRange = drawRangeX2 - drawRangeX1
+    const PDY = (drawRangeY2 - drawRangeY1) * range
+    const PSY = drawRangeY1 + (drawRangeY2 - drawRangeY1) * from
+
+    const CSY = canvasHeight * from
+    const CDY = canvasHeight * range
+
+    let drawRatio = (sRatio - drawInStart) / (drawInEnd - drawInStart)
+    if (drawRatio < 0) drawRatio = 0
+    else if (drawRatio > 1) drawRatio = 1
+
+    const PSX = drawRangeX1 + drawRatio * PXRange
+    const PDX = PXRange - PXRange * drawRatio
+    const CSX = canvasWidth * drawRatio
+    const CDX = canvasWidth - canvasWidth * drawRatio
+
+    ctx.drawImage(paintImg, PSX, PSY, PDX, PDY, CSX, CSY, CDX, CDY)
 }

@@ -6,6 +6,7 @@ import {
     paintMidToAll,
     paintBottomUpOut,
     paintLRPartIn,
+    paintLRPartOut,
 } from './paintAction.js'
 
 import img1 from '../../imgs/img1.png'
@@ -23,10 +24,11 @@ let canvasWidth
 let canvasHeight
 const defaultMessageStyle = { top: `0px`, opacity: 0 }
 const s1HeightSize = 5
-const s2HeightSize = 7
+const s2HeightSize = 10
 
 const s1ImgCount = 4
-const s2ImgCount = 3
+const s2ImgCount = 2
+const s3ImgCount = 3
 
 const sceneActive = {
     s1: {
@@ -111,23 +113,38 @@ const sceneActive = {
             drawRangeX: [],
             drawRangeY: [],
             drawMidIn: [0, 0.1],
-            drawMidToAllIn: [0.12, 0.22],
-            drawBottomUpOut: [0.35, 0.45],
+            drawMidToAllIn: [0.12, 0.18],
+            drawBottomUpOut: [0.33, 0.4],
         },
         img6: {
             drawRangeX: [],
             drawRangeY: [],
-            drawLRPartIn1: [0.46, 0.54],
-            drawLRPartIn2: [0.5, 0.58],
-            drawLRPartIn3: [0.54, 0.62],
-            drawLRPartIn4: [0.58, 0.64],
-            drawLRPartIn5: [0.62, 0.7],
+            drawLRPartIn1: [0.42, 0.48],
+            drawLRPartIn2: [0.45, 0.51],
+            drawLRPartIn3: [0.48, 0.54],
+            drawLRPartIn4: [0.51, 0.57],
+            drawLRPartIn5: [0.54, 0.6],
+            drawLRPartOut1: [0.87, 0.93],
+            drawLRPartOut2: [0.84, 0.9],
+            drawLRPartOut3: [0.81, 0.87],
+            drawLRPartOut4: [0.78, 0.84],
+            drawLRPartOut5: [0.75, 0.81],
         },
+    },
+    s3: {
         img7: {
             drawRangeX: [],
             drawRangeY: [],
-            drawSideIn: [0.71, 0.8],
-            drawSideOut: [0.9, 0.95],
+            drawMidIn: [0, 0.1],
+            drawMidToAllIn: [0.12, 0.18],
+            drawBottomUpOut: [0.33, 0.4],
+        },
+        img8: {
+            drawRangeX: [],
+            drawRangeY: [],
+            drawMidIn: [0, 0.1],
+            drawMidToAllIn: [0.12, 0.18],
+            drawBottomUpOut: [0.33, 0.4],
         },
     },
 }
@@ -170,7 +187,7 @@ const drawS1 = (sRatio, ctx, scene, imgs) => {
 }
 
 const drawS2 = (sRatio, ctx2, scene, imgs) => {
-    const { img5, img6, img7 } = scene
+    const { img5, img6 } = scene
 
     // Img5
 
@@ -206,61 +223,61 @@ const drawS2 = (sRatio, ctx2, scene, imgs) => {
         )
 
     // img6
-    paintLRPartIn(
-        sRatio,
-        ctx2,
-        img5,
-        imgs[imgArr[4]].img,
-        canvasWidth,
-        canvasHeight,
-        img6.drawLRPartIn1,
-        0,
-        0.2,
-    )
-    paintLRPartIn(
-        sRatio,
-        ctx2,
-        img5,
-        imgs[imgArr[4]].img,
-        canvasWidth,
-        canvasHeight,
-        img6.drawLRPartIn2,
-        0.2,
-        0.2,
-    )
-    paintLRPartIn(
-        sRatio,
-        ctx2,
-        img5,
-        imgs[imgArr[4]].img,
-        canvasWidth,
-        canvasHeight,
-        img6.drawLRPartIn3,
-        0.4,
-        0.2,
-    )
-    paintLRPartIn(
-        sRatio,
-        ctx2,
-        img5,
-        imgs[imgArr[4]].img,
-        canvasWidth,
-        canvasHeight,
-        img6.drawLRPartIn4,
-        0.6,
-        0.2,
-    )
-    paintLRPartIn(
-        sRatio,
-        ctx2,
-        img5,
-        imgs[imgArr[4]].img,
-        canvasWidth,
-        canvasHeight,
-        img6.drawLRPartIn5,
-        0.8,
-        0.2,
-    )
+    const img6ActionBorder =
+        (img6.drawLRPartIn5[1] + img6.drawLRPartOut5[0]) / 2
+    if (sRatio < img6ActionBorder) {
+        paintLRPartIn(
+            sRatio,
+            ctx2,
+            img6,
+            imgs[imgArr[5]].img,
+            canvasWidth,
+            canvasHeight,
+            img6[`drawLRPartIn${1}`],
+            0,
+            0.2,
+        )
+        for (let i = 0; i < 4; i++) {
+            const from = 0.1 + i * 0.2
+            paintLRPartIn(
+                sRatio,
+                ctx2,
+                img6,
+                imgs[imgArr[5]].img,
+                canvasWidth,
+                canvasHeight,
+                img6[`drawLRPartIn${i + 2}`],
+                from,
+                0.3,
+            )
+        }
+    } else {
+        paintLRPartOut(
+            sRatio,
+            ctx2,
+            img6,
+            imgs[imgArr[5]].img,
+            canvasWidth,
+            canvasHeight,
+            img6[`drawLRPartOut${1}`],
+            0,
+            0.2,
+        )
+        for (let i = 0; i < 4; i++) {
+            const from = 0.1 + i * 0.2
+            paintLRPartOut(
+                sRatio,
+                ctx2,
+                img6,
+                imgs[imgArr[5]].img,
+                canvasWidth,
+                canvasHeight,
+                img6[`drawLRPartOut${i + 2}`],
+                from,
+                0.3,
+            )
+        }
+    }
 }
 
 const imgSizing = (vWidth, vHeight, imgs) => {
