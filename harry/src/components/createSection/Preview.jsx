@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react'
 import Styles from './preview.module.css'
-import { paintLRInOut, paintMidIn } from './paintAction.js'
+import { paintLRInOut, paintMidIn, paintMidToAll } from './paintAction.js'
 
 import img1 from '../../imgs/img1.png'
 import img2 from '../../imgs/img2.png'
@@ -104,9 +104,9 @@ const sceneActive = {
         img5: {
             drawRangeX: [],
             drawRangeY: [],
-            drawMidIn: [0, 0.1],
-            drawAllIn: [0.12, 0.22],
-            drawButtonUpOut: [0.35, 0.45],
+            action1In: [0, 0.1],
+            action2In: [0.12, 0.22],
+            action3In: [0.35, 0.45],
         },
         img6: {
             drawRangeX: [],
@@ -163,14 +163,28 @@ const drawS1 = (sRatio, ctx, scene, imgs) => {
 const drawS2 = (sRatio, ctx2, scene, imgs) => {
     const { img5, img6, img7 } = scene
 
-    paintMidIn(
-        sRatio,
-        ctx2,
-        img5,
-        imgs[imgArr[4]].img,
-        canvasWidth,
-        canvasHeight,
-    )
+    // Img5
+
+    const img5Action1Border = (img5.action1In[1] + img5.action2In[0]) / 2
+    const img5Action2Border = (img5.action2In[1] + img5.action3In[0]) / 2
+    if (sRatio < img5Action1Border)
+        paintMidIn(
+            sRatio,
+            ctx2,
+            img5,
+            imgs[imgArr[4]].img,
+            canvasWidth,
+            canvasHeight,
+        )
+    else if (sRatio < img5Action2Border)
+        paintMidToAll(
+            sRatio,
+            ctx2,
+            img5,
+            imgs[imgArr[4]].img,
+            canvasWidth,
+            canvasHeight,
+        )
 }
 
 const imgSizing = (vWidth, vHeight, imgs) => {
