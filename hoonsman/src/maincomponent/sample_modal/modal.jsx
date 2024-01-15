@@ -1,11 +1,11 @@
 import React from 'react'
 import styles from './modal.module.css'
+import SeminarSample from '../samples/seminarsample'
 
-function Modal({ isOpen, closeModal }) {
+function Modal({ isOpen, closeModal, selectedSampleId }) {
   const handleBackdropClick = (e) => {
     if (e.target === e.currentTarget) {
-      // 백그라운드 판독기
-      closeModal() // 백그라운드면 모달 창 닫음
+      closeModal()
     }
   }
 
@@ -18,7 +18,7 @@ function Modal({ isOpen, closeModal }) {
         <button className={styles.closeButton} onClick={closeModal}>
           X
         </button>
-        <p>Modal Content</p>
+        {selectedSampleId === 1 && <SeminarSample />}
         <button className={styles.applyButton}>이 샘플로 생성하기</button>
       </div>
     </div>

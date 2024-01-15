@@ -47,7 +47,7 @@
   max-width: 380px;
 
   object-fit: cover;
-  z-index: -1;
+  z-index: 0;
   transition: transform 0.5s ease-in-out;
 }
 
@@ -108,7 +108,7 @@
   text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000,
     2px 2px 0 #000; /* 텍스트 아웃라인 효과 */
   opacity: 0; /* 초기 상태는 투명 */
-  z-index: 1;
+  z-index: 5;
 }
 
 .text-fade-in {
@@ -143,7 +143,7 @@
   font-weight: bold;
   color: black;
   opacity: 0;
-  z-index: 2;
+  z-index: 5;
 }
 
 /* 설명 텍스트 스타일 */
@@ -155,7 +155,7 @@
   font-size: 16px;
   color: black;
   opacity: 0;
-  z-index: 2;
+  z-index: 5;
 }
 
 /* 애니메이션 타이밍 조정 */

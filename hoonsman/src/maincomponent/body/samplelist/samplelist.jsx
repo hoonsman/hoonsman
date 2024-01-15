@@ -4,11 +4,22 @@ import Modal from '../../sample_modal/modal'
 
 const SampleBox = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [selectedSampleId, setSelectedSampleId] = useState(null)
 
-  const SampleBoxClick = (event) => {
-    event.stopPropagation() // 이벤트 전파를 방지
+  const samples = [
+    //샘플 미리보기 이미지 배열임니둥
+    //사이즈 임의로 300에 300사이즈
+    { id: 1, imageUrl: 'img/intro.png' },
+    { id: 2, imageUrl: 'images/intro2.png' },
+    { id: 3, imageUrl: 'images/intro3.png' },
+    { id: 4, imageUrl: 'images/intro4.png' },
+  ]
+
+  const handleSampleBoxClick = (sampleId) => {
+    setSelectedSampleId(sampleId)
     setIsModalOpen(true)
   }
+
   const closeModal = () => {
     setIsModalOpen(false)
   }
@@ -26,21 +37,23 @@ const SampleBox = () => {
       </div>
       <div className={Styles.box__container}>
         <div className={Styles.sample__line}>
-          <button className={Styles.box1} onClick={(e) => SampleBoxClick(e)}>
-            box1
-          </button>
-          <button className={Styles.box2} onClick={(e) => SampleBoxClick(e)}>
-            box2
-          </button>
-          <button className={Styles.box3} onClick={(e) => SampleBoxClick(e)}>
-            box3
-          </button>
-          <button className={Styles.box4} onClick={(e) => SampleBoxClick(e)}>
-            box4
-          </button>
+          {samples.map((sample) => (
+            <div
+              key={sample.id}
+              className={Styles['box' + sample.id]}
+              onClick={() => handleSampleBoxClick(sample.id)}
+            >
+              <img src={sample.imageUrl} alt={`Sample ${sample.id}`} />
+              <p>box{sample.id}</p>
+            </div>
+          ))}
         </div>
       </div>
-      <Modal isOpen={isModalOpen} closeModal={closeModal} />
+      <Modal
+        isOpen={isModalOpen}
+        closeModal={closeModal}
+        selectedSampleId={selectedSampleId}
+      />
     </div>
   )
 }

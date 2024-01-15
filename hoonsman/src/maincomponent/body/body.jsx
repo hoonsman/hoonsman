@@ -2,12 +2,11 @@ import React, { useState } from 'react'
 import Style from './body.module.css'
 import Introduce from './introduce/introduce'
 import SampleList from './samplelist/samplelist'
-import Modal from '../sample_modal/modal' // Modal 컴포넌트를 임포트합니다.
+import Modal from '../sample_modal/modal'
 
 const MainBody = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
 
-  // 모달을 여는 함수
   const openModal = () => {
     setIsModalOpen(true)
   }

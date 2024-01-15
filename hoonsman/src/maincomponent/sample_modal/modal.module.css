@@ -33,3 +33,8 @@
   left: 50%;
   transform: translateX(-50%);
 }
+
+.seminaSample {
+  width: 380px; /* 모달과 동일한 너비 설정 */
+  /* 필요한 추가 스타일링 */
+}

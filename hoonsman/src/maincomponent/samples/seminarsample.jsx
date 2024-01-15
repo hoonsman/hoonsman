@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
-import './App.css'
+import './seminarsample.css'
 
-function App() {
+function SeminarSample() {
   const sliderRef1 = useRef()
   const sliderRef2 = useRef()
   const sectionRefs = useRef([])
@@ -17,7 +17,7 @@ function App() {
       if (imgX < -imgWidth * 2) imgX = 0
 
       sliderRef1.current.style.left = `${imgX}px`
-      sliderRef2.current.style.Right = `${imgX}px`
+      sliderRef2.current.style.left = `${imgX}px`
     }, 2000)
 
     const observer = new IntersectionObserver(
@@ -65,11 +65,7 @@ function App() {
           ref={(el) => (sectionRefs.current[0] = el)}
           className="section intro"
         >
-          <img
-            src="images/intro.png"
-            alt="Intro"
-            className="background-image"
-          />
+          <img src="img/intro.png" alt="Intro" className="background-image" />
           <p className={`text ${textAnimationStatus[0] || ''}`}>
             세미나에 대한 소개
           </p>
@@ -81,17 +77,17 @@ function App() {
         >
           <div ref={sliderRef1} className="slider">
             <img
-              src="images/desc1.png"
+              src="img/desc1.png"
               alt="Description 1"
               className="background-image"
             />
             <img
-              src="images/desc1.png"
+              src="img/desc1.png"
               alt="Description 1"
               className="background-image"
             />
             <img
-              src="images/desc1.png"
+              src="img/desc1.png"
               alt="Description 1"
               className="background-image"
             />
@@ -108,17 +104,17 @@ function App() {
         >
           <div ref={sliderRef2} className="slider">
             <img
-              src="images/desc2.png"
+              src="img/desc2.png"
               alt="Description 2"
               className="background-image"
             />
             <img
-              src="images/desc2.png"
+              src="img/desc2.png"
               alt="Description 2"
               className="background-image"
             />
             <img
-              src="images/desc2.png"
+              src="img/desc2.png"
               alt="Description 2"
               className="background-image"
             />
@@ -134,7 +130,7 @@ function App() {
           className="section intro"
         >
           <img
-            src="images/location.png"
+            src="img/location.png"
             alt="Location n Time"
             className="background-image"
           />
@@ -148,7 +144,7 @@ function App() {
           className="section intro"
         >
           <img
-            src="images/conclusion.png"
+            src="img/conclusion.png"
             alt="Con"
             className="background-image"
           />
@@ -159,4 +155,4 @@ function App() {
   )
 }
 
-export default App
+export default SeminarSample
