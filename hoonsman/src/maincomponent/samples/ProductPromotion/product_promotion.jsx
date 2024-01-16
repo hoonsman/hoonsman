@@ -54,14 +54,19 @@ const Promotion = () => {
   }
 
   useEffect(() => {
-    const container = containerRef.current
-    container.style.height = '100vh'
-    container.addEventListener('scroll', handleScroll)
-
-    return () => {
-      container.removeEventListener('scroll', handleScroll)
+    const handleScrollOptimized = () => {
+      window.requestAnimationFrame(handleScroll)
     }
-  }, [])
+
+    const container = containerRef.current
+    if (container) {
+      container.addEventListener('scroll', handleScrollOptimized)
+
+      return () => {
+        container.removeEventListener('scroll', handleScrollOptimized)
+      }
+    }
+  }, [containerRef.current]) // 의존성 배열에 containerRef.current 추가
 
   const getAnimationClass = (compName) => {
     return activeComp === compName ? styles.fadeIn : styles.fadeOut
