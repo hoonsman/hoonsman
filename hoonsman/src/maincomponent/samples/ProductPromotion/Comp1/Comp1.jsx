@@ -9,10 +9,16 @@ const Comp1 = ({ active, showMessage, showDetailImage }) => {
     <div className={Style.container}>
       <div className={`${Style.message} ${messageClass}`}>갤럭시 Z 플립 5</div>
       <div className={Style.imageContainer}>
-        <img src={`${process.env.PUBLIC_URL}/s_image1.png`} alt="Image" />
+        <img
+          src={`${process.env.PUBLIC_URL}/img/Promo_Image/Comp1_Main.png`}
+          alt="Image"
+        />
       </div>
       <div className={`${Style.detailImage} ${detailImageClass}`}>
-        <img src={`${process.env.PUBLIC_URL}/detailImage.png`} alt="Detail" />
+        <img
+          src={`${process.env.PUBLIC_URL}/img/Promo_Image/Comp1_Sub.png`}
+          alt="Detail"
+        />
       </div>
     </div>
   )
