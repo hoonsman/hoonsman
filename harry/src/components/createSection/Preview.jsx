@@ -26,7 +26,6 @@ import img8 from '../../imgs/img8.png'
 const heightArr = []
 let canvasWidth
 let canvasHeight
-const defaultMessageStyle = { top: `0px`, opacity: 0 }
 
 const s1HeightSize = 8
 const s2HeightSize = 10
@@ -432,15 +431,14 @@ const imgSizing = (vWidth, vHeight, imgs, sceneActive) => {
 const drawMessage = (
     sRatio,
     currentScene,
-    messageStyles,
     setMessageStyles,
     vheight,
     sceneActive,
+    messages,
 ) => {
     const messageActive = sceneActive[`s${currentScene + 1}`].messages
-    const sceneMessage = messageStyles[`s${currentScene + 1}`]
     const newMessageStyles = []
-    sceneMessage.forEach((_, index) => {
+    messages.forEach((m, index) => {
         const border =
             (messageActive[index].opIn[1] + messageActive[index].opOut[0]) / 2
         let opacity
@@ -469,9 +467,12 @@ const drawMessage = (
                     messageActive[index].trOut[0]) *
                     (1 - opacity)
         }
+        const fontSize =
+            m.size === 'small' ? '14px' : m.size === 'medium' ? '20px' : '28px'
 
         newMessageStyles.push({
-            ...sceneMessage[index],
+            fontSize,
+            color: m.color,
             top: `${vheight / 2 + top}px`,
             opacity,
         })
@@ -492,27 +493,27 @@ const activeScene = (
     sRatio,
     ctx,
     imgs,
-    messageStyles,
     setMessageStyles,
     vheight,
     ctx2,
     ctx3,
     sceneActive,
-    sceneData
+    sceneData,
 ) => {
     ctx.clearRect(0, 0, canvasWidth, canvasHeight)
     ctx2.clearRect(0, 0, canvasWidth, canvasHeight)
     ctx3.clearRect(0, 0, canvasWidth, canvasHeight)
+    const { s1, s2, s3 } = sceneData
     switch (currentscene) {
         case 0:
             drawS1(sRatio, ctx, sceneActive.s1, imgs)
             drawMessage(
                 sRatio,
                 currentscene,
-                messageStyles,
                 setMessageStyles,
                 vheight,
                 sceneActive,
+                s1.messages,
             )
             break
         case 1:
@@ -520,10 +521,10 @@ const activeScene = (
             drawMessage(
                 sRatio,
                 currentscene,
-                messageStyles,
                 setMessageStyles,
                 vheight,
                 sceneActive,
+                s2.messages,
             )
             break
         case 2:
@@ -531,87 +532,27 @@ const activeScene = (
             drawMessage(
                 sRatio,
                 currentscene,
-                messageStyles,
                 setMessageStyles,
                 vheight,
                 sceneActive,
+                s3.messages,
             )
             break
         default:
     }
 }
 
-const messageStylesInitial = (vWidth, vHeight, setMessageStyles, sceneData) => {
-    const { s1, s2, s3 } = sceneData
-
-    const newStyles = {
-        s1: [],
-        s2: [],
-        s3: [],
-    }
-    for (let i = 0; i < s1.messages.length; i++) {
-        const fontSize =
-            s1.messages[i].size === 'small'
-                ? '14px'
-                : s1.messages[i].size === 'medium'
-                ? '20px'
-                : '28px'
-        const color = s1.messages[i].color === 'white' ? 'white' : 'black'
-        const style = {
-            fontSize,
-            color,
-            top: `${vHeight / 2}px`,
-            opacity: 0,
-        }
-        newStyles.s1.push(style)
-    }
-    for (let i = 0; i < s2.messages.length; i++) {
-        const fontSize =
-            s2.messages[i].size === 'small'
-                ? '14px'
-                : s2.messages[i].size === 'medium'
-                ? '20px'
-                : '28px'
-        const color = s2.messages[i].color === 'white' ? 'white' : 'black'
-        const style = {
-            fontSize,
-            color,
-            top: `${vHeight / 2}px`,
-            opacity: 0,
-        }
-        newStyles.s2.push(style)
-    }
-    for (let i = 0; i < s3.messages.length; i++) {
-        const fontSize =
-            s3.messages[i].size === 'small'
-                ? '14px'
-                : s3.messages[i].size === 'medium'
-                ? '20px'
-                : '28px'
-        const color = s3.messages[i].color === 'white' ? 'white' : 'black'
-        const style = {
-            fontSize,
-            color,
-            top: `${vHeight / 2}px`,
-            opacity: 0,
-        }
-        newStyles.s3.push(style)
-    }
-    console.log(newStyles)
-    setMessageStyles(newStyles)
-}
-
 const sceneData = {
     s1: {
         imgs: {
-            img1: img1,
+            img1: img1, // 경로
             img2: img2,
             img3: img3,
             img4: img4,
             intro: img3,
         },
         messages: [
-            { context: 'message1', size: 'medium', color: 'white' },
+            { context: 'message1', size: 'large', color: 'white' },
             { context: 'message2', size: 'medium', color: 'white' },
             { context: 'message3', size: 'medium', color: 'white' },
             { context: 'message4', size: 'medium', color: 'white' },
@@ -651,21 +592,10 @@ export default function Preview({ size }) {
     const c3Ref = useRef()
     const [isLoading, setIsLoading] = useState(true)
     const [imgs, setImgs] = useState({})
-    const [isMessageInitial, setMessageInitial] = useState(false)
     const [messageStyles, setMessageStyles] = useState({
-        s1: [
-            defaultMessageStyle,
-            defaultMessageStyle,
-            defaultMessageStyle,
-            defaultMessageStyle,
-        ],
-        s2: [
-            defaultMessageStyle,
-            defaultMessageStyle,
-            defaultMessageStyle,
-            defaultMessageStyle,
-        ],
-        s3: [defaultMessageStyle, defaultMessageStyle],
+        s1: [],
+        s2: [],
+        s3: [],
     })
 
     useEffect(() => {
@@ -707,7 +637,6 @@ export default function Preview({ size }) {
             c2Ref.current.height =
             c3Ref.current.height =
                 vHeight
-        messageStylesInitial(vWidth, vHeight, setMessageStyles, sceneData)
 
         imgSizing(vWidth, vHeight, imgs, sceneActive)
 
@@ -742,13 +671,12 @@ export default function Preview({ size }) {
                 sRatio,
                 ctx,
                 imgs,
-                messageStyles,
                 setMessageStyles,
                 vHeight,
                 ctx2,
                 ctx3,
                 sceneActive,
-                sceneData
+                sceneData,
             )
         }
 
@@ -768,7 +696,7 @@ export default function Preview({ size }) {
         c2Ref,
         s3Ref,
         c3Ref,
-        isMessageInitial,
+        ,
     ])
 
     // Src Loading
