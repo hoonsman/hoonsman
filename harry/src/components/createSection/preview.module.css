@@ -6,7 +6,7 @@
     height: 10px;
 }
 
-.s1_canvas {
+.scenecanvas {
     position: absolute;
     background-color: transparent;
     top: 0;
@@ -20,8 +20,9 @@
     background-color: white;
 }
 
-.s1message {
+.scenemessage {
     position: absolute;
+    font-weight: bold;
     z-index: 2;
     left: 50%;
     transform: translate3d(-50%, -50%, 0);
