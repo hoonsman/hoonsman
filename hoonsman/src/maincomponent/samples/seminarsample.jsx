@@ -8,8 +8,6 @@ function SeminarSample() {
   const [textAnimationStatus, setTextAnimationStatus] = useState({})
 
   useEffect(() => {
-    if (!sliderRef1 || !sliderRef2) return
-
     const imgWidth = 380
     let imgX = 0
     const intervalId1 = setInterval(() => {
@@ -50,13 +48,17 @@ function SeminarSample() {
       },
     )
 
-    sectionRefs.current.forEach((section) => observer.observe(section))
+    sectionRefs.current.forEach((section) => observer.observe(section)) // 주석 처리 시 문제 발생 안함
 
     return () => {
-      sectionRefs.current.forEach((section) => observer.unobserve(section))
+      if (sectionRefs.current) {
+        sectionRefs.current.forEach((section) => {
+          if (section && observer) observer.unobserve(section)
+        })
+      }
       clearInterval(intervalId1)
     }
-  }, [sliderRef1, sliderRef2])
+  }, [])
 
   return (
     <div className="wrapper">
