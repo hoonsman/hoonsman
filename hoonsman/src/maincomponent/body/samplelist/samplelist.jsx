@@ -4,7 +4,7 @@ import Modal from '../../sample_modal/modal'
 
 const SampleBox = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [selectedSampleId, setSelectedSampleId] = useState(null)
+  const [selectedSampleId, setSelectedSampleId] = useState(0)
 
   const samples = [
     {
@@ -17,8 +17,9 @@ const SampleBox = () => {
     {
       id: 2,
       imageUrl: 'images/intro2.png',
-      title: '제목 2',
-      description: '샘플에 대한 설명 2',
+      title: '상품 프로모션',
+      description:
+        '상품 프로모션 얘 템플릿 컴포넌트로 만들어서 다시 재조립 해야됩니당',
     },
     {
       id: 3,
@@ -35,12 +36,12 @@ const SampleBox = () => {
   ]
 
   const handleSampleBoxClick = (sampleId) => {
-    setSelectedSampleId(sampleId)
-    setIsModalOpen(true)
+    setSelectedSampleId(sampleId) // 모달을 열 때 선택한 샘플의 ID를 설정
+    setIsModalOpen(true) // 모달을 열기
   }
-
   const closeModal = () => {
-    setIsModalOpen(false)
+    // setSelectedSampleId(0) // 선택한 샘플 ID 초기화
+    setIsModalOpen(false) // 모달을 닫기
   }
 
   return (
