@@ -1,7 +1,49 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Styles from './samplelist.module.css'
+import Modal from '../../sample_modal/modal'
 
-const SampleList = () => {
+const SampleBox = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [selectedSampleId, setSelectedSampleId] = useState(0)
+
+  const samples = [
+    {
+      id: 1,
+      imageUrl: 'img/intro.png',
+      title: '세미나 초대장',
+      description:
+        '이 샘플은 5개의 섹션 소개, 설명1, 설명2, 시간 및 위치, 맺음말로 구성되어있으며, 인터랙티브하지만 간단한 초대장을 만들 수 있습니다.',
+    },
+    {
+      id: 2,
+      imageUrl: 'images/intro2.png',
+      title: '상품 프로모션',
+      description:
+        '상품 프로모션 얘 템플릿 컴포넌트로 만들어서 다시 재조립 해야됩니당',
+    },
+    {
+      id: 3,
+      imageUrl: 'images/intro3.png',
+      title: '제목 3',
+      description: '샘플에 대한 설명 3',
+    },
+    {
+      id: 4,
+      imageUrl: 'images/intro4.png',
+      title: '제목 4',
+      description: '샘플에 대한 설명 4',
+    },
+  ]
+
+  const handleSampleBoxClick = (sampleId) => {
+    setSelectedSampleId(sampleId) // 모달을 열 때 선택한 샘플의 ID를 설정
+    setIsModalOpen(true) // 모달을 열기
+  }
+  const closeModal = () => {
+    // setSelectedSampleId(0) // 선택한 샘플 ID 초기화
+    setIsModalOpen(false) // 모달을 닫기
+  }
+
   return (
     <div className={Styles.container}>
       <div className={Styles.intro}>Take a look at some samples.</div>
@@ -15,14 +57,28 @@ const SampleList = () => {
       </div>
       <div className={Styles.box__container}>
         <div className={Styles.sample__line}>
-          <button className={Styles.box1}>box1</button>
-          <button className={Styles.box2}>box2</button>
-          <button className={Styles.box3}>box3</button>
-          <button className={Styles.box4}>box4</button>
+          {samples.map((sample) => (
+            <div
+              key={sample.id}
+              className={Styles['box' + sample.id]}
+              onClick={() => handleSampleBoxClick(sample.id)}
+            >
+              <img src={sample.imageUrl} alt={`Sample ${sample.id}`} />
+              <div className={Styles.textContainer}>
+                <h2>{sample.title}</h2>
+                <p>{sample.description}</p>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
+      <Modal
+        isOpen={isModalOpen}
+        closeModal={closeModal}
+        selectedSampleId={selectedSampleId}
+      />
     </div>
   )
 }
 
-export default SampleList
+export default SampleBox

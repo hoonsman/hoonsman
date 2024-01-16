@@ -27,7 +27,7 @@
   display: grid;
   justify-content: space-between;
   grid-template-columns: repeat(2, 1fr);
-  padding-left: 200px;
+  padding-left: 30px;
   margin-bottom: 100px;
   grid-auto-rows: 500px;
 }
@@ -70,9 +70,25 @@
   font-family: inherit;
   background-color: #ffe9e9;
   width: 300px;
-  height: 400px;
+  height: 300px;
+  margin: 5px;
+  display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
+}
+
+.box1 img,
+.box2 img,
+.box3 img,
+.box4 img {
+  width: 100%;
+  height: auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin-top: 7px;
 }
 
 /* 클릭 효과를 위한 스타일 */
@@ -88,7 +104,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: #f9c4d2;
+  background: #ffe9e9;
   border-radius: inherit;
   box-shadow: 8px 8px 0 3px #b18597, 0 0.625em 0 0 #ffe3e2;
   transform: translate3d(0, 0.75em, -1em);
@@ -193,4 +209,35 @@ input:hover + label:after {
 
 .model8 .checkbox input:checked + label:after {
   left: 35px;
+}
+
+/* SampleBox 컴포넌트 CSS 내부 */
+
+.textContainer {
+  width: 300px; /* 이미지와 동일한 크기 설정 */
+  height: 300px; /* 이미지와 동일한 크기 설정 */
+  position: absolute;
+  left: 100%; /* 이미지 우측에 위치 */
+  top: 50%;
+  transform: translateY(-50%);
+  background: #fff; /* 배경색 설정 */
+  padding: 20px; /* 내용과 경계 사이의 여백 설정 */
+  box-sizing: border-box; /* 패딩을 포함한 너비 유지 */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start; /* 텍스트를 왼쪽 정렬 */
+}
+
+.textContainer h2 {
+  margin: 0 0 10px 0; /* 아래쪽 마진 설정 */
+  font-size: 24px; /* 제목 폰트 크기 */
+  font-weight: bold; /* 제목 폰트 두께 */
+  color: #333; /* 제목 색상 */
+}
+
+.textContainer p {
+  margin: 0; /* 마진 제거 */
+  font-size: 16px; /* 설명 텍스트 폰트 크기 */
+  color: #666; /* 설명 텍스트 색상 */
 }

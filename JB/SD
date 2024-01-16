@@ -1,0 +1,88 @@
+Main
+{
+    Blank
+
+    Comp1
+    {
+        MainText
+        {
+            font-size: 50px;
+            font-weight: bold;
+            color: black;
+        }
+
+        MainImage
+        {
+            public/Promo_Image/Comp1_Main.png
+        }
+        SubImage
+        {
+            public/Promo_Image/Comp1_Sub.png
+        }
+    }
+
+    Comp2
+    {
+        MainText
+        {
+            font-size: 50px;
+            font-weight: bold;
+            color: black;
+        }
+        SubText
+        {
+            font-size: 25px;
+            color: black;
+        }
+        
+        MainImage
+        {
+            public/Promo_Image/Comp2_Main.png
+        }       
+    }
+
+    Comp3
+    {
+        MainText
+        {
+            font-size: 50px;
+            font-weight: bold;
+            color: black;
+        }
+        SubText
+        {
+            font-size: 25px;
+            color: black;
+        }
+
+        SubImage1
+        {
+            public/Promo_Image/Comp3_Sub1.png
+        }
+        SubImage2
+        {
+            public/Promo_Image/Comp3_Sub2.png
+        }
+        SubImage
+        {
+            public/Promo_Image/Comp3_Sub3.png
+        }
+    }
+
+    Comp4
+    {
+        MainText
+        {
+            font-size: 50px;
+            font-weight: bold;
+            color: black;
+        }
+        
+        BackImage
+        {
+            public/Promo_Image/Comp4_Back.png
+        }
+    }
+
+    Blank
+}
