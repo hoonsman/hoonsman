@@ -24,13 +24,22 @@ const Comp3 = ({
       <div className={Style.imageContainer}>
         {/* 각 이미지의 출력 여부에 따라 조건부 렌더링 */}
         <div className={`${Style.image1} ${showImage1 ? Style.fadeIn : ''}`}>
-          <img src={`${process.env.PUBLIC_URL}/image3_1.png`} alt="Image 1" />
+          <img
+            src={`${process.env.PUBLIC_URL}/img/Promo_Image/Comp3_Sub1.png`}
+            alt="Image 1"
+          />
         </div>
         <div className={`${Style.image2} ${showImage2 ? Style.fadeIn : ''}`}>
-          <img src={`${process.env.PUBLIC_URL}/image3_2.png`} alt="Image 2" />
+          <img
+            src={`${process.env.PUBLIC_URL}/img/Promo_Image/Comp3_Sub2.png`}
+            alt="Image 2"
+          />
         </div>
         <div className={`${Style.image3} ${showImage3 ? Style.fadeIn : ''}`}>
-          <img src={`${process.env.PUBLIC_URL}/image3_3.png`} alt="Image 3" />
+          <img
+            src={`${process.env.PUBLIC_URL}/img/Promo_Image/Comp3_Sub3.png`}
+            alt="Image 3"
+          />
         </div>
       </div>
     </div>

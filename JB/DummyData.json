@@ -1,0 +1,43 @@
+{
+  "Main": {
+    "Comp1": {
+      "MainText": {
+        "font-size": "large",
+        "color": "black"
+      },
+      "MainImage": "/Promo_Image/Comp1_Main.png",
+      "SubImage": "/Promo_Image/Comp1_Sub.png"
+    },
+    "Comp2": {
+      "MainText": {
+        "font-size": "large",
+        "color": "black"
+      },
+      "SubText": {
+        "font-size": "medium",
+        "color": "black"
+      },
+      "MainImage": "/Promo_Image/Comp2_Main.png"
+    },
+    "Comp3": {
+      "MainText": {
+        "font-size": "large",
+        "color": "black"
+      },
+      "SubText": {
+        "font-size": "medium",
+        "color": "black"
+      },
+      "SubImage1": "/Promo_Image/Comp3_Sub1.png",
+      "SubImage2": "/Promo_Image/Comp3_Sub2.png",
+      "SubImage3": "/Promo_Image/Comp3_Sub3.png"
+    },
+    "Comp4": {
+      "MainText": {
+        "font-size": "large",
+        "color": "black"
+      },
+      "BackImage": "/Promo_Image/Comp4_Back.png"
+    }
+  }
+}

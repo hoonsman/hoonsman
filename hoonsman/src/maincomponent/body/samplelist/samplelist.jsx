@@ -16,7 +16,7 @@ const SampleBox = () => {
     },
     {
       id: 2,
-      imageUrl: 'images/intro2.png',
+      imageUrl: '/img/Promo_Image/sampleImg.png',
       title: '상품 프로모션',
       description:
         '상품 프로모션 얘 템플릿 컴포넌트로 만들어서 다시 재조립 해야됩니당',
