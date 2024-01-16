@@ -67,44 +67,28 @@ const sceneActive = {
         },
         messages: [
             {
-                context: 'hello!',
                 opIn: [0, 0.05],
                 opOut: [0.15, 0.2],
                 trIn: [20, 0],
                 trOut: [0, -20],
-                color: 'black',
-                size: 'large',
-                sort: 'middle',
             },
             {
-                context: '잘 지냄 수과',
                 opIn: [0.2, 0.25],
                 opOut: [0.35, 0.4],
                 trIn: [20, 0],
                 trOut: [0, -20],
-                color: 'black',
-                size: 'large',
-                sort: 'middle',
             },
             {
-                context: '나도 잘 지내영',
                 opIn: [0.4, 0.45],
                 opOut: [0.55, 0.6],
                 trIn: [20, 0],
                 trOut: [0, -20],
-                color: 'black',
-                size: 'large',
-                sort: 'middle',
             },
             {
-                context: '잘 지냄 수과',
                 opIn: [0.6, 0.65],
                 opOut: [0.75, 0.8],
                 trIn: [20, 0],
                 trOut: [0, -20],
-                color: 'black',
-                size: 'large',
-                sort: 'middle',
             },
         ],
     },
@@ -130,6 +114,32 @@ const sceneActive = {
             drawLRPartOut4: [0.78, 0.84],
             drawLRPartOut5: [0.75, 0.81],
         },
+        messages: [
+            {
+                opIn: [0, 0.05],
+                opOut: [0.15, 0.2],
+                trIn: [20, 0],
+                trOut: [0, -20],
+            },
+            {
+                opIn: [0.2, 0.25],
+                opOut: [0.35, 0.4],
+                trIn: [20, 0],
+                trOut: [0, -20],
+            },
+            {
+                opIn: [0.4, 0.45],
+                opOut: [0.55, 0.6],
+                trIn: [20, 0],
+                trOut: [0, -20],
+            },
+            {
+                opIn: [0.6, 0.65],
+                opOut: [0.75, 0.8],
+                trIn: [20, 0],
+                trOut: [0, -20],
+            },
+        ],
     },
     s3: {
         img7: {
@@ -144,10 +154,23 @@ const sceneActive = {
         img8: {
             drawRangeX: [],
             drawRangeY: [],
-            drawLRPartIn: [0.58, 0.62],
-            drawLRHorizontalPartIn: [0.63, 0.7],
-            drawBottomCuntomIn: [0.71, 0.8],
+            drawBottomPartIn: [0.56, 0.6],
+            drawLRCustomIn: [0.61, 0.7],
         },
+        messages: [
+            {
+                opIn: [0, 0.05],
+                opOut: [0.15, 0.2],
+                trIn: [20, 0],
+                trOut: [0, -20],
+            },
+            {
+                opIn: [0.2, 0.25],
+                opOut: [0.35, 0.4],
+                trIn: [20, 0],
+                trOut: [0, -20],
+            },
+        ],
     },
 }
 
@@ -293,6 +316,7 @@ const drawS3 = (sRatio, ctx3, scene, imgs) => {
     const img7Action4Border =
         (img7.drawLRCustomOut[1] + img7.drawBottomPartOut[0]) / 2
 
+    // img7Action
     if (sRatio < img7Action1Border)
         paintBottomPartIn(
             sRatio,
@@ -351,6 +375,33 @@ const drawS3 = (sRatio, ctx3, scene, imgs) => {
             0.9,
             0.1,
         )
+
+    // img8Action
+    const img8Action1Border =
+        (img8.drawBottomPartIn[1] + img8.drawLRCustomIn[0]) / 2
+    if (sRatio < img8Action1Border)
+        paintBottomPartIn(
+            sRatio,
+            ctx3,
+            img8,
+            imgs[imgArr[7]].img,
+            canvasWidth,
+            canvasHeight,
+            img8.drawBottomPartIn,
+            0,
+            0.1,
+        )
+    else
+        paintLRCustomIn(
+            sRatio,
+            ctx3,
+            img8,
+            imgs[imgArr[7]].img,
+            canvasWidth,
+            canvasHeight,
+            img8.drawLRCustomIn,
+            0.1,
+        )
 }
 
 const imgSizing = (vWidth, vHeight, imgs) => {
@@ -389,39 +440,67 @@ const imgSizing = (vWidth, vHeight, imgs) => {
     })
 }
 
-const drawMessage = (sRatio, currentScene, mp, setmp, vheight) => {
-    const sceneMessage = sceneActive[`s${currentScene + 1}`].messages
-    const newMessagePosition = { s1: [] }
-    sceneMessage.forEach((message, index) => {
-        const border = (message.opIn[1] + message.opOut[0]) / 2
+const drawMessage = (
+    sRatio,
+    currentScene,
+    messageStyles,
+    setMessageStyles,
+    vheight,
+    sceneActive,
+) => {
+    const messageActive = sceneActive[`s${currentScene + 1}`].messages
+    const sceneMessage = messageStyles[`s${currentScene + 1}`]
+    const newMessageStyles = []
+    sceneMessage.forEach((_, index) => {
+        const border =
+            (messageActive[index].opIn[1] + messageActive[index].opOut[0]) / 2
         let opacity
         let top
         if (sRatio < border) {
             opacity =
-                (sRatio - message.opIn[0]) / (message.opIn[1] - message.opIn[0])
+                (sRatio - messageActive[index].opIn[0]) /
+                (messageActive[index].opIn[1] - messageActive[index].opIn[0])
             if (opacity < 0) opacity = 0
             else if (opacity > 1) opacity = 1
             top =
-                message.trIn[0] + (message.trIn[1] - message.trIn[0]) * opacity
+                messageActive[index].trIn[0] +
+                (messageActive[index].trIn[1] - messageActive[index].trIn[0]) *
+                    opacity
         } else {
             opacity =
                 1 -
-                (sRatio - message.opOut[0]) /
-                    (message.opOut[1] - message.opOut[0])
+                (sRatio - messageActive[index].opOut[0]) /
+                    (messageActive[index].opOut[1] -
+                        messageActive[index].opOut[0])
             if (opacity < 0) opacity = 0
             else if (opacity > 1) opacity = 1
             top =
-                message.trOut[0] +
-                (message.trOut[1] - message.trOut[0]) * (1 - opacity)
+                messageActive[index].trOut[0] +
+                (messageActive[index].trOut[1] -
+                    messageActive[index].trOut[0]) *
+                    (1 - opacity)
         }
+        console.log({
+            ...sceneMessage[index],
+            top: `${vheight / 2 + top}px`,
+            opacity,
+        })
 
-        newMessagePosition[`s${currentScene + 1}`].push({
-            ...mp[index],
+        newMessageStyles.push({
+            ...sceneMessage[index],
             top: `${vheight / 2 + top}px`,
             opacity,
         })
     })
-    setmp(newMessagePosition)
+    setMessageStyles((prev) => {
+        const newStyles = {
+            ...prev,
+            [`s${currentScene + 1}`]: [...newMessageStyles],
+        }
+
+        console.log(newStyles)
+        return newStyles
+    })
 }
 
 const activeScene = (
@@ -429,11 +508,12 @@ const activeScene = (
     sRatio,
     ctx,
     imgs,
-    mp,
-    setmp,
+    messageStyles,
+    setMessageStyles,
     vheight,
     ctx2,
     ctx3,
+    sceneActive,
 ) => {
     ctx.clearRect(0, 0, canvasWidth, canvasHeight)
     ctx2.clearRect(0, 0, canvasWidth, canvasHeight)
@@ -441,25 +521,137 @@ const activeScene = (
     switch (currentscene) {
         case 0:
             drawS1(sRatio, ctx, sceneActive.s1, imgs)
-            drawMessage(sRatio, currentscene, mp, setmp, vheight)
+            drawMessage(
+                sRatio,
+                currentscene,
+                messageStyles,
+                setMessageStyles,
+                vheight,
+                sceneActive,
+            )
             break
         case 1:
             drawS2(sRatio, ctx2, sceneActive.s2, imgs)
+            drawMessage(
+                sRatio,
+                currentscene,
+                messageStyles,
+                setMessageStyles,
+                vheight,
+                sceneActive,
+            )
             break
         case 2:
             drawS3(sRatio, ctx3, sceneActive.s3, imgs)
+            drawMessage(
+                sRatio,
+                currentscene,
+                messageStyles,
+                setMessageStyles,
+                vheight,
+                sceneActive,
+            )
             break
         default:
     }
 }
-const messagePositionInitial = (vWidth, vHeight, setMessagePosition) => {
+const messageStylesInitial = (vWidth, vHeight, setMessageStyles, sceneData) => {
+    const { s1, s2, s3 } = sceneData
+
     const newStyles = {
         s1: [],
+        s2: [],
+        s3: [],
     }
-    for (let i = 0; i < sceneActive.s1.messages.length; i++) {
-        newStyles.s1.push({ top: `${vHeight / 2}px`, opacity: 0 })
+    for (let i = 0; i < s1.messages.length; i++) {
+        const fontSize =
+            s1.messages[i].size === 'small'
+                ? '14px'
+                : s1.messages[i].size === 'medium'
+                ? '20px'
+                : '28px'
+        const color = s1.messages[i].color === 'white' ? 'white' : 'black'
+        const style = {
+            fontSize,
+            color,
+            top: `${vHeight / 2}px`,
+            opacity: 0,
+        }
+        newStyles.s1.push(style)
     }
-    setMessagePosition(newStyles)
+    for (let i = 0; i < s2.messages.length; i++) {
+        const fontSize =
+            s2.messages[i].size === 'small'
+                ? '14px'
+                : s2.messages[i].size === 'medium'
+                ? '20px'
+                : '28px'
+        const color = s2.messages[i].color === 'white' ? 'white' : 'black'
+        const style = {
+            fontSize,
+            color,
+            top: `${vHeight / 2}px`,
+            opacity: 0,
+        }
+        newStyles.s2.push(style)
+    }
+    for (let i = 0; i < s3.messages.length; i++) {
+        const fontSize =
+            s3.messages[i].size === 'small'
+                ? '14px'
+                : s3.messages[i].size === 'medium'
+                ? '20px'
+                : '28px'
+        const color = s3.messages[i].color === 'white' ? 'white' : 'black'
+        const style = {
+            fontSize,
+            color,
+            top: `${vHeight / 2}px`,
+            opacity: 0,
+        }
+        newStyles.s3.push(style)
+    }
+    setMessageStyles(newStyles)
+}
+
+const sceneData = {
+    s1: {
+        imgs: {
+            intro: img3,
+            img1: img1,
+            img2: img2,
+            img3: img3,
+            img4: img4,
+        },
+        messages: [
+            { context: 'message1', size: 'medium', color: 'white' },
+            { context: 'message2', size: 'medium', color: 'white' },
+            { context: 'message3', size: 'medium', color: 'white' },
+            { context: 'message4', size: 'medium', color: 'white' },
+        ],
+    },
+    s2: {
+        imgs: {
+            img5: img5,
+            img6: img6,
+        },
+        messages: [
+            { context: 'message5', size: 'medium', color: 'white' },
+            { context: 'message6', size: 'medium', color: 'white' },
+            { context: 'message7', size: 'medium', color: 'white' },
+            { context: 'message8', size: 'medium', color: 'white' },
+        ],
+    },
+    s3: {
+        imgs: {
+            img7: img7,
+            img8: img8,
+        },
+        messages: [
+            { context: 'message9', size: 'medium', color: 'white' },
+            { context: 'message10', size: 'medium', color: 'white' },
+        ],
+    },
 }
 
 export default function Preview({ size }) {
@@ -472,14 +664,20 @@ export default function Preview({ size }) {
     const c3Ref = useRef()
     const [isLoading, setIsLoading] = useState(true)
     const [imgs, setImgs] = useState({})
-    const [messagePosition, setMessagePosition] = useState({
+    const [messageStyles, setMessageStyles] = useState({
         s1: [
             defaultMessageStyle,
             defaultMessageStyle,
             defaultMessageStyle,
             defaultMessageStyle,
+        ],
+        s2: [
+            defaultMessageStyle,
+            defaultMessageStyle,
+            defaultMessageStyle,
             defaultMessageStyle,
         ],
+        s3: [defaultMessageStyle, defaultMessageStyle],
     })
 
     useEffect(() => {
@@ -522,7 +720,7 @@ export default function Preview({ size }) {
             c3Ref.current.height =
                 vHeight
 
-        messagePositionInitial(vWidth, vHeight, setMessagePosition)
+        messageStylesInitial(vWidth, vHeight, setMessageStyles, sceneData)
 
         imgSizing(vWidth, vHeight, [
             imgs[img1],
@@ -532,6 +730,7 @@ export default function Preview({ size }) {
             imgs[img5],
             imgs[img6],
             imgs[img7],
+            imgs[img8],
         ])
 
         s1Ref.current.style.height = vHeight * s1HeightSize + 'px'
@@ -565,11 +764,12 @@ export default function Preview({ size }) {
                 sRatio,
                 ctx,
                 imgs,
-                messagePosition,
-                setMessagePosition,
+                messageStyles,
+                setMessageStyles,
                 vHeight,
                 ctx2,
                 ctx3,
+                sceneActive,
             )
         }
 
@@ -582,6 +782,64 @@ export default function Preview({ size }) {
 
     // Src Loading
     useEffect(() => {
+        const { s1, s2, s3 } = sceneData
+        // s1 img loading
+
+        // Object.keys(s1.imgs).forEach((k, index) => {
+        //     const img = new Image()
+        //     img.src = s1.imgs[k]
+        //     img.onload = () => {
+        //         setImgs((prev) => {
+        //             return {
+        //                 ...prev,
+        //                 [k]: {
+        //                     name: `img${index + 1}`,
+        //                     img,
+        //                     path: s1.imgs[k],
+        //                     width: img.naturalWidth,
+        //                     height: img.naturalHeight,
+        //                 },
+        //             }
+        //         })
+        //     }
+        // })
+        // Object.keys(s2.imgs).forEach((k, index) => {
+        //     const img = new Image()
+        //     img.src = s2.imgs[k]
+        //     img.onload = () => {
+        //         setImgs((prev) => {
+        //             return {
+        //                 ...prev,
+        //                 [k]: {
+        //                     name: `img${index + 1}`,
+        //                     img,
+        //                     path: s2.imgs[k],
+        //                     width: img.naturalWidth,
+        //                     height: img.naturalHeight,
+        //                 },
+        //             }
+        //         })
+        //     }
+        // })
+        // Object.keys(s3.imgs).forEach((k, index) => {
+        //     const img = new Image()
+        //     img.src = s3.imgs[k]
+        //     img.onload = () => {
+        //         setImgs((prev) => {
+        //             return {
+        //                 ...prev,
+        //                 [k]: {
+        //                     name: `img${index + 1}`,
+        //                     img,
+        //                     path: s3.imgs[k],
+        //                     width: img.naturalWidth,
+        //                     height: img.naturalHeight,
+        //                 },
+        //             }
+        //         })
+        //     }
+        // })
+
         // src Uploading
         imgArr.forEach((path, index) => {
             const img = new Image()
@@ -607,9 +865,10 @@ export default function Preview({ size }) {
         }
         window.addEventListener('load', onWindowLoad)
         return () => {
+            setIsLoading(true)
             window.removeEventListener('load', onWindowLoad)
         }
-    }, [])
+    }, [sceneData])
 
     return (
         <div ref={vRef} className={Styles.container}>
@@ -623,12 +882,12 @@ export default function Preview({ size }) {
                         className={`${Styles.s1_canvas}`}
                     ></canvas>
 
-                    {sceneActive.s1.messages.map((message, index) => {
+                    {sceneData.s1.messages.map((message, index) => {
                         return (
                             <div
                                 key={index}
                                 className={Styles.s1message}
-                                style={{ ...messagePosition.s1[index] }}
+                                style={{ ...messageStyles.s1[index] }}
                             >
                                 {message.context}
                             </div>
