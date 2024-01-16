@@ -1,5 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react'
 import Styles from './preview.module.css'
+import LoadingSpinner from './LoadingSpinner.jsx'
 import {
     paintLRInOut,
     paintMidIn,
@@ -14,18 +15,7 @@ import {
     paintBottomPartOut,
 } from './paintAction.js'
 
-import img1 from '../../imgs/img1.png'
-import img2 from '../../imgs/img2.png'
-import img3 from '../../imgs/img3.png'
-import img4 from '../../imgs/img4.png'
-import img5 from '../../imgs/img5.png'
-import img6 from '../../imgs/img6.png'
-import img7 from '../../imgs/img7.png'
-import img8 from '../../imgs/img8.png'
-
 const heightArr = []
-let canvasWidth
-let canvasHeight
 
 const s1HeightSize = 8
 const s2HeightSize = 10
@@ -33,9 +23,6 @@ const s3HeightSize = 8
 
 const sceneActive = {
     s1: {
-        intro: {
-            img: img8,
-        },
         img1: {
             drawRangeX: [],
             drawRangeY: [],
@@ -169,16 +156,16 @@ const sceneActive = {
     },
 }
 
-const drawS1 = (sRatio, ctx, scene, imgs) => {
+const drawS1 = (sRatio, ctx, scene, imgs, vWidth, vHeight) => {
     const { img1, img2, img3, img4 } = scene
 
-    paintLRInOut(sRatio, ctx, img1, imgs.img1.img, canvasWidth, canvasHeight)
-    paintLRInOut(sRatio, ctx, img2, imgs.img2.img, canvasWidth, canvasHeight)
-    paintLRInOut(sRatio, ctx, img3, imgs.img3.img, canvasWidth, canvasHeight)
-    paintLRInOut(sRatio, ctx, img4, imgs.img4.img, canvasWidth, canvasHeight)
+    paintLRInOut(sRatio, ctx, img1, imgs.img1.img, vWidth, vHeight)
+    paintLRInOut(sRatio, ctx, img2, imgs.img2.img, vWidth, vHeight)
+    paintLRInOut(sRatio, ctx, img3, imgs.img3.img, vWidth, vHeight)
+    paintLRInOut(sRatio, ctx, img4, imgs.img4.img, vWidth, vHeight)
 }
 
-const drawS2 = (sRatio, ctx2, scene, imgs) => {
+const drawS2 = (sRatio, ctx2, scene, imgs, vWidth, vHeight) => {
     const { img5, img6 } = scene
 
     // Img5
@@ -187,25 +174,10 @@ const drawS2 = (sRatio, ctx2, scene, imgs) => {
     const img5Action2Border =
         (img5.drawMidToAllIn[1] + img5.drawBottomUpOut[0]) / 2
     if (sRatio < img5Action1Border)
-        paintMidIn(sRatio, ctx2, img5, imgs.img5.img, canvasWidth, canvasHeight)
+        paintMidIn(sRatio, ctx2, img5, imgs.img5.img, vWidth, vHeight)
     else if (sRatio < img5Action2Border)
-        paintMidToAll(
-            sRatio,
-            ctx2,
-            img5,
-            imgs.img5.img,
-            canvasWidth,
-            canvasHeight,
-        )
-    else
-        paintBottomUpOut(
-            sRatio,
-            ctx2,
-            img5,
-            imgs.img5.img,
-            canvasWidth,
-            canvasHeight,
-        )
+        paintMidToAll(sRatio, ctx2, img5, imgs.img5.img, vWidth, vHeight)
+    else paintBottomUpOut(sRatio, ctx2, img5, imgs.img5.img, vWidth, vHeight)
 
     // img6
     const img6ActionBorder =
@@ -216,8 +188,8 @@ const drawS2 = (sRatio, ctx2, scene, imgs) => {
             ctx2,
             img6,
             imgs.img6.img,
-            canvasWidth,
-            canvasHeight,
+            vWidth,
+            vHeight,
             img6[`drawLRPartIn${1}`],
             0,
             0.2,
@@ -229,8 +201,8 @@ const drawS2 = (sRatio, ctx2, scene, imgs) => {
                 ctx2,
                 img6,
                 imgs.img6.img,
-                canvasWidth,
-                canvasHeight,
+                vWidth,
+                vHeight,
                 img6[`drawLRPartIn${i + 2}`],
                 from,
                 0.3,
@@ -242,8 +214,8 @@ const drawS2 = (sRatio, ctx2, scene, imgs) => {
             ctx2,
             img6,
             imgs.img6.img,
-            canvasWidth,
-            canvasHeight,
+            vWidth,
+            vHeight,
             img6[`drawLRPartOut${1}`],
             0,
             0.2,
@@ -255,8 +227,8 @@ const drawS2 = (sRatio, ctx2, scene, imgs) => {
                 ctx2,
                 img6,
                 imgs.img6.img,
-                canvasWidth,
-                canvasHeight,
+                vWidth,
+                vHeight,
                 img6[`drawLRPartOut${i + 2}`],
                 from,
                 0.3,
@@ -265,7 +237,7 @@ const drawS2 = (sRatio, ctx2, scene, imgs) => {
     }
 }
 
-const drawS3 = (sRatio, ctx3, scene, imgs) => {
+const drawS3 = (sRatio, ctx3, scene, imgs, vWidth, vHeight) => {
     const { img7, img8 } = scene
     const img7Action1Border =
         (img7.drawBottomPartIn[1] + img7.drawVerticalPartIn[0]) / 2
@@ -283,8 +255,8 @@ const drawS3 = (sRatio, ctx3, scene, imgs) => {
             ctx3,
             img7,
             imgs.img7.img,
-            canvasWidth,
-            canvasHeight,
+            vWidth,
+            vHeight,
             img7.drawBottomPartIn,
             0.9,
             0.1,
@@ -295,8 +267,8 @@ const drawS3 = (sRatio, ctx3, scene, imgs) => {
             ctx3,
             img7,
             imgs.img7.img,
-            canvasWidth,
-            canvasHeight,
+            vWidth,
+            vHeight,
             img7.drawVerticalPartIn,
             0.9,
             0.1,
@@ -307,8 +279,8 @@ const drawS3 = (sRatio, ctx3, scene, imgs) => {
             ctx3,
             img7,
             imgs.img7.img,
-            canvasWidth,
-            canvasHeight,
+            vWidth,
+            vHeight,
             img7.drawLRCustomIn,
             0.1,
         )
@@ -318,8 +290,8 @@ const drawS3 = (sRatio, ctx3, scene, imgs) => {
             ctx3,
             img7,
             imgs.img7.img,
-            canvasWidth,
-            canvasHeight,
+            vWidth,
+            vHeight,
             img7.drawLRCustomOut,
             0.1,
         )
@@ -329,8 +301,8 @@ const drawS3 = (sRatio, ctx3, scene, imgs) => {
             ctx3,
             img7,
             imgs.img7.img,
-            canvasWidth,
-            canvasHeight,
+            vWidth,
+            vHeight,
             img7.drawBottomPartOut,
             0.9,
             0.1,
@@ -345,8 +317,8 @@ const drawS3 = (sRatio, ctx3, scene, imgs) => {
             ctx3,
             img8,
             imgs.img8.img,
-            canvasWidth,
-            canvasHeight,
+            vWidth,
+            vHeight,
             img8.drawBottomPartIn,
             0,
             0.1,
@@ -357,8 +329,8 @@ const drawS3 = (sRatio, ctx3, scene, imgs) => {
             ctx3,
             img8,
             imgs.img8.img,
-            canvasWidth,
-            canvasHeight,
+            vWidth,
+            vHeight,
             img8.drawLRCustomIn,
             0.1,
         )
@@ -492,48 +464,49 @@ const activeScene = (
     currentscene,
     sRatio,
     ctx,
-    imgs,
-    setMessageStyles,
-    vheight,
     ctx2,
     ctx3,
+    imgs,
+    setMessageStyles,
+    vWidth,
+    vHeight,
     sceneActive,
     sceneData,
 ) => {
-    ctx.clearRect(0, 0, canvasWidth, canvasHeight)
-    ctx2.clearRect(0, 0, canvasWidth, canvasHeight)
-    ctx3.clearRect(0, 0, canvasWidth, canvasHeight)
+    ctx.clearRect(0, 0, vWidth, vHeight)
+    ctx2.clearRect(0, 0, vWidth, vHeight)
+    ctx3.clearRect(0, 0, vWidth, vHeight)
     const { s1, s2, s3 } = sceneData
     switch (currentscene) {
         case 0:
-            drawS1(sRatio, ctx, sceneActive.s1, imgs)
+            drawS1(sRatio, ctx, sceneActive.s1, imgs, vWidth, vHeight)
             drawMessage(
                 sRatio,
                 currentscene,
                 setMessageStyles,
-                vheight,
+                vHeight,
                 sceneActive,
                 s1.messages,
             )
             break
         case 1:
-            drawS2(sRatio, ctx2, sceneActive.s2, imgs)
+            drawS2(sRatio, ctx2, sceneActive.s2, imgs, vWidth, vHeight)
             drawMessage(
                 sRatio,
                 currentscene,
                 setMessageStyles,
-                vheight,
+                vHeight,
                 sceneActive,
                 s2.messages,
             )
             break
         case 2:
-            drawS3(sRatio, ctx3, sceneActive.s3, imgs)
+            drawS3(sRatio, ctx3, sceneActive.s3, imgs, vWidth, vHeight)
             drawMessage(
                 sRatio,
                 currentscene,
                 setMessageStyles,
-                vheight,
+                vHeight,
                 sceneActive,
                 s3.messages,
             )
@@ -542,47 +515,7 @@ const activeScene = (
     }
 }
 
-const sceneData = {
-    s1: {
-        imgs: {
-            img1: img1, // 경로
-            img2: img2,
-            img3: img3,
-            img4: img4,
-            intro: img3,
-        },
-        messages: [
-            { context: 'message1', size: 'large', color: 'white' },
-            { context: 'message2', size: 'medium', color: 'white' },
-            { context: 'message3', size: 'medium', color: 'white' },
-            { context: 'message4', size: 'medium', color: 'white' },
-        ],
-    },
-    s2: {
-        imgs: {
-            img5: img5,
-            img6: img6,
-        },
-        messages: [
-            { context: 'message5', size: 'medium', color: 'white' },
-            { context: 'message6', size: 'medium', color: 'white' },
-            { context: 'message7', size: 'medium', color: 'white' },
-            { context: 'message8', size: 'medium', color: 'white' },
-        ],
-    },
-    s3: {
-        imgs: {
-            img7: img7,
-            img8: img8,
-        },
-        messages: [
-            { context: 'message9', size: 'medium', color: 'white' },
-            { context: 'message10', size: 'medium', color: 'white' },
-        ],
-    },
-}
-
-export default function Preview({ size }) {
+export default function Preview({ size, sceneData }) {
     const vRef = useRef()
     const cRef = useRef()
     const s1Ref = useRef()
@@ -610,7 +543,7 @@ export default function Preview({ size }) {
             isLoading
         )
             return
-
+        const { width, height } = size
         //height 고정, 그에 대한 width 보정
         const vContainer = vRef.current
         // canvas acitve
@@ -618,34 +551,15 @@ export default function Preview({ size }) {
         const ctx2 = c2Ref.current.getContext('2d')
         const ctx3 = c3Ref.current.getContext('2d')
         // canvas sizing(for scene1)
-        // s1 - img1 - 4
-        const pHeight = vContainer.parentNode.offsetHeight
 
-        const whRatio = size.width / size.height
+        imgSizing(width, height, imgs, sceneActive)
 
-        const vHeight = (pHeight * 8) / 10
-        const vWidth = vHeight * whRatio
-        vContainer.style.width = `${vWidth}px`
-        vContainer.style.height = `${vHeight}px`
-        canvasWidth =
-            cRef.current.width =
-            c2Ref.current.width =
-            c3Ref.current.width =
-                vWidth
-        canvasHeight =
-            cRef.current.height =
-            c2Ref.current.height =
-            c3Ref.current.height =
-                vHeight
-
-        imgSizing(vWidth, vHeight, imgs, sceneActive)
-
-        s1Ref.current.style.height = vHeight * s1HeightSize + 'px'
-        heightArr[0] = vHeight * s1HeightSize
-        s2Ref.current.style.height = vHeight * s2HeightSize + 'px'
-        heightArr[1] = vHeight * s2HeightSize
-        s3Ref.current.style.height = vHeight * s3HeightSize + 'px'
-        heightArr[2] = vHeight * s3HeightSize
+        s1Ref.current.style.height = height * s1HeightSize + 'px'
+        heightArr[0] = height * s1HeightSize
+        s2Ref.current.style.height = height * s2HeightSize + 'px'
+        heightArr[1] = height * s2HeightSize
+        s3Ref.current.style.height = height * s3HeightSize + 'px'
+        heightArr[2] = height * s3HeightSize
 
         const handleViewScroll = (e) => {
             // calculate scrollY
@@ -670,11 +584,12 @@ export default function Preview({ size }) {
                 currentScene,
                 sRatio,
                 ctx,
-                imgs,
-                setMessageStyles,
-                vHeight,
                 ctx2,
                 ctx3,
+                imgs,
+                setMessageStyles,
+                width,
+                height,
                 sceneActive,
                 sceneData,
             )
@@ -775,68 +690,115 @@ export default function Preview({ size }) {
     }, [sceneData])
 
     return (
-        <div ref={vRef} className={Styles.container}>
-            <div ref={s1Ref} className={Styles.scene}>
-                <div className={Styles.intro_img}>
-                    <img src={sceneData.s1.imgs.intro} alt="introimage" />
-                </div>
-                <div className={Styles.sticky_box}>
-                    <canvas
-                        ref={cRef}
-                        className={`${Styles.scenecanvas}`}
-                    ></canvas>
+        <div
+            ref={vRef}
+            style={{
+                width: `${size.width}px`,
+                height: `${size.height}px`,
+            }}
+            className={Styles.container}
+        >
+            {isLoading ? (
+                <LoadingSpinner size={size} />
+            ) : (
+                <>
+                    <div
+                        ref={s1Ref}
+                        style={{
+                            width: `${size.width}px`,
+                            height: `${size.height}px`,
+                        }}
+                        className={Styles.scene}
+                    >
+                        <div className={Styles.intro_img}>
+                            <img
+                                src={sceneData.s1.imgs.intro}
+                                alt="introimage"
+                            />
+                        </div>
+                        <div className={Styles.sticky_box}>
+                            <canvas
+                                ref={cRef}
+                                width={size.width}
+                                height={size.height}
+                                className={`${Styles.scenecanvas}`}
+                            ></canvas>
 
-                    {sceneData.s1.messages.map((message, index) => {
-                        return (
-                            <div
-                                key={index}
-                                className={Styles.scenemessage}
-                                style={{ ...messageStyles.s1[index] }}
-                            >
-                                {message.context}
-                            </div>
-                        )
-                    })}
-                </div>
-            </div>
-            <div ref={s2Ref} className={Styles.scene}>
-                <div className={Styles.sticky_box}>
-                    <canvas
-                        ref={c2Ref}
-                        className={`${Styles.scenecanvas}`}
-                    ></canvas>
-                    {sceneData.s2.messages.map((message, index) => {
-                        return (
-                            <div
-                                key={index}
-                                className={Styles.scenemessage}
-                                style={{ ...messageStyles.s2[index] }}
-                            >
-                                {message.context}
-                            </div>
-                        )
-                    })}
-                </div>
-            </div>
-            <div ref={s3Ref} className={Styles.scene}>
-                <div className={Styles.sticky_box}>
-                    <canvas
-                        ref={c3Ref}
-                        className={`${Styles.scenecanvas}`}
-                    ></canvas>
-                    {sceneData.s3.messages.map((message, index) => {
-                        return (
-                            <div
-                                key={index}
-                                className={Styles.scenemessage}
-                                style={{ ...messageStyles.s3[index] }}
-                            >
-                                {message.context}
-                            </div>
-                        )
-                    })}
-                </div>
-            </div>
+                            {sceneData.s1.messages.map((message, index) => {
+                                return (
+                                    <div
+                                        key={index}
+                                        className={Styles.scenemessage}
+                                        style={{ ...messageStyles.s1[index] }}
+                                    >
+                                        {message.context}
+                                    </div>
+                                )
+                            })}
+                        </div>
+                    </div>
+                    <div
+                        ref={s2Ref}
+                        style={{
+                            width: `${size.width}px`,
+                            height: `${size.height}px`,
+                        }}
+                        width={size.width}
+                        height={size.height}
+                        className={Styles.scene}
+                    >
+                        <div className={Styles.sticky_box}>
+                            <canvas
+                                width={size.width}
+                                height={size.height}
+                                ref={c2Ref}
+                                className={`${Styles.scenecanvas}`}
+                            ></canvas>
+                            {sceneData.s2.messages.map((message, index) => {
+                                return (
+                                    <div
+                                        key={index}
+                                        className={Styles.scenemessage}
+                                        style={{ ...messageStyles.s2[index] }}
+                                    >
+                                        {message.context}
+                                    </div>
+                                )
+                            })}
+                        </div>
+                    </div>
+                    <div
+                        ref={s3Ref}
+                        style={{
+                            width: `${size.width}px`,
+                            height: `${size.height}px`,
+                        }}
+                        width={size.width}
+                        height={size.height}
+                        className={Styles.scene}
+                    >
+                        <div className={Styles.sticky_box}>
+                            <canvas
+                                width={size.width}
+                                height={size.height}
+                                ref={c3Ref}
+                                className={`${Styles.scenecanvas}`}
+                            ></canvas>
+                            {sceneData.s3.messages.map((message, index) => {
+                                return (
+                                    <div
+                                        key={index}
+                                        className={Styles.scenemessage}
+                                        style={{ ...messageStyles.s3[index] }}
+                                    >
+                                        {message.context}
+                                    </div>
+                                )
+                            })}
+                        </div>
+                    </div>
+                </>
+            )}
         </div>
     )
 }

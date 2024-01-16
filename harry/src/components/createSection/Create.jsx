@@ -1,7 +1,56 @@
-import React, { useState } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import Styles from './create.module.css'
 import SettingPage from './SettingPage'
 import Preview from './Preview'
+
+import img1 from '../../imgs/img1.png'
+import img2 from '../../imgs/img2.png'
+import img3 from '../../imgs/img3.png'
+import img4 from '../../imgs/img4.png'
+import img5 from '../../imgs/img5.png'
+import img6 from '../../imgs/img6.png'
+import img7 from '../../imgs/img7.png'
+import img8 from '../../imgs/img8.png'
+
+const letterData = {
+    s1: {
+        imgs: {
+            img1: img1, // 경로
+            img2: img2,
+            img3: img3,
+            img4: img4,
+            intro: img3,
+        },
+        messages: [
+            { context: 'message1', size: 'large', color: 'white' },
+            { context: 'message2', size: 'medium', color: 'white' },
+            { context: 'message3', size: 'medium', color: 'white' },
+            { context: 'message4', size: 'medium', color: 'white' },
+        ],
+    },
+    s2: {
+        imgs: {
+            img5: img5,
+            img6: img6,
+        },
+        messages: [
+            { context: 'message5', size: 'medium', color: 'white' },
+            { context: 'message6', size: 'medium', color: 'white' },
+            { context: 'message7', size: 'medium', color: 'white' },
+            { context: 'message8', size: 'medium', color: 'white' },
+        ],
+    },
+    s3: {
+        imgs: {
+            img7: img7,
+            img8: img8,
+        },
+        messages: [
+            { context: 'message9', size: 'medium', color: 'white' },
+            { context: 'message10', size: 'medium', color: 'white' },
+        ],
+    },
+}
 
 const sizeItemList = [
     {
@@ -183,7 +232,29 @@ export default function Create() {
     const [sceneIndex, setSceneIndex] = useState(0)
     const [messageFocus, setMessageFocus] = useState(0)
     const [sizeListIndex, setSizeListIndex] = useState(0)
+    const [previewSize, setPreviewSize] = useState({
+        width: 0,
+        height: 0,
+    })
 
+    const displayContainerRef = useRef()
+    useEffect(() => {
+        if (!displayContainerRef) return
+
+        const displayHeight = displayContainerRef.current.offsetHeight
+
+        const { width, height } = sizeItemList[sizeListIndex].size
+
+        const whRatio = width / height
+
+        const vHeight = (displayHeight * 8) / 10
+        const vWidth = vHeight * whRatio
+
+        setPreviewSize({
+            width: vWidth,
+            height: vHeight,
+        })
+    }, [displayContainerRef, sizeListIndex])
     const onLeftClick = () => {
         if (sceneIndex <= 0) return
         setSceneIndex((v) => v - 1)
@@ -202,8 +273,11 @@ export default function Create() {
                 <div className={Styles.right_title}>Preview</div>
 
                 <div className={Styles.display_container}>
-                    <div className={Styles.display__box}>
-                        <Preview size={sizeItemList[sizeListIndex].size} />
+                    <div
+                        ref={displayContainerRef}
+                        className={Styles.display__box}
+                    >
+                        <Preview size={previewSize} sceneData={letterData} />
                     </div>
                     <SizeBar
                         sizeList={sizeItemList}
