@@ -326,11 +326,10 @@ export default function Create({ type = 0 }) {
                             {'>'}
                         </div>
                     </div>
-
                     <SettingPage
                         settingData={settingData[sceneIndex]}
                         setSettingData={setSettingData}
-                        index={sceneIndex}
+                        sceneIndex={sceneIndex}
                         messageFocus={messageFocus}
                         setMessageFocus={setMessageFocus}
                         setLetterData={setLetterData}
