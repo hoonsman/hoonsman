@@ -1,0 +1,38 @@
+.container {
+    display: flex;
+    background-color: #fae100;
+    padding: 10px;
+    align-items: center;
+}
+
+.left,
+.right {
+    flex-grow: 1;
+}
+
+.right {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.icon {
+    font-weight: bold;
+    font-size: 25px;
+    color: rgb(253, 76, 105);
+}
+
+.btn {
+    border: 1px solid #777777;
+    padding: 10px;
+    margin-left: 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #777777;
+    transition: all 0.1s linear;
+}
+
+.btn:hover {
+    color: #999999;
+    border-color: #999999;
+}
