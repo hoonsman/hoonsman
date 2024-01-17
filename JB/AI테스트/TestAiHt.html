@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Q&A with GPT-4</title>
+  </head>
+  <body>
+    <h1>Ask a Question</h1>
+    <form id="question-form">
+      <input type="text" id="question" name="question" />
+      <input type="submit" value="Ask" />
+    </form>
+    <p id="answer"></p>
+
+    <script>
+      document.getElementById('question-form').onsubmit = function (e) {
+        e.preventDefault()
+
+        fetch('http://127.0.0.1:5000/ask', {
+          // Flask 서버의 /ask 경로로 요청을 보내야 합니다.
+          method: 'POST',
+          body: new FormData(this),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            document.getElementById('answer').innerText =
+              'Answer: ' + data.answer
+          })
+          .catch((error) => console.error('Error:', error))
+      }
+    </script>
+  </body>
+</html>
+``
