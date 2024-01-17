@@ -2,55 +2,7 @@ import React, { useState, useRef, useEffect } from 'react'
 import Styles from './create.module.css'
 import SettingPage from './SettingPage'
 import Preview from './Preview'
-
-import img1 from '../../imgs/img1.png'
-import img2 from '../../imgs/img2.png'
-import img3 from '../../imgs/img3.png'
-import img4 from '../../imgs/img4.png'
-import img5 from '../../imgs/img5.png'
-import img6 from '../../imgs/img6.png'
-import img7 from '../../imgs/img7.png'
-import img8 from '../../imgs/img8.png'
-
-const letterData = {
-    s1: {
-        imgs: {
-            img1: img1, // 경로
-            img2: img2,
-            img3: img3,
-            img4: img4,
-            intro: img3,
-        },
-        messages: [
-            { context: 'message1', size: 'large', color: 'white' },
-            { context: 'message2', size: 'medium', color: 'white' },
-            { context: 'message3', size: 'medium', color: 'white' },
-            { context: 'message4', size: 'medium', color: 'white' },
-        ],
-    },
-    s2: {
-        imgs: {
-            img5: img5,
-            img6: img6,
-        },
-        messages: [
-            { context: 'message5', size: 'medium', color: 'white' },
-            { context: 'message6', size: 'medium', color: 'white' },
-            { context: 'message7', size: 'medium', color: 'white' },
-            { context: 'message8', size: 'medium', color: 'white' },
-        ],
-    },
-    s3: {
-        imgs: {
-            img7: img7,
-            img8: img8,
-        },
-        messages: [
-            { context: 'message9', size: 'medium', color: 'white' },
-            { context: 'message10', size: 'medium', color: 'white' },
-        ],
-    },
-}
+import SampleData from './sampleData'
 
 const sizeItemList = [
     {
@@ -130,105 +82,142 @@ const SizeBar = ({ sizeList, listIndex, setSizeListIndex }) => {
     )
 }
 
-export default function Create() {
-    const [sceneData, setSceneData] = useState([
+const mapType1ToSettingData = (letter) => {
+    const newSettingData = []
+    Object.keys(letter).forEach((k) => {
+        if (k === 'type') return
+        const newScene = {
+            images: [],
+            message: [],
+        }
+        Object.keys(letter[k].imgs).forEach((imgk) => {
+            newScene.images.push(letter[k].imgs[imgk])
+        })
+        letter[k].messages.forEach((m) => {
+            newScene.message.push({ ...m })
+        })
+        newSettingData.push(newScene)
+    })
+    return newSettingData
+}
+
+const mapSettingDataToType1 = (settingData, letter) => {
+    const scenesData = [settingData[0], settingData[1], settingData[2]]
+    const letterImgKeys = [
+        Object.keys(letter.s1.imgs),
+        Object.keys(letter.s2.imgs),
+        Object.keys(letter.s3.imgs),
+    ]
+
+    const newLetter = {
+        type: 0,
+        s1: {
+            imgs: {}, // intro 1 2 3 4
+            messages: [], // 4
+        },
+        s2: {
+            imgs: {}, // 5 6
+            messages: [], //4
+        },
+        s3: {
+            imgs: {}, // 7 8
+            messages: [], // 2
+        },
+    }
+
+    scenesData.forEach((sceneData, index) => {
+        newLetter[`s${index + 1}`].messages = [...sceneData.message]
+    })
+
+    letterImgKeys.forEach((imgKeys, sIndex) => {
+        imgKeys.forEach((imgKey, imgIndex) => {
+            newLetter[`s${sIndex + 1}`].imgs[imgKey] =
+                scenesData[sIndex].images[imgIndex]
+        })
+    })
+
+    return newLetter
+}
+
+export default function Create({ type = 0 }) {
+    const [settingData, setSettingData] = useState([
         {
-            src: {
-                type: 'video',
-                src: ['None'],
-            },
+            images: ['none'],
             message: [
                 {
                     content: '',
-                    size: 'middle',
+                    size: 'medium',
                     color: 'white',
-                    sort: 'middle',
                 },
                 {
                     content: '',
-                    size: 'middle',
+                    size: 'medium',
                     color: 'white',
-                    sort: 'middle',
                 },
                 {
                     content: '',
-                    size: 'middle',
+                    size: 'medium',
                     color: 'white',
-                    sort: 'middle',
                 },
             ],
         },
         {
-            src: {
-                type: 'image',
-                src: ['None', 'None', 'None', 'None', 'None'],
-            },
+            images: ['none'],
             message: [
                 {
                     content: '',
-                    size: 'middle',
+                    size: 'medium',
                     color: 'white',
-                    sort: 'middle',
                 },
                 {
                     content: '',
-                    size: 'middle',
+                    size: 'medium',
                     color: 'white',
-                    sort: 'middle',
                 },
                 {
                     content: '',
-                    size: 'middle',
+                    size: 'medium',
                     color: 'white',
-                    sort: 'middle',
                 },
                 {
                     content: '',
-                    size: 'middle',
+                    size: 'medium',
                     color: 'white',
-                    sort: 'middle',
                 },
                 {
                     content: '',
-                    size: 'middle',
+                    size: 'medium',
                     color: 'white',
-                    sort: 'middle',
                 },
             ],
         },
         {
-            src: {
-                type: 'video',
-                src: ['None'],
-            },
+            images: ['none'],
             message: [
                 {
                     content: '',
-                    size: 'middle',
+                    size: 'medium',
                     color: 'white',
-                    sort: 'middle',
                 },
                 {
                     content: '',
-                    size: 'middle',
+                    size: 'medium',
                     color: 'white',
-                    sort: 'middle',
                 },
                 {
                     content: '',
-                    size: 'middle',
+                    size: 'medium',
                     color: 'white',
-                    sort: 'middle',
                 },
                 {
                     content: '',
-                    size: 'middle',
+                    size: 'medium',
                     color: 'white',
-                    sort: 'middle',
                 },
             ],
         },
     ])
+    const [letter, setLetter] = useState({ ...SampleData[type] })
     const [sceneIndex, setSceneIndex] = useState(0)
     const [messageFocus, setMessageFocus] = useState(0)
     const [sizeListIndex, setSizeListIndex] = useState(0)
@@ -236,6 +225,18 @@ export default function Create() {
         width: 0,
         height: 0,
     })
+
+    // mapping letter data -> settingData
+    useEffect(() => {
+        const letterType = letter.type
+        let mappedSettingData
+        switch (letterType) {
+            case 0:
+                mappedSettingData = mapType1ToSettingData(letter)
+                break
+        }
+        setSettingData(mappedSettingData)
+    }, [letter])
 
     const displayContainerRef = useRef()
     useEffect(() => {
@@ -262,9 +263,21 @@ export default function Create() {
     }
 
     const onRightClick = () => {
-        if (sceneIndex >= sceneData.length - 1) return
+        console.log(settingData)
+        if (sceneIndex > settingData.length - 2) return
         setSceneIndex((v) => v + 1)
         setMessageFocus(0)
+    }
+
+    const setLetterData = () => {
+        let newLetter
+        switch (type) {
+            case 0:
+                newLetter = mapSettingDataToType1(settingData, letter)
+                break
+        }
+
+        setLetter(newLetter)
     }
 
     return (
@@ -277,7 +290,7 @@ export default function Create() {
                         ref={displayContainerRef}
                         className={Styles.display__box}
                     >
-                        <Preview size={previewSize} sceneData={letterData} />
+                        <Preview size={previewSize} sceneData={letter} />
                     </div>
                     <SizeBar
                         sizeList={sizeItemList}
@@ -306,7 +319,7 @@ export default function Create() {
                         <div
                             onClick={onRightClick}
                             className={`${Styles.info_btn} ${
-                                sceneIndex === sceneData.length - 1 &&
+                                sceneIndex === settingData.length - 1 &&
                                 Styles.btn_disabled
                             }`}
                         >
@@ -315,11 +328,12 @@ export default function Create() {
                     </div>
 
                     <SettingPage
-                        sceneData={sceneData[sceneIndex]}
-                        setSceneData={setSceneData}
+                        settingData={settingData[sceneIndex]}
+                        setSettingData={setSettingData}
                         index={sceneIndex}
                         messageFocus={messageFocus}
                         setMessageFocus={setMessageFocus}
+                        setLetterData={setLetterData}
                     />
                 </div>
             </div>

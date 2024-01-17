@@ -20,6 +20,7 @@ const heightArr = []
 const s1HeightSize = 8
 const s2HeightSize = 10
 const s3HeightSize = 8
+const TotalImgCnt = 8
 
 const sceneActive = {
     s1: {
@@ -543,6 +544,7 @@ export default function Preview({ size, sceneData }) {
             isLoading
         )
             return
+        vRef.current.scrollTo(0, 0)
         const { width, height } = size
         //height 고정, 그에 대한 width 보정
         const vContainer = vRef.current
@@ -618,12 +620,15 @@ export default function Preview({ size, sceneData }) {
     useEffect(() => {
         const { s1, s2, s3 } = sceneData
         // s1 img loading
-
+        let imgLoadCnt = 0
         Object.keys(s1.imgs).forEach((k, index) => {
             if (k === 'intro') return
             const img = new Image()
             img.src = s1.imgs[k]
             img.onload = () => {
+                imgLoadCnt++
+                if (imgLoadCnt >= TotalImgCnt) onWindowLoad()
+                console.log(imgLoadCnt)
                 setImgs((prev) => {
                     return {
                         ...prev,
@@ -644,6 +649,9 @@ export default function Preview({ size, sceneData }) {
             const img = new Image()
             img.src = s2.imgs[k]
             img.onload = () => {
+                imgLoadCnt++
+                if (imgLoadCnt >= TotalImgCnt) onWindowLoad()
+                console.log(imgLoadCnt)
                 setImgs((prev) => {
                     return {
                         ...prev,
@@ -664,6 +672,9 @@ export default function Preview({ size, sceneData }) {
             const img = new Image()
             img.src = s3.imgs[k]
             img.onload = () => {
+                imgLoadCnt++
+                if (imgLoadCnt >= TotalImgCnt) onWindowLoad()
+                console.log(imgLoadCnt)
                 setImgs((prev) => {
                     return {
                         ...prev,
@@ -731,7 +742,7 @@ export default function Preview({ size, sceneData }) {
                                         className={Styles.scenemessage}
                                         style={{ ...messageStyles.s1[index] }}
                                     >
-                                        {message.context}
+                                        {message.content}
                                     </div>
                                 )
                             })}
@@ -761,7 +772,7 @@ export default function Preview({ size, sceneData }) {
                                         className={Styles.scenemessage}
                                         style={{ ...messageStyles.s2[index] }}
                                     >
-                                        {message.context}
+                                        {message.content}
                                     </div>
                                 )
                             })}
@@ -791,7 +802,7 @@ export default function Preview({ size, sceneData }) {
                                         className={Styles.scenemessage}
                                         style={{ ...messageStyles.s3[index] }}
                                     >
-                                        {message.context}
+                                        {message.content}
                                     </div>
                                 )
                             })}

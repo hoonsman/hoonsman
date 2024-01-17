@@ -22,6 +22,7 @@
 
 .scenemessage {
     position: absolute;
+    text-align: center;
     font-weight: bold;
     z-index: 2;
     left: 50%;

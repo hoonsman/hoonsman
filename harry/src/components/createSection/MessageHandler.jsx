@@ -3,19 +3,13 @@ import Styles from './messagehandler.module.css'
 
 const SizeOptions = [
     { val: 'small', text: '작게' },
-    { val: 'middle', text: '중간' },
+    { val: 'medium', text: '중간' },
     { val: 'large', text: '크게' },
 ]
 
 const ColorOptions = [
     { val: 'white', text: 'white' },
     { val: 'black', text: 'black' },
-]
-
-const SortOptions = [
-    { val: 'left', text: '왼쪽' },
-    { val: 'middle', text: '중간' },
-    { val: 'right', text: '오른쪽' },
 ]
 
 const OptBtn = ({ attr, val, text, now, setVal }) => {
@@ -34,11 +28,14 @@ const OptBtn = ({ attr, val, text, now, setVal }) => {
 
 export default function MessageHandler({
     content,
+    setLetterData,
     size,
     color,
-    sort,
     changeControlInfo,
 }) {
+    const onSaveClick = () => {
+        setLetterData()
+    }
     const setVal = (attr, val) => {
         changeControlInfo({
             [attr]: val,
@@ -83,22 +80,9 @@ export default function MessageHandler({
                         ))}
                     </div>
                 </div>
-                <div className={Styles.message_option}>
-                    <div className={Styles.title}>글자 정렬</div>
-                    <div className={Styles.option_bar}>
-                        {SortOptions.map((option, index) => (
-                            <OptBtn
-                                key={index}
-                                now={sort}
-                                attr="sort"
-                                {...option}
-                                setVal={setVal}
-                            />
-                        ))}
-                    </div>
+                <div onClick={onSaveClick} className={Styles.submit_btn}>
+                    저장
                 </div>
-
-                <div className={Styles.submit_btn}>저장</div>
             </div>
             <div className={Styles.right}>
                 <div className={Styles.input_container}>
