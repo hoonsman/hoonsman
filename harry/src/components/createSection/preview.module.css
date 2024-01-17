@@ -1,15 +1,60 @@
 .container {
     position: relative;
     flex-direction: column;
-    background-color: aqua;
     overflow-y: scroll;
     overflow-x: hidden;
     height: 10px;
 }
 
-.scene_canvas {
-    position: sticky;
+.s1_canvas {
+    position: absolute;
+    background-color: transparent;
     top: 0;
     left: 0;
     transform-origin: top left;
+    z-index: 1;
+}
+
+.scene {
+    /* opacity: 0; */
+    background-color: white;
+}
+
+.s1message {
+    position: absolute;
+    z-index: 2;
+    left: 50%;
+    transform: translate3d(-50%, -50%, 0);
+    color: black;
+}
+
+.messagebox {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+}
+
+.sticky_box {
+    width: 100%;
+    position: sticky;
+    top: 0;
+    left: 0;
+}
+
+.intro_img {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+
+.intro_img img {
+    height: 100%;
 }

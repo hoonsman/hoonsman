@@ -16,16 +16,17 @@ const SampleBox = () => {
     },
     {
       id: 2,
-      imageUrl: 'images/intro2.png',
+      imageUrl: '/img/Promo_Image/sampleImg.png',
       title: '상품 프로모션',
       description:
         '상품 프로모션 얘 템플릿 컴포넌트로 만들어서 다시 재조립 해야됩니당',
     },
     {
       id: 3,
-      imageUrl: 'images/intro3.png',
-      title: '제목 3',
-      description: '샘플에 대한 설명 3',
+      imageUrl: '/img/wedding_Image/img1.png',
+      title: '청첩장',
+      description:
+        '이 템플릿은 12개의 문구와 11개의 사진으로 구성되어 있습니다.',
     },
     {
       id: 4,
