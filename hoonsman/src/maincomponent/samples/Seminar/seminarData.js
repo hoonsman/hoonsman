@@ -6,7 +6,7 @@ const seminarData = {
       messages: [
         {
           text: '세미나에 대한 소개',
-          size: 'small',
+          size: 'large',
           color: 'white',
         },
       ],
@@ -26,8 +26,8 @@ const seminarData = {
         },
         {
           text: '세미나에 대한 설명 1',
-          size: 'medium',
-          color: 'white',
+          size: 'small',
+          color: 'black',
         },
       ],
     },
@@ -58,7 +58,7 @@ const seminarData = {
         {
           text: '세미나 위치',
           size: 'large',
-          color: '#white',
+          color: 'white',
         },
         {
           text: '시간과 날짜',
