@@ -5,8 +5,72 @@ import Comp2 from './Comp2/Comp2'
 import Comp3 from './Comp3/Comp3'
 import Comp4 from './Comp4/Comp4'
 import Blank from './Blank/Blank'
+import SettingDataSP from './SettingDataSP.json'
+import JBDummy from './JBDummy.json'
 
 const Promotion = () => {
+  //데이터
+  const mapType0ToSettingData = (letter) => {
+    const newSettingData = []
+    Object.keys(letter).forEach((k) => {
+      if (k === 'type') return
+      const newScene = {
+        images: [],
+        message: [],
+      }
+      Object.keys(letter[k].imgs).forEach((imgk) => {
+        newScene.images.push(letter[k].imgs[imgk])
+      })
+      letter[k].messages.forEach((m) => {
+        newScene.message.push({ ...m })
+      })
+      newSettingData.push(newScene)
+    })
+    return newSettingData
+  }
+
+  const mapSettingDataToType0 = (settingData, letter) => {
+    const scenesData = [settingData[0], settingData[1], settingData[2]]
+    const letterImgKeys = [
+      Object.keys(letter.s1.imgs),
+      Object.keys(letter.s2.imgs),
+      Object.keys(letter.s3.imgs),
+    ]
+
+    const newLetter = {
+      type: 0,
+      s1: {
+        imgs: {},
+        messages: [],
+      },
+      s2: {
+        imgs: {},
+        messages: [],
+      },
+      s3: {
+        imgs: {},
+        messages: [],
+      },
+    }
+
+    scenesData.forEach((sceneData, index) => {
+      newLetter[`s${index + 1}`].messages = [...sceneData.message]
+    })
+
+    letterImgKeys.forEach((imgKeys, sIndex) => {
+      imgKeys.forEach((imgKey, imgIndex) => {
+        newLetter[`s${sIndex + 1}`].imgs[imgKey] =
+          scenesData[sIndex].images[imgIndex]
+      })
+    })
+
+    return newLetter
+  }
+  const settingData = SettingDataSP
+  const newSettingData = mapType0ToSettingData(settingData)
+  const newLetter = mapSettingDataToType0(newSettingData, JBDummy)
+
+  //이벤트
   const [activeComp, setActiveComp] = useState('Comp1')
   const [showMessage1, setShowMessage1] = useState(false)
   const [showMessage2_1, setShowMessage2_1] = useState(false)
