@@ -16,7 +16,10 @@ const Comp2 = ({ active, showMessage1, showMessage2 }) => {
         새로운 플렉스 힌지를 장착한 Z플립5와 함께 하세요.
       </div>
       <div className={Style.imageContainer}>
-        <img src={`${process.env.PUBLIC_URL}/image2.png`} alt="Image" />
+        <img
+          src={`${process.env.PUBLIC_URL}/img/Promo_Image/Comp2_Main.png`}
+          alt="Image"
+        />
       </div>
     </div>
   )

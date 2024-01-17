@@ -1,7 +1,8 @@
 import React from 'react'
 import styles from './modal.module.css'
-import SeminarSample from '../samples/seminarsample'
+import SeminarSample from '../samples/Seminar/seminarsample'
 import Promotion from '../samples/ProductPromotion/product_promotion'
+import SamplePage from '../samples/WeddingSample/SamplePage'
 
 function Modal({ isOpen, closeModal, selectedSampleId }) {
   const handleBackdropClick = (e) => {
@@ -21,6 +22,7 @@ function Modal({ isOpen, closeModal, selectedSampleId }) {
         </button>
         {selectedSampleId === 1 && <SeminarSample />}
         {selectedSampleId === 2 && <Promotion />}
+        {selectedSampleId === 3 && <SamplePage />}
         <button className={styles.applyButton}>생성하기</button>
       </div>
     </div>

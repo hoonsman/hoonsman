@@ -1,0 +1,33 @@
+{
+  "s1": {
+    "imgs": {
+      "intro": "img1",
+      "img2": "/Promo_Image/Comp1_Main.png",
+      "img3": "/Promo_Image/Comp1_Sub.png"
+    },
+    "messages": [{ "context": "message1", "size": "large", "color": "black" }]
+  },
+  "s2": {
+    "imgs": {
+      "img4": "/Promo_Image/Comp2_Main.png"
+    },
+    "messages": [
+      { "context": "message2", "size": "large", "color": "black" },
+      { "context": "message3", "size": "medium", "color": "black" }
+    ]
+  },
+  "s3": {
+    "imgs": {
+      "img5": "/Promo_Image/Comp3_Sub1.png",
+      "img6": "/Promo_Image/Comp3_Sub2.png",
+      "img7": "/Promo_Image/Comp3_Sub3.png"
+    },
+    "messages": [
+      { "context": "message4", "size": "large", "color": "black" },
+      { "context": "message5", "size": "medium", "color": "black" }
+    ]
+  },
+  "s4": {
+    "messages": [{ "context": "message6", "size": "large", "color": "black" }]
+  }
+}
