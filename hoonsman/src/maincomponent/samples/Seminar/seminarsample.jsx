@@ -100,6 +100,7 @@ function SeminarSample() {
           </p>
         </section>
         <div className="half-height-block"></div>
+        <div className="half-height-block"></div>
         <section
           ref={(el) => (sectionRefs.current[1] = el)}
           className={`section ${textAnimationStatus[1] || ''}`}
@@ -122,7 +123,11 @@ function SeminarSample() {
             />
           </div>
           <p
-            className={`keyword ${textAnimationStatus[1] || ''}`}
+            className={`keyword ${textAnimationStatus[1] || ''} ${
+              seminarData.scenes[1].messages[0].color === 'white'
+                ? 'white-text-with-black-stroke'
+                : 'black-text-no-stroke'
+            }`}
             style={{
               fontSize:
                 seminarData.scenes[1].messages[0].size === 'small'
@@ -138,7 +143,11 @@ function SeminarSample() {
             {seminarData.scenes[1].messages[0].text}
           </p>
           <p
-            className={`description-text ${textAnimationStatus[1] || ''}`}
+            className={`description-text ${textAnimationStatus[1] || ''} ${
+              seminarData.scenes[1].messages[1].color === 'white'
+                ? 'white-text-with-black-stroke'
+                : 'black-text-no-stroke'
+            }`}
             style={{
               fontSize:
                 seminarData.scenes[1].messages[1].size === 'small'
@@ -154,7 +163,6 @@ function SeminarSample() {
             {seminarData.scenes[1].messages[1].text}
           </p>
         </section>
-
         <div className="half-height-block"></div>
         <section
           ref={(el) => (sectionRefs.current[2] = el)}
@@ -178,7 +186,11 @@ function SeminarSample() {
             />
           </div>
           <p
-            className={`keyword ${textAnimationStatus[2] || ''}`}
+            className={`keyword ${textAnimationStatus[2] || ''} ${
+              seminarData.scenes[2].messages[0].color === 'white'
+                ? 'white-text-with-black-stroke'
+                : 'black-text-no-stroke'
+            }`}
             style={{
               fontSize:
                 seminarData.scenes[2].messages[0].size === 'small'
@@ -194,7 +206,11 @@ function SeminarSample() {
             {seminarData.scenes[2].messages[0].text}
           </p>
           <p
-            className={`description-text ${textAnimationStatus[2] || ''}`}
+            className={`description-text ${textAnimationStatus[2] || ''} ${
+              seminarData.scenes[2].messages[1].color === 'white'
+                ? 'white-text-with-black-stroke'
+                : 'black-text-no-stroke'
+            }`}
             style={{
               fontSize:
                 seminarData.scenes[2].messages[1].size === 'small'
@@ -218,11 +234,15 @@ function SeminarSample() {
           <div className="slider"></div>
           <img
             src={seminarData.scenes[3].images[0]}
-            alt="Intro"
+            alt="Location"
             className="background-image"
           />
           <p
-            className={`keyword ${textAnimationStatus[3] || ''}`}
+            className={`keyword ${textAnimationStatus[3] || ''} ${
+              seminarData.scenes[3].messages[0].color === 'white'
+                ? 'white-text-with-black-stroke'
+                : 'black-text-no-stroke'
+            }`}
             style={{
               fontSize:
                 seminarData.scenes[3].messages[0].size === 'small'
@@ -238,7 +258,11 @@ function SeminarSample() {
             {seminarData.scenes[3].messages[0].text}
           </p>
           <p
-            className={`description-text ${textAnimationStatus[3] || ''}`}
+            className={`description-text ${textAnimationStatus[3] || ''} ${
+              seminarData.scenes[3].messages[1].color === 'white'
+                ? 'white-text-with-black-stroke'
+                : 'black-text-no-stroke'
+            }`}
             style={{
               fontSize:
                 seminarData.scenes[3].messages[1].size === 'small'
@@ -254,7 +278,6 @@ function SeminarSample() {
             {seminarData.scenes[3].messages[1].text}
           </p>
         </section>
-
         <section
           ref={(el) => (sectionRefs.current[4] = el)}
           className={`section ${textAnimationStatus[4] || ''}`}
