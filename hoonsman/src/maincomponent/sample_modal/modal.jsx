@@ -1,6 +1,6 @@
 import React from 'react'
 import styles from './modal.module.css'
-import SeminarSample from '../samples/seminarsample'
+import SeminarSample from '../samples/Seminar/seminarsample'
 import Promotion from '../samples/ProductPromotion/product_promotion'
 
 function Modal({ isOpen, closeModal, selectedSampleId }) {
