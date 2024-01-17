@@ -80,7 +80,7 @@ export default function MessageHandler({
                         ))}
                     </div>
                 </div>
-                <div onClick={onSaveClick} className={Styles.submit_btn}>
+                <div onClick={onSaveClick} className={Styles.save_btn}>
                     저장
                 </div>
             </div>

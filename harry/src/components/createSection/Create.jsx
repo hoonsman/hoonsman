@@ -82,7 +82,7 @@ const SizeBar = ({ sizeList, listIndex, setSizeListIndex }) => {
     )
 }
 
-const mapType1ToSettingData = (letter) => {
+const mapType0ToSettingData = (letter) => {
     const newSettingData = []
     Object.keys(letter).forEach((k) => {
         if (k === 'type') return
@@ -101,7 +101,7 @@ const mapType1ToSettingData = (letter) => {
     return newSettingData
 }
 
-const mapSettingDataToType1 = (settingData, letter) => {
+const mapSettingDataToType0 = (settingData, letter) => {
     const scenesData = [settingData[0], settingData[1], settingData[2]]
     const letterImgKeys = [
         Object.keys(letter.s1.imgs),
@@ -232,7 +232,7 @@ export default function Create({ type = 0 }) {
         let mappedSettingData
         switch (letterType) {
             case 0:
-                mappedSettingData = mapType1ToSettingData(letter)
+                mappedSettingData = mapType0ToSettingData(letter)
                 break
         }
         setSettingData(mappedSettingData)
@@ -273,7 +273,7 @@ export default function Create({ type = 0 }) {
         let newLetter
         switch (type) {
             case 0:
-                newLetter = mapSettingDataToType1(settingData, letter)
+                newLetter = mapSettingDataToType0(settingData, letter)
                 break
         }
 
