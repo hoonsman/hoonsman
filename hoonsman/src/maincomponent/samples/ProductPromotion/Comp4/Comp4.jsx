@@ -1,17 +1,29 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import Style from './Comp4.module.css'
+import dummyData from '../JBDummy.json'
 
 const Comp4 = ({ showMessage4 }) => {
-  const message4Class = showMessage4 ? Style.fadeIn : '' // showMessage4 상태 추가
+  const [message, setMessage] = useState('')
+  const [messageStyle, setMessageStyle] = useState({})
+
+  useEffect(() => {
+    if (dummyData && dummyData.s4) {
+      const messageData = dummyData.s4.messages[0]
+      setMessage(messageData.context)
+      setMessageStyle({
+        fontSize: messageData.size === 'medium' ? '25px' : '50px',
+        color: messageData.color,
+      })
+    }
+  }, [])
+
+  const message4Class = showMessage4 ? Style.fadeIn : ''
 
   return (
     <div className={Style.container}>
-      <div className={`${Style.message} ${message4Class}`}>
-        지금 바로 Z플립5와
-        <br />
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;함께하세요!
-      </div>{' '}
-      {/* showMessage4 상태에 따라 메시지 제어 */}
+      <div className={`${Style.message} ${message4Class}`} style={messageStyle}>
+        {message}
+      </div>
     </div>
   )
 }
