@@ -23,14 +23,15 @@ const SrcInputBtn = ({ index, srcName }) => {
 }
 
 export default function SettingPage({
-    sceneData,
-    setSceneData,
+    settingData,
+    setSettingData,
     index,
     messageFocus,
     setMessageFocus,
+    setLetterData,
 }) {
     const changeControlInfo = (data) => {
-        setSceneData((v) => {
+        setSettingData((v) => {
             const newInfo = { ...v }
             newInfo[index].message[messageFocus] = {
                 ...newInfo[index].message[messageFocus],
@@ -47,11 +48,9 @@ export default function SettingPage({
         <div className={Styles.setting_page}>
             {/* Video Input */}
             <div className={Styles.video_input}>
-                <div className={Styles.setting_title}>
-                    {sceneData.src.type === 'video' ? '비디오' : '이미지'}
-                </div>
+                <div className={Styles.setting_title}>이미지</div>
                 <div className={Styles.video_setting}>
-                    {sceneData.src.src.map((srcName, ind) => (
+                    {settingData.images.map((srcName, ind) => (
                         <SrcInputBtn
                             key={ind}
                             index={index}
@@ -65,7 +64,7 @@ export default function SettingPage({
             <div className={Styles.message_input}>
                 <div className={Styles.setting_title}>메시지</div>
                 <div onClick={onMessageBarClick} className={Styles.message_bar}>
-                    {sceneData.message.map((v, ind) => (
+                    {settingData.message.map((v, ind) => (
                         <MessageBtn
                             index={ind}
                             key={ind}
@@ -82,7 +81,8 @@ export default function SettingPage({
                 </div>
                 <MessageHandler
                     changeControlInfo={changeControlInfo}
-                    {...sceneData.message[messageFocus]}
+                    setLetterData={setLetterData}
+                    {...settingData.message[messageFocus]}
                 />
             </div>
         </div>
