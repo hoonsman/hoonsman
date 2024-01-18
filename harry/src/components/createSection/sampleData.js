@@ -12,8 +12,10 @@ const SampleData = [
         type: 0,
         s1: {
             imgs: {
-                intro: img3,
-                img1: img1, // 경로
+                intro: img1,
+                img1: img2,
+
+                // 경로
                 img2: img2,
                 img3: img3,
                 img4: img4,

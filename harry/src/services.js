@@ -3,12 +3,14 @@ class HttpReq {
         this.baseUrl = baseUrl
     }
 
-    postRequest = async (endPoint, data) => {
+    postRequest = async (endPoint, data, headers = {}) => {
         try {
             const res = await fetch(this.baseUrl + endPoint, {
                 method: 'POST',
                 body: data,
-                headers: {},
+                headers: {
+                    ...headers,
+                },
             })
             const json = await res.json()
             return json
@@ -32,5 +34,23 @@ export class CloudinaryService {
             console.log(e)
             return e
         }
+    }
+}
+
+export class DBService {
+    constructor(baseUrl) {
+        this.http = new HttpReq(baseUrl)
+    }
+
+    createLetter = async (letterData) => {
+        const result = await this.http.postRequest(
+            '/letter/create',
+            JSON.stringify(letterData),
+            {
+                'Content-Type': 'application/json',
+            },
+        )
+
+        console.log(result)
     }
 }

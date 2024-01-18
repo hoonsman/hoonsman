@@ -5,6 +5,10 @@ import Preview from './Preview'
 import SampleData from './sampleData'
 import ConfirmModal from './ConfirmModal'
 
+import { DBService } from '../../services'
+
+const dbService = new DBService(process.env.REACT_APP_BASE_URL)
+
 const sizeItemList = [
     {
         name: 'Iphone 13 pro max (428 x 926)',
@@ -227,6 +231,15 @@ export default function Create({ type = 0 }) {
         height: 0,
     })
     const [isModal, setIsModal] = useState(true)
+    const [isCreateLetter, setIsCreateLetter] = useState(false)
+
+    const onCreateClick = async () => {
+        setIsCreateLetter(true)
+        const result = await dbService.createLetter(letter)
+        console.log(result)
+        setIsCreateLetter(false)
+        setIsModal(false)
+    }
 
     // mapping letter data -> settingData
     useEffect(() => {
@@ -343,6 +356,8 @@ export default function Create({ type = 0 }) {
                         sceneData={letter}
                         size={previewSize}
                         setIsModal={setIsModal}
+                        onCreateClick={onCreateClick}
+                        isCreateLetter={isCreateLetter}
                     />
                 )}
             </div>

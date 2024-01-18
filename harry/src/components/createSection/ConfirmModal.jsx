@@ -2,9 +2,15 @@ import React from 'react'
 import Styles from './confirmmodal.module.css'
 import Preview from './Preview'
 
-export default function ConfirmModal({ sceneData, size, setIsModal }) {
-    const onCreateClick = () => {
-        // request db to create Scene
+export default function ConfirmModal({
+    sceneData,
+    size,
+    setIsModal,
+    onCreateClick,
+    isCreateLetter,
+}) {
+    const onConfirmClick = () => {
+        onCreateClick()
     }
 
     const onUpdateClick = () => {
@@ -18,7 +24,7 @@ export default function ConfirmModal({ sceneData, size, setIsModal }) {
                     <Preview sceneData={sceneData} size={size} />
                 </div>
                 <div className={Styles.select_bar}>
-                    <div onClick={onCreateClick} className={Styles.btn}>
+                    <div onClick={onConfirmClick} className={Styles.btn}>
                         생성하기
                     </div>
                     <div onClick={onUpdateClick} className={Styles.btn}>
@@ -26,6 +32,11 @@ export default function ConfirmModal({ sceneData, size, setIsModal }) {
                     </div>
                 </div>
             </div>
+            {isCreateLetter && (
+                <div className={Styles.loading_container}>
+                    <div className={Styles.loading_spinner}></div>{' '}
+                </div>
+            )}
         </div>
     )
 }
