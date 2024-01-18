@@ -96,3 +96,32 @@
     border-color: #ffb1ad;
     color: #ffb1ad;
 }
+
+/*  Img Spinner */
+
+.img_loading_container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.img_loading_spinner {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 2px solid #a1e9ff;
+    border-top: 2px solid gray;
+    animation: imgspinner infinite 0.5s linear;
+}
+
+@keyframes imgspinner {
+    0% {
+        transform: rotateZ(0deg);
+    }
+    100% {
+        transform: rotateZ(360deg);
+    }
+}
