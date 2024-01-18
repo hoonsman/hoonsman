@@ -1,6 +1,14 @@
-import React from 'react'
+import React, { useRef, useState } from 'react'
 import Styles from './settingpage.module.css'
 import MessageHandler from './MessageHandler'
+
+const ImgLoading = () => {
+    return (
+        <div className="container">
+            <div className="spinner"> </div>
+        </div>
+    )
+}
 
 const MessageBtn = ({ index, focus }) => {
     const isfocus = index === focus
@@ -14,10 +22,53 @@ const MessageBtn = ({ index, focus }) => {
     )
 }
 
-const SrcInputBtn = ({ index, srcName }) => {
+const ImgInput = ({ imageIndex, srcName }) => {
+    const imgInputRef = useRef()
+    const [isLoading, setIsLoading] = useState(false)
+
+    const onImgInputClick = () => {
+        console.log('imgCLick')
+        imgInputRef.current.click()
+    }
+
+    const onFileChange = async (e) => {
+        setIsLoading(true)
+        const files = e?.target?.files
+        if (!files) return
+        const formData = new FormData()
+        for (let i = 0; i < files.length; i++) {
+            formData.append(files[i])
+        }
+
+        setIsLoading(false)
+    }
     return (
-        <div className={Styles.input_btn}>
-            +<div className={Styles.video_title}>{srcName}</div>
+        <div onClick={onImgInputClick} className={Styles.input_btn}>
+            {isLoading ? (
+                <ImgLoading />
+            ) : (
+                <>
+                    <form encType="multipart/form-data">
+                        <input
+                            type="file"
+                            className="file"
+                            style={{
+                                display: 'none',
+                            }}
+                            accept="image/*"
+                            ref={imgInputRef}
+                            onChange={onFileChange}
+                        />
+                    </form>
+                    +
+                    <div className={Styles.img_title}>
+                        {srcName.split('/').pop()}
+                    </div>
+                    <div className={Styles.img_preview}>
+                        <img src={srcName} alt="imgpreview" />
+                    </div>
+                </>
+            )}
         </div>
     )
 }
@@ -25,7 +76,7 @@ const SrcInputBtn = ({ index, srcName }) => {
 export default function SettingPage({
     settingData,
     setSettingData,
-    index,
+    sceneIndex,
     messageFocus,
     setMessageFocus,
     setLetterData,
@@ -33,8 +84,8 @@ export default function SettingPage({
     const changeControlInfo = (data) => {
         setSettingData((v) => {
             const newInfo = { ...v }
-            newInfo[index].message[messageFocus] = {
-                ...newInfo[index].message[messageFocus],
+            newInfo[sceneIndex].message[messageFocus] = {
+                ...newInfo[sceneIndex].message[messageFocus],
                 ...data,
             }
             return newInfo
@@ -51,9 +102,9 @@ export default function SettingPage({
                 <div className={Styles.setting_title}>이미지</div>
                 <div className={Styles.video_setting}>
                     {settingData.images.map((srcName, ind) => (
-                        <SrcInputBtn
+                        <ImgInput
                             key={ind}
-                            index={index}
+                            imageIndex={ind}
                             srcName={srcName}
                         />
                     ))}
