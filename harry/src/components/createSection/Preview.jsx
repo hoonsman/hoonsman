@@ -149,7 +149,7 @@ const sceneActive = {
             },
             {
                 opIn: [0.65, 0.7],
-                opOut: [0.8, 1],
+                opOut: [0.95, 1],
                 trIn: [15, 0],
                 trOut: [0, -15],
             },
@@ -613,7 +613,6 @@ export default function Preview({ size, sceneData }) {
         c2Ref,
         s3Ref,
         c3Ref,
-        ,
     ])
 
     // Src Loading

@@ -64,9 +64,6 @@ const ImgInput = ({ imageIndex, srcName, setImgUrl }) => {
                         />
                     </form>
                     +
-                    <div className={Styles.img_title}>
-                        {srcName.split('/').pop()}
-                    </div>
                     <div className={Styles.img_preview}>
                         <img src={srcName} alt="imgpreview" />
                     </div>
@@ -83,9 +80,15 @@ export default function SettingPage({
     messageFocus,
     setMessageFocus,
     setLetterData,
+    setIsModal,
 }) {
     const setImgUrl = (imageIndex, imgUrl) => {
-        
+        setSettingData((v) => {
+            const newInfo = { ...v }
+            newInfo[sceneIndex].images[imageIndex] = imgUrl
+
+            return newInfo
+        })
     }
 
     const changeControlInfo = (data) => {
@@ -141,6 +144,7 @@ export default function SettingPage({
                 <MessageHandler
                     changeControlInfo={changeControlInfo}
                     setLetterData={setLetterData}
+                    setIsModal={setIsModal}
                     {...settingData.message[messageFocus]}
                 />
             </div>

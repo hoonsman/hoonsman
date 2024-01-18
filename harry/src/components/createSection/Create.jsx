@@ -3,6 +3,7 @@ import Styles from './create.module.css'
 import SettingPage from './SettingPage'
 import Preview from './Preview'
 import SampleData from './sampleData'
+import ConfirmModal from './ConfirmModal'
 
 const sizeItemList = [
     {
@@ -225,6 +226,7 @@ export default function Create({ type = 0 }) {
         width: 0,
         height: 0,
     })
+    const [isModal, setIsModal] = useState(false)
 
     // mapping letter data -> settingData
     useEffect(() => {
@@ -333,8 +335,10 @@ export default function Create({ type = 0 }) {
                         messageFocus={messageFocus}
                         setMessageFocus={setMessageFocus}
                         setLetterData={setLetterData}
+                        setIsModal={setIsModal}
                     />
                 </div>
+                {isModal && <ConfirmModal />}
             </div>
         </div>
     )
