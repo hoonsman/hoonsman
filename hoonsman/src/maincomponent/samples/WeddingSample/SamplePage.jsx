@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import Styles from './samplepage.module.css'
+import LoadingSpinner from './LoadingSpinner'
 
 const messageMotion = {
   s1: {
@@ -911,7 +912,7 @@ export default function SamplePage({ size, data }) {
         style={{ height: `${viewHeight}px`, width: `${viewWidth}px` }}
       >
         {isLoading ? (
-          'Loading...'
+          <LoadingSpinner />
         ) : (
           <>
             <div
