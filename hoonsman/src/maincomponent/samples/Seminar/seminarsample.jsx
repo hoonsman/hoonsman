@@ -4,12 +4,7 @@ import seminarData from './seminarData.js'
 
 const IntervalTime = 2000
 
-const size = {
-  width: 428,
-  height: 926,
-}
-
-function SeminarSample() {
+function SeminarSample({ size }) {
   const sectionRefs = useRef([])
   const sliderRefs = useRef([])
   const [textAnimationStatus, setTextAnimationStatus] = useState({})
@@ -50,11 +45,13 @@ function SeminarSample() {
   console.log('Transformed Dummy Data:', transformedDummyData)
 
   useEffect(() => {
-    const imgWidth = 380
-    let imgX = 0
+    const imgWidth = parseInt(size.width, 10) // `size.width` 문자열에서 숫자로 변환
+    let imgX = imgWidth
     const intervalId1 = setInterval(() => {
-      imgX -= 380
-      if (imgX < -imgWidth * 2) imgX = 0
+      imgX -= imgWidth
+      if (imgX < -imgWidth * (settingData[1].images.length - 1) + imgWidth) {
+        imgX = imgWidth // 여기서 settingData[1]은 슬라이더가 있는 섹션입니다.
+      }
 
       sliderRefs.current.forEach((sliderRef, index) => {
         if (index !== 0 && index !== 3 && index !== 4) {
@@ -103,10 +100,10 @@ function SeminarSample() {
       }
       clearInterval(intervalId1)
     }
-  }, [])
+  }, [size.width, size.height]) // size가 변경될 때마다 useEffect가 다시 실행되도록 설정
 
   return (
-    <div className="wrapper">
+    <div className="wrapper" style={{ maxWidth: size.width || 380 }}>
       <div className="container">
         <section
           ref={(el) => (sectionRefs.current[0] = el)}
@@ -117,6 +114,7 @@ function SeminarSample() {
               src={seminarData.scenes[0].images[0]}
               alt="Intro"
               className="background-image"
+              style={{ width: size.width, height: size.height }}
             />
           </div>
           <p
@@ -151,16 +149,19 @@ function SeminarSample() {
               src={seminarData.scenes[1].images.image1}
               alt="Description 1"
               className="background-image"
+              style={{ width: size.width, height: size.height }}
             />
             <img
               src={seminarData.scenes[1].images.image2}
               alt="Description 1"
               className="background-image"
+              style={{ width: size.width, height: size.height }}
             />
             <img
               src={seminarData.scenes[1].images.image3}
               alt="Description 1"
               className="background-image"
+              style={{ width: size.width, height: size.height }}
             />
           </div>
           <p
@@ -214,16 +215,19 @@ function SeminarSample() {
               src={seminarData.scenes[2].images.image1}
               alt="Description 2"
               className="background-image"
+              style={{ width: size.width, height: size.height }}
             />
             <img
               src={seminarData.scenes[2].images.image2}
               alt="Description 2"
               className="background-image"
+              style={{ width: size.width, height: size.height }}
             />
             <img
               src={seminarData.scenes[2].images.image3}
               alt="Description 2"
               className="background-image"
+              style={{ width: size.width, height: size.height }}
             />
           </div>
           <p
@@ -277,6 +281,7 @@ function SeminarSample() {
             src={seminarData.scenes[3].images[0]}
             alt="Location"
             className="background-image"
+            style={{ width: size.width, height: size.height }}
           />
           <p
             className={`keyword ${textAnimationStatus[3] || ''} ${
@@ -328,6 +333,7 @@ function SeminarSample() {
               src={seminarData.scenes[4].images[0]}
               alt="Intro"
               className="background-image"
+              style={{ width: size.width, height: size.height }}
             />
           </div>
 
