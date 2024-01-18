@@ -2,10 +2,12 @@ import React, { useRef, useState } from 'react'
 import Styles from './settingpage.module.css'
 import MessageHandler from './MessageHandler'
 
+import { CloudinaryService } from '../../services'
+const cloudinaryService = new CloudinaryService(process.env.REACT_APP_BASE_URL)
 const ImgLoading = () => {
     return (
-        <div className="container">
-            <div className="spinner"> </div>
+        <div className={Styles.img_loading_container}>
+            <div className={Styles.img_loading_spinner}> </div>
         </div>
     )
 }
@@ -22,7 +24,7 @@ const MessageBtn = ({ index, focus }) => {
     )
 }
 
-const ImgInput = ({ imageIndex, srcName }) => {
+const ImgInput = ({ imageIndex, srcName, setImgUrl }) => {
     const imgInputRef = useRef()
     const [isLoading, setIsLoading] = useState(false)
 
@@ -33,13 +35,14 @@ const ImgInput = ({ imageIndex, srcName }) => {
 
     const onFileChange = async (e) => {
         setIsLoading(true)
-        const files = e?.target?.files
+        const files = e?.currentTarget?.files
         if (!files) return
         const formData = new FormData()
         for (let i = 0; i < files.length; i++) {
-            formData.append(files[i])
+            formData.append('avatar', files[i])
         }
-
+        const imgUrl = await cloudinaryService.uploadImage(formData)
+        setImgUrl(imageIndex, imgUrl)
         setIsLoading(false)
     }
     return (
@@ -61,9 +64,6 @@ const ImgInput = ({ imageIndex, srcName }) => {
                         />
                     </form>
                     +
-                    <div className={Styles.img_title}>
-                        {srcName.split('/').pop()}
-                    </div>
                     <div className={Styles.img_preview}>
                         <img src={srcName} alt="imgpreview" />
                     </div>
@@ -80,7 +80,17 @@ export default function SettingPage({
     messageFocus,
     setMessageFocus,
     setLetterData,
+    setIsModal,
 }) {
+    const setImgUrl = (imageIndex, imgUrl) => {
+        setSettingData((v) => {
+            const newInfo = { ...v }
+            newInfo[sceneIndex].images[imageIndex] = imgUrl
+
+            return newInfo
+        })
+    }
+
     const changeControlInfo = (data) => {
         setSettingData((v) => {
             const newInfo = { ...v }
@@ -106,6 +116,7 @@ export default function SettingPage({
                             key={ind}
                             imageIndex={ind}
                             srcName={srcName}
+                            setImgUrl={setImgUrl}
                         />
                     ))}
                 </div>
@@ -133,6 +144,7 @@ export default function SettingPage({
                 <MessageHandler
                     changeControlInfo={changeControlInfo}
                     setLetterData={setLetterData}
+                    setIsModal={setIsModal}
                     {...settingData.message[messageFocus]}
                 />
             </div>
