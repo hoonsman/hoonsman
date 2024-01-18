@@ -5,52 +5,61 @@ import Comp2 from './Comp2/Comp2'
 import Comp3 from './Comp3/Comp3'
 import Comp4 from './Comp4/Comp4'
 import Blank from './Blank/Blank'
+import jbdummyData from './JBDummy.json' // JBDummy.json 불러오기
+import settingDataSP from './SettingDataSP.json' // SettingDataSP.json 불러오기
+
+//데이터변환
+const convertSettingDataSPToJBDummy = (settingDataSP) => {
+  const jbdummyData = {}
+
+  settingDataSP.forEach((section, index) => {
+    const sectionKey = `s${index + 1}`
+    jbdummyData[sectionKey] = {
+      imgs: {},
+      messages: [],
+    }
+
+    section.images.forEach((img, imgIndex) => {
+      const imgKey = imgIndex === 0 ? 'intro' : `img${imgIndex}`
+      jbdummyData[sectionKey].imgs[imgKey] = img
+    })
+
+    section.message.forEach((msg) => {
+      jbdummyData[sectionKey].messages.push({
+        context: msg.content,
+        size: msg.size || 'medium',
+        color: msg.color || 'white',
+      })
+    })
+  })
+
+  return jbdummyData
+}
+
+const convertJBDummyToSettingDataSP = (jbdummyData) => {
+  const settingDataSP = []
+
+  Object.keys(jbdummyData).forEach((sectionKey) => {
+    const section = jbdummyData[sectionKey]
+    const images = section.imgs ? Object.values(section.imgs) : []
+    const messages = section.messages.map((msg) => ({
+      content: msg.context,
+      size: msg.size || 'medium',
+      color: msg.color || 'white',
+    }))
+
+    settingDataSP.push({
+      images,
+      message: messages,
+    })
+  })
+
+  return settingDataSP
+}
 
 const Promotion = () => {
-  //데이터 변환
-  //외부값을 JBDummy값으로 변경
-  const mapExternalDataToInternal = (externalData) => {
-    return externalData.map((item) => {
-      return {
-        messages: item['messages'] || [], // 기본값: 빈 배열
-        img: item['img'] || '', // 기본값: 공백
-
-        size: item['font_size'] || 'medium', // 기본값: 'medium'
-        color: item['font_color'] || 'black', // 기본값: 'black'
-        context: item['content'] || '', // 기본값: 빈 문자열
-      }
-    })
-  }
-
-  //JBDummy값을 외부값으로 변경
-  const mapInternalDataToExternal = (internalData) => {
-    return internalData.map((item) => {
-      return {
-        messages: item['messages'] || [], // 기본값: 빈 배열
-        img: item['img'] || '', // 기본값: 공백
-
-        font_size: item['size'] || 'medium', // 기본값: 'medium'
-        font_color: item['color'] || 'black', // 기본값: 'black'
-        content: item['context'] || '', // 기본값: 빈 문자열
-      }
-    })
-  }
-
-  // '''''test''''
-  // const externalData = [
-  //   {
-  //     'font_size': 'large',
-  //     'font_color': 'red',
-  //     content: 'Example text 1',
-  //   },
-  //   {
-  //     content: 'Example text 2',
-  //   },
-  // ]
-
-  // const internalData = mapExternalDataToInternal(externalData)
-  // console.log(internalData)
-
+  const transformedSettingDataSP = convertJBDummyToSettingDataSP(jbdummyData)
+  const transformedJBDummyData = convertSettingDataSPToJBDummy(settingDataSP)
   //이벤트
   const [activeComp, setActiveComp] = useState('Comp1')
   const [showMessage1, setShowMessage1] = useState(false)
