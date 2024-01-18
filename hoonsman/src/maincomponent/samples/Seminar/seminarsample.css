@@ -38,15 +38,11 @@
 
 .slider {
   position: relative;
-  top: 0;
-  left: 0;
-  width: 380px;
   display: flex;
   transition: all 1s cubic-bezier(0.3, 0.49, 0.37, 0.88);
 }
 
 .background-image {
-  max-width: 380px;
   object-fit: cover;
   z-index: 0;
   transition: transform 0.5s ease-in-out;
