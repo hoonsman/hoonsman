@@ -5,20 +5,33 @@ import Comp2 from './Comp2/Comp2'
 import Comp3 from './Comp3/Comp3'
 import Comp4 from './Comp4/Comp4'
 import Blank from './Blank/Blank'
-import SettingDataSP from './SettingDataSP.json'
-import JBDummy from './JBDummy.json'
 
 const Promotion = () => {
   //데이터 변환
+  //외부값을 JBDummy값으로 변경
   const mapExternalDataToInternal = (externalData) => {
     return externalData.map((item) => {
       return {
         messages: item['messages'] || [], // 기본값: 빈 배열
         img: item['img'] || '', // 기본값: 공백
 
-        size: item['font-size'] || 'medium', // 기본값: 'medium'
-        color: item['font-color'] || 'black', // 기본값: 'black'
+        size: item['font_size'] || 'medium', // 기본값: 'medium'
+        color: item['font_color'] || 'black', // 기본값: 'black'
         context: item['content'] || '', // 기본값: 빈 문자열
+      }
+    })
+  }
+
+  //JBDummy값을 외부값으로 변경
+  const mapInternalDataToExternal = (internalData) => {
+    return internalData.map((item) => {
+      return {
+        messages: item['messages'] || [], // 기본값: 빈 배열
+        img: item['img'] || '', // 기본값: 공백
+
+        font_size: item['size'] || 'medium', // 기본값: 'medium'
+        font_color: item['color'] || 'black', // 기본값: 'black'
+        content: item['context'] || '', // 기본값: 빈 문자열
       }
     })
   }
@@ -26,8 +39,8 @@ const Promotion = () => {
   // '''''test''''
   // const externalData = [
   //   {
-  //     'font-size': 'large',
-  //     'font-color': 'red',
+  //     'font_size': 'large',
+  //     'font_color': 'red',
   //     content: 'Example text 1',
   //   },
   //   {
