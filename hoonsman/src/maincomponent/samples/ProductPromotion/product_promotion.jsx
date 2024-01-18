@@ -9,66 +9,34 @@ import SettingDataSP from './SettingDataSP.json'
 import JBDummy from './JBDummy.json'
 
 const Promotion = () => {
-  //데이터
-  const mapType0ToSettingData = (letter) => {
-    const newSettingData = []
-    Object.keys(letter).forEach((k) => {
-      if (k === 'type') return
-      const newScene = {
-        images: [],
-        message: [],
+  //데이터 변환
+  const mapExternalDataToInternal = (externalData) => {
+    return externalData.map((item) => {
+      return {
+        messages: item['messages'] || [], // 기본값: 빈 배열
+        img: item['img'] || '', // 기본값: 공백
+
+        size: item['font-size'] || 'medium', // 기본값: 'medium'
+        color: item['font-color'] || 'black', // 기본값: 'black'
+        context: item['content'] || '', // 기본값: 빈 문자열
       }
-      Object.keys(letter[k].imgs).forEach((imgk) => {
-        newScene.images.push(letter[k].imgs[imgk])
-      })
-      letter[k].messages.forEach((m) => {
-        newScene.message.push({ ...m })
-      })
-      newSettingData.push(newScene)
     })
-    return newSettingData
   }
 
-  const mapSettingDataToType0 = (settingData, letter) => {
-    const scenesData = [settingData[0], settingData[1], settingData[2]]
-    const letterImgKeys = [
-      Object.keys(letter.s1.imgs),
-      Object.keys(letter.s2.imgs),
-      Object.keys(letter.s3.imgs),
-    ]
+  // '''''test''''
+  // const externalData = [
+  //   {
+  //     'font-size': 'large',
+  //     'font-color': 'red',
+  //     content: 'Example text 1',
+  //   },
+  //   {
+  //     content: 'Example text 2',
+  //   },
+  // ]
 
-    const newLetter = {
-      type: 0,
-      s1: {
-        imgs: {},
-        messages: [],
-      },
-      s2: {
-        imgs: {},
-        messages: [],
-      },
-      s3: {
-        imgs: {},
-        messages: [],
-      },
-    }
-
-    scenesData.forEach((sceneData, index) => {
-      newLetter[`s${index + 1}`].messages = [...sceneData.message]
-    })
-
-    letterImgKeys.forEach((imgKeys, sIndex) => {
-      imgKeys.forEach((imgKey, imgIndex) => {
-        newLetter[`s${sIndex + 1}`].imgs[imgKey] =
-          scenesData[sIndex].images[imgIndex]
-      })
-    })
-
-    return newLetter
-  }
-  const settingData = SettingDataSP
-  const newSettingData = mapType0ToSettingData(settingData)
-  const newLetter = mapSettingDataToType0(newSettingData, JBDummy)
+  // const internalData = mapExternalDataToInternal(externalData)
+  // console.log(internalData)
 
   //이벤트
   const [activeComp, setActiveComp] = useState('Comp1')
