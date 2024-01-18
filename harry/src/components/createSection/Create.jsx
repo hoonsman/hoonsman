@@ -230,7 +230,7 @@ export default function Create({ type = 0 }) {
         width: 0,
         height: 0,
     })
-    const [isModal, setIsModal] = useState(true)
+    const [isModal, setIsModal] = useState(false)
     const [isCreateLetter, setIsCreateLetter] = useState(false)
 
     const onCreateClick = async () => {

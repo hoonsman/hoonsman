@@ -34,7 +34,7 @@ export default function ConfirmModal({
             </div>
             {isCreateLetter && (
                 <div className={Styles.loading_container}>
-                    <div className={Styles.loading_spinner}></div>{' '}
+                    <div className={Styles.loading_spinner}> </div>
                 </div>
             )}
         </div>
