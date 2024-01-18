@@ -387,7 +387,7 @@ const mapType3ToSettingData = (dummy) => {
     }
 
     Object.keys(dummy[s].image).forEach((img) => {
-      newScene.images.push(dummy[s].image[img])
+      newScene.images.push(dummy[s].image[img].path)
     })
 
     Object.keys(dummy[s].message).forEach((m) => {
