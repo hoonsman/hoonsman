@@ -5,7 +5,7 @@ const Logo = () => {
   return (
     <div className={Style.Logo}>
       <a href="../../App.js">
-        <img src={`${process.env.PUBLIC_URL}/img/Logo.png`} />
+        <img src={`${process.env.PUBLIC_URL}/img/lllogo.png`} />
       </a>
     </div>
   )

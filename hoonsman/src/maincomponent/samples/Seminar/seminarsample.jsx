@@ -2,25 +2,63 @@ import React, { useEffect, useRef, useState } from 'react'
 import './seminarsample.css'
 import seminarData from './seminarData.js'
 
-function SeminarSample() {
+const IntervalTime = 2000
+
+function SeminarSample({ size }) {
   const sectionRefs = useRef([])
   const sliderRefs = useRef([])
   const [textAnimationStatus, setTextAnimationStatus] = useState({})
 
+  // 내 더미 데이터를 세팅 데이터로 변환하는 함수
+  const mapDummyToSettingData = (dummyData) => {
+    return dummyData.scenes.map((scene) => ({
+      images: scene.images ? Object.values(scene.images) : [],
+      message: scene.messages
+        ? scene.messages.map((msg) => ({
+            content: msg.text || '',
+            size: msg.size || 'medium',
+            color: msg.color || 'white',
+          }))
+        : [],
+    }))
+  }
+  const settingData = mapDummyToSettingData(seminarData)
+  console.log('Setting Data:', settingData)
+
+  // 세팅 데이터를 내 더미 데이터로 변환하는 함수
+  const mapSettingDataToDummy = (settingData) => {
+    return {
+      scenes: settingData.map((scene) => ({
+        images: scene.images.reduce((acc, img, index) => {
+          acc[`image${index + 1}`] = img
+          return acc
+        }, {}),
+        messages: scene.message.map((msg) => ({
+          text: msg.content,
+          size: msg.size,
+          color: msg.color,
+        })),
+      })),
+    }
+  }
+  const transformedDummyData = mapSettingDataToDummy(settingData)
+  console.log('Transformed Dummy Data:', transformedDummyData)
+
   useEffect(() => {
-    const imgWidth = 380
-    let imgX = 0
+    const imgWidth = parseInt(size.width, 10) // `size.width` 문자열에서 숫자로 변환
+    let imgX = imgWidth
     const intervalId1 = setInterval(() => {
-      imgX -= 380
-      if (imgX < -imgWidth * 2) imgX = 0
+      imgX -= imgWidth
+      if (imgX < -imgWidth * (settingData[1].images.length - 1) + imgWidth) {
+        imgX = imgWidth // 여기서 settingData[1]은 슬라이더가 있는 섹션입니다.
+      }
 
       sliderRefs.current.forEach((sliderRef, index) => {
-        // 섹션 1, 4, 5에 대해서만 slider 애니메이션을 적용하지 않습니다.
         if (index !== 0 && index !== 3 && index !== 4) {
           sliderRef.style.left = `${imgX}px`
         }
       })
-    }, 2000)
+    }, IntervalTime)
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -35,7 +73,7 @@ function SeminarSample() {
                 ...prev,
                 [sectionIndex]: 'text-fade-in',
               }))
-            }, 2000) // 이미지 fade-in 애니메이션 시간과 일치
+            }, IntervalTime) // 이미지 fade-in 애니메이션 시간과 일치
           } else {
             entry.target.classList.add('fade-out')
             entry.target.classList.remove('fade-in')
@@ -62,10 +100,10 @@ function SeminarSample() {
       }
       clearInterval(intervalId1)
     }
-  }, [])
+  }, [size.width, size.height]) // size가 변경될 때마다 useEffect가 다시 실행되도록 설정
 
   return (
-    <div className="wrapper">
+    <div className="wrapper" style={{ maxWidth: size.width || 380 }}>
       <div className="container">
         <section
           ref={(el) => (sectionRefs.current[0] = el)}
@@ -76,6 +114,7 @@ function SeminarSample() {
               src={seminarData.scenes[0].images[0]}
               alt="Intro"
               className="background-image"
+              style={{ width: size.width, height: size.height }}
             />
           </div>
           <p
@@ -110,16 +149,19 @@ function SeminarSample() {
               src={seminarData.scenes[1].images.image1}
               alt="Description 1"
               className="background-image"
+              style={{ width: size.width, height: size.height }}
             />
             <img
               src={seminarData.scenes[1].images.image2}
               alt="Description 1"
               className="background-image"
+              style={{ width: size.width, height: size.height }}
             />
             <img
               src={seminarData.scenes[1].images.image3}
               alt="Description 1"
               className="background-image"
+              style={{ width: size.width, height: size.height }}
             />
           </div>
           <p
@@ -173,16 +215,19 @@ function SeminarSample() {
               src={seminarData.scenes[2].images.image1}
               alt="Description 2"
               className="background-image"
+              style={{ width: size.width, height: size.height }}
             />
             <img
               src={seminarData.scenes[2].images.image2}
               alt="Description 2"
               className="background-image"
+              style={{ width: size.width, height: size.height }}
             />
             <img
               src={seminarData.scenes[2].images.image3}
               alt="Description 2"
               className="background-image"
+              style={{ width: size.width, height: size.height }}
             />
           </div>
           <p
@@ -236,6 +281,7 @@ function SeminarSample() {
             src={seminarData.scenes[3].images[0]}
             alt="Location"
             className="background-image"
+            style={{ width: size.width, height: size.height }}
           />
           <p
             className={`keyword ${textAnimationStatus[3] || ''} ${
@@ -287,6 +333,7 @@ function SeminarSample() {
               src={seminarData.scenes[4].images[0]}
               alt="Intro"
               className="background-image"
+              style={{ width: size.width, height: size.height }}
             />
           </div>
 
