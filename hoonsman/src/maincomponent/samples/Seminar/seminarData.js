@@ -27,7 +27,7 @@ const seminarData = {
         {
           text: '세미나에 대한 설명 1',
           size: 'small',
-          color: 'black',
+          color: 'white',
         },
       ],
     },
@@ -47,7 +47,7 @@ const seminarData = {
         {
           text: '세미나에 대한 설명 2',
           size: 'small',
-          color: 'black',
+          color: 'white',
         },
       ],
     },

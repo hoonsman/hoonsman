@@ -2,10 +2,52 @@ import React, { useEffect, useRef, useState } from 'react'
 import './seminarsample.css'
 import seminarData from './seminarData.js'
 
+const IntervalTime = 2000
+
+const size = {
+  width: 428,
+  height: 926,
+}
+
 function SeminarSample() {
   const sectionRefs = useRef([])
   const sliderRefs = useRef([])
   const [textAnimationStatus, setTextAnimationStatus] = useState({})
+
+  // 내 더미 데이터를 세팅 데이터로 변환하는 함수
+  const mapDummyToSettingData = (dummyData) => {
+    return dummyData.scenes.map((scene) => ({
+      images: scene.images ? Object.values(scene.images) : [],
+      message: scene.messages
+        ? scene.messages.map((msg) => ({
+            content: msg.text || '',
+            size: msg.size || 'medium',
+            color: msg.color || 'white',
+          }))
+        : [],
+    }))
+  }
+  const settingData = mapDummyToSettingData(seminarData)
+  console.log('Setting Data:', settingData)
+
+  // 세팅 데이터를 내 더미 데이터로 변환하는 함수
+  const mapSettingDataToDummy = (settingData) => {
+    return {
+      scenes: settingData.map((scene) => ({
+        images: scene.images.reduce((acc, img, index) => {
+          acc[`image${index + 1}`] = img
+          return acc
+        }, {}),
+        messages: scene.message.map((msg) => ({
+          text: msg.content,
+          size: msg.size,
+          color: msg.color,
+        })),
+      })),
+    }
+  }
+  const transformedDummyData = mapSettingDataToDummy(settingData)
+  console.log('Transformed Dummy Data:', transformedDummyData)
 
   useEffect(() => {
     const imgWidth = 380
@@ -15,12 +57,11 @@ function SeminarSample() {
       if (imgX < -imgWidth * 2) imgX = 0
 
       sliderRefs.current.forEach((sliderRef, index) => {
-        // 섹션 1, 4, 5에 대해서만 slider 애니메이션을 적용하지 않습니다.
         if (index !== 0 && index !== 3 && index !== 4) {
           sliderRef.style.left = `${imgX}px`
         }
       })
-    }, 2000)
+    }, IntervalTime)
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -35,7 +76,7 @@ function SeminarSample() {
                 ...prev,
                 [sectionIndex]: 'text-fade-in',
               }))
-            }, 2000) // 이미지 fade-in 애니메이션 시간과 일치
+            }, IntervalTime) // 이미지 fade-in 애니메이션 시간과 일치
           } else {
             entry.target.classList.add('fade-out')
             entry.target.classList.remove('fade-in')
