@@ -226,7 +226,7 @@ export default function Create({ type = 0 }) {
         width: 0,
         height: 0,
     })
-    const [isModal, setIsModal] = useState(false)
+    const [isModal, setIsModal] = useState(true)
 
     // mapping letter data -> settingData
     useEffect(() => {
@@ -338,7 +338,13 @@ export default function Create({ type = 0 }) {
                         setIsModal={setIsModal}
                     />
                 </div>
-                {isModal && <ConfirmModal />}
+                {isModal && (
+                    <ConfirmModal
+                        sceneData={letter}
+                        size={previewSize}
+                        setIsModal={setIsModal}
+                    />
+                )}
             </div>
         </div>
     )

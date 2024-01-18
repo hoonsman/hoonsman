@@ -41,7 +41,7 @@ export default function MessageHandler({
     const onSaveClick = () => {
         setIsModal(true)
     }
-    
+
     const setVal = (attr, val) => {
         changeControlInfo({
             [attr]: val,
@@ -93,7 +93,7 @@ export default function MessageHandler({
                             임시저장
                         </div>
                         <div onClick={onSaveClick} className={Styles.opt}>
-                            저장
+                            생성
                         </div>
                     </div>
                 </div>
