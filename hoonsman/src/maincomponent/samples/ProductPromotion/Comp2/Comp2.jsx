@@ -11,7 +11,7 @@ const Comp2 = ({ active, showMessage1, showMessage2 }) => {
 
   useEffect(() => {
     if (dummyData && dummyData.s2) {
-      setImg3Url(process.env.PUBLIC_URL + dummyData.s2.imgs.img3)
+      setImg3Url(dummyData.s2.imgs.img3)
       const messageData1 = dummyData.s2.messages[0]
       const messageData2 = dummyData.s2.messages[1]
       setMessage1(messageData1.context)

@@ -11,8 +11,8 @@ const Comp1 = ({ active, showMessage, showDetailImage }) => {
   useEffect(() => {
     // JSON 파일에서 데이터 로드
     if (dummyData && dummyData.s1) {
-      setImg1Url(process.env.PUBLIC_URL + dummyData.s1.imgs.img1)
-      setImg2Url(process.env.PUBLIC_URL + dummyData.s1.imgs.img2)
+      setImg1Url(dummyData.s1.imgs.img1)
+      setImg2Url(dummyData.s1.imgs.img2)
       const messageData = dummyData.s1.messages[0]
       setMessage(messageData.context)
       setMessageStyle({
