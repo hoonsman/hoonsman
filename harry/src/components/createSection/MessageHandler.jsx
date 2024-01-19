@@ -19,7 +19,7 @@ const OptBtn = ({ attr, val, text, now, setVal }) => {
     return (
         <div
             onClick={onBtnClick}
-            className={` ${now === val && Styles.opt_focus} ${Styles.opt}`}
+            className={`${now === val && Styles.opt_focus} ${Styles.opt}`}
         >
             {text}
         </div>
@@ -29,13 +29,19 @@ const OptBtn = ({ attr, val, text, now, setVal }) => {
 export default function MessageHandler({
     content,
     setLetterData,
+    setIsModal,
     size,
     color,
     changeControlInfo,
 }) {
-    const onSaveClick = () => {
+    const onTempSaveClick = () => {
         setLetterData()
     }
+
+    const onSaveClick = () => {
+        setIsModal(true)
+    }
+
     const setVal = (attr, val) => {
         changeControlInfo({
             [attr]: val,
@@ -80,8 +86,16 @@ export default function MessageHandler({
                         ))}
                     </div>
                 </div>
-                <div onClick={onSaveClick} className={Styles.save_btn}>
-                    저장
+                <div className={Styles.message_option}>
+                    <div className={Styles.title}>저장</div>
+                    <div className={Styles.option_bar}>
+                        <div onClick={onTempSaveClick} className={Styles.opt}>
+                            적용
+                        </div>
+                        <div onClick={onSaveClick} className={Styles.opt}>
+                            생성
+                        </div>
+                    </div>
                 </div>
             </div>
             <div className={Styles.right}>

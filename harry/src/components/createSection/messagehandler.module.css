@@ -7,6 +7,11 @@
     width: 50%;
 }
 
+.left {
+    display: flex;
+    flex-direction: column;
+}
+
 .title {
     font-weight: bold;
     font-size: 20px;
@@ -26,6 +31,9 @@
 }
 
 .opt {
+    text-align: center;
+    width: 50%;
+    margin: 0 10px;
     background-color: #ffbcb6;
     padding: 3px 20px;
     border-radius: 5px;
@@ -53,11 +61,12 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 0 15px;
+    margin: 0 10px;
     margin-right: 40px;
     cursor: pointer;
     user-select: none;
     transition: all 0.05s linear;
+    width: 50%;
 }
 
 .save_btn:hover {
