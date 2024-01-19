@@ -1,33 +1,59 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Q&A with GPT-4</title>
+    <title>문구 추천</title>
   </head>
   <body>
-    <h1>Ask a Question</h1>
-    <form id="question-form">
-      <input type="text" id="question" name="question" />
-      <input type="submit" value="Ask" />
+    <h1>문구 추천</h1>
+    <form id="phrase-form">
+      <label for="keyword1">키워드1:</label>
+      <input type="text" id="keyword1" name="keyword1" />
+      <br />
+      <label for="keyword2">키워드2:</label>
+      <input type="text" id="keyword2" name="keyword2" />
+      <br />
+      <label for="keyword3">키워드3:</label>
+      <input type="text" id="keyword3" name="keyword3" />
+      <br />
+      <label for="keyword4">키워드4:</label>
+      <input type="text" id="keyword4" name="keyword4" />
+      <br />
+      <label for="theme">테마:</label>
+      <input type="text" id="theme" name="theme" />
+      <br />
+      <input type="submit" value="문구 추천받기" />
     </form>
-    <p id="answer"></p>
+    <p id="phrases"></p>
 
     <script>
-      document.getElementById('question-form').onsubmit = function (e) {
+      document.getElementById('phrase-form').onsubmit = function (e) {
         e.preventDefault()
 
-        fetch('http://127.0.0.1:5000/ask', {
-          // Flask 서버의 /ask 경로로 요청을 보내야 합니다.
+        const formData = new FormData(this)
+        const keywords = [
+          formData.get('keyword1'),
+          formData.get('keyword2'),
+          formData.get('keyword3'),
+          formData.get('keyword4'),
+        ].filter(Boolean) // 빈 값 제거
+
+        const theme = formData.get('theme')
+
+        fetch('http://127.0.0.1:5000/get_phrases', {
           method: 'POST',
-          body: new FormData(this),
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ keywords, theme }),
         })
           .then((response) => response.json())
           .then((data) => {
-            document.getElementById('answer').innerText =
-              'Answer: ' + data.answer
+            document.getElementById('phrases').innerText = JSON.stringify(
+              data,
+              null,
+              2,
+            )
           })
           .catch((error) => console.error('Error:', error))
       }
     </script>
   </body>
 </html>
-``

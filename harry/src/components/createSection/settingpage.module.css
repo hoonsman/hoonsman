@@ -1,4 +1,5 @@
 /* Setting Page */
+
 .setting_page {
     width: 100%;
     display: flex;
@@ -12,7 +13,7 @@
     margin-bottom: 10px;
 }
 
-/* src input*/
+/* src input */
 
 .video_input {
     display: flex;
@@ -26,7 +27,8 @@
     padding-left: 20px;
 }
 
-.video_title {
+.img_title {
+    display: none;
     position: absolute;
     top: 0;
     left: 100%;
@@ -38,10 +40,19 @@
     background-color: #ffa1a1;
     color: white;
     text-align: center;
-    display: none;
     z-index: 1;
 }
 
+.img_preview {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1;
+}
+.img_preview img {
+    width: 300px;
+}
 /* Message Setting */
 
 .message_input {
@@ -76,7 +87,8 @@
     color: #ffb1ad;
 }
 
-.input_btn:hover .video_title {
+.input_btn:hover .img_title,
+.input_btn:hover .img_preview {
     display: block;
 }
 
@@ -84,5 +96,3 @@
     border-color: #ffb1ad;
     color: #ffb1ad;
 }
-
-

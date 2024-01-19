@@ -1,12 +1,22 @@
-.container {
+.wrapper {
     position: relative;
     flex-direction: column;
-    overflow-y: scroll;
+    overflow-y: hidden;
     overflow-x: hidden;
     height: 10px;
 }
 
-.s1_canvas {
+.container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    padding-right: 17px; /* Increase/decrease this value for cross-browser compatibility */
+    box-sizing: content-box; /* So the width will be 100% + 17px */
+}
+
+.scenecanvas {
     position: absolute;
     background-color: transparent;
     top: 0;
@@ -20,12 +30,15 @@
     background-color: white;
 }
 
-.s1message {
+.scenemessage {
     position: absolute;
+    text-align: center;
+    font-weight: bold;
     z-index: 2;
     left: 50%;
     transform: translate3d(-50%, -50%, 0);
     color: black;
+    opacity: 0;
 }
 
 .messagebox {

@@ -257,6 +257,7 @@ const drawImageInCanvas = (
 // Sample Data
 
 const data = {
+  type: 3,
   scene1: {
     image: {
       1: {
@@ -376,7 +377,166 @@ const data = {
   },
 }
 
-export default function SamplePage({ viewWidth = 360, viewHeight = 800 }) {
+const mapType3ToSettingData = (dummy) => {
+  const newSettingData = []
+  Object.keys(dummy).forEach((s) => {
+    if (s === 'type') return
+    const newScene = {
+      images: [],
+      message: [],
+    }
+
+    Object.keys(dummy[s].image).forEach((img) => {
+      newScene.images.push(dummy[s].image[img].path)
+    })
+
+    Object.keys(dummy[s].message).forEach((m) => {
+      newScene.message.push(dummy[s].message[m])
+    })
+
+    newSettingData.push(newScene)
+  })
+
+  return newSettingData
+}
+
+const mapSettingDataToType3 = (settingData) => {
+  const scenesData = [
+    settingData[0],
+    settingData[1],
+    settingData[2],
+    settingData[3],
+  ]
+
+  const newDummy = {
+    type: 3,
+    scene1: {
+      image: {},
+      message: {},
+    },
+    scene2: {
+      image: {},
+      message: {},
+    },
+    scene3: {
+      image: {},
+      message: {},
+    },
+    scene4: {
+      image: {},
+      message: {},
+    },
+  }
+
+  scenesData.forEach((sceneData, ind) => {
+    sceneData.images.forEach((img, index) => {
+      newDummy[`scene${ind + 1}`].image[`${index + 1}`] = {
+        path: img,
+      }
+    })
+  })
+
+  scenesData.forEach((sceneData, ind) => {
+    sceneData.message.forEach((m, index) => {
+      newDummy[`scene${ind + 1}`].message[`${index + 1}`] = { ...m }
+    })
+  })
+
+  return newDummy
+}
+
+const settingData = [
+  {
+    images: ['none'],
+    message: [
+      {
+        content: '1',
+        size: 'medium',
+        color: 'white',
+      },
+      {
+        content: '2',
+        size: 'medium',
+        color: 'white',
+      },
+    ],
+  },
+  {
+    images: ['none', 'none2', 'none3', 'none4'],
+    message: [
+      {
+        content: '3',
+        size: 'medium',
+        color: 'white',
+      },
+      {
+        content: '',
+        size: 'medium',
+        color: 'white',
+      },
+      {
+        content: '',
+        size: 'medium',
+        color: 'white',
+      },
+      {
+        content: '',
+        size: 'medium',
+        color: 'white',
+      },
+      {
+        content: '',
+        size: 'medium',
+        color: 'white',
+      },
+    ],
+  },
+  {
+    images: ['none', 'none2', 'none3', 'none4'],
+    message: [
+      {
+        content: '4',
+        size: 'medium',
+        color: 'white',
+      },
+      {
+        content: '',
+        size: 'medium',
+        color: 'white',
+      },
+      {
+        content: '',
+        size: 'medium',
+        color: 'white',
+      },
+      {
+        content: '',
+        size: 'medium',
+        color: 'white',
+      },
+    ],
+  },
+  {
+    images: ['none', 'none2'],
+    message: [
+      {
+        content: '5',
+        size: 'medium',
+        color: 'white',
+      },
+      {
+        content: '',
+        size: 'medium',
+        color: 'white',
+      },
+    ],
+  },
+]
+
+export default function SamplePage({ size, data }) {
+  mapType3ToSettingData(data)
+  mapSettingDataToType3(settingData, data)
+  const { viewWidth, viewHeight } = size
   const imageMotion = {
     s1: [
       {
