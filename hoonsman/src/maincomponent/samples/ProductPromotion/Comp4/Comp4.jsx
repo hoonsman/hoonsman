@@ -11,7 +11,7 @@ const Comp4 = ({ showMessage4 }) => {
       const messageData = dummyData.s4.messages[0]
       setMessage(messageData.context)
       setMessageStyle({
-        fontSize: messageData.size === 'medium' ? '25px' : '50px',
+        fontSize: messageData.size === 'medium' ? '12px' : '24px',
         color: messageData.color,
       })
     }

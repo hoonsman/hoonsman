@@ -20,7 +20,7 @@ function Modal({ isOpen, closeModal, selectedSampleId }) {
         <button className={styles.closeButton} onClick={closeModal}>
           X
         </button>
-        {selectedSampleId === 1 && <SeminarSample />}
+        {selectedSampleId === 1 && <SeminarSample size={(380, 380)} />}
         {selectedSampleId === 2 && <Promotion />}
         {selectedSampleId === 3 && <SamplePage />}
         <button className={styles.applyButton}>생성하기</button>

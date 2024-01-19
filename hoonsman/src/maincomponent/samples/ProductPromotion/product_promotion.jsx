@@ -60,6 +60,7 @@ const convertJBDummyToSettingDataSP = (jbdummyData) => {
 const Promotion = () => {
   const transformedSettingDataSP = convertJBDummyToSettingDataSP(jbdummyData)
   const transformedJBDummyData = convertSettingDataSPToJBDummy(settingDataSP)
+
   //이벤트
   const [activeComp, setActiveComp] = useState('Comp1')
   const [showMessage1, setShowMessage1] = useState(false)

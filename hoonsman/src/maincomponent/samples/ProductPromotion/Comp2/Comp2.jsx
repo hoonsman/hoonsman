@@ -17,11 +17,11 @@ const Comp2 = ({ active, showMessage1, showMessage2 }) => {
       setMessage1(messageData1.context)
       setMessage2(messageData2.context)
       setMessage1Style({
-        fontSize: messageData1.size === 'medium' ? '25px' : '50px',
+        fontSize: messageData1.size === 'medium' ? '12px' : '24px',
         color: messageData1.color,
       })
       setMessage2Style({
-        fontSize: messageData2.size === 'medium' ? '25px' : '50px',
+        fontSize: messageData2.size === 'medium' ? '12px' : '24px',
         color: messageData2.color,
       })
     }

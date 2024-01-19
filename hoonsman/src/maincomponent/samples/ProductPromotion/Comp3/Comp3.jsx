@@ -28,11 +28,11 @@ const Comp3 = ({
       setMessage1(messageData1.context)
       setMessage2(messageData2.context)
       setMessage1Style({
-        fontSize: messageData1.size === 'medium' ? '25px' : '50px',
+        fontSize: messageData1.size === 'medium' ? '12px' : '24px',
         color: messageData1.color,
       })
       setMessage2Style({
-        fontSize: messageData2.size === 'medium' ? '25px' : '50px',
+        fontSize: messageData2.size === 'medium' ? '12px' : '24px',
         color: messageData2.color,
       })
     }
@@ -56,13 +56,13 @@ const Comp3 = ({
       </div>
       <div className={Style.imageContainer}>
         <div className={`${Style.image1} ${showImage1 ? Style.fadeIn : ''}`}>
-          <img src={process.env.PUBLIC_URL + images.img4} alt="Image 1" />
+          <img src={images.img4} alt="Image 1" />
         </div>
         <div className={`${Style.image2} ${showImage2 ? Style.fadeIn : ''}`}>
-          <img src={process.env.PUBLIC_URL + images.img5} alt="Image 2" />
+          <img src={images.img5} alt="Image 2" />
         </div>
         <div className={`${Style.image3} ${showImage3 ? Style.fadeIn : ''}`}>
-          <img src={process.env.PUBLIC_URL + images.img6} alt="Image 3" />
+          <img src={images.img6} alt="Image 3" />
         </div>
       </div>
     </div>

@@ -17,7 +17,7 @@ const Comp1 = ({ active, showMessage, showDetailImage }) => {
       setMessage(messageData.context)
       setMessageStyle({
         // 인라인 스타일 객체 생성
-        fontSize: messageData.size === 'medium' ? '25px' : '50px',
+        fontSize: messageData.size === 'medium' ? '12px' : '24px',
         color: messageData.color,
       })
     }
