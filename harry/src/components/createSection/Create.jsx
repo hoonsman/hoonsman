@@ -3,6 +3,11 @@ import Styles from './create.module.css'
 import SettingPage from './SettingPage'
 import Preview from './Preview'
 import SampleData from './sampleData'
+import ConfirmModal from './ConfirmModal'
+
+import { DBService } from '../../services'
+
+const dbService = new DBService(process.env.REACT_APP_BASE_URL)
 
 const sizeItemList = [
     {
@@ -225,6 +230,16 @@ export default function Create({ type = 0 }) {
         width: 0,
         height: 0,
     })
+    const [isModal, setIsModal] = useState(false)
+    const [isCreateLetter, setIsCreateLetter] = useState(false)
+
+    const onCreateClick = async () => {
+        setIsCreateLetter(true)
+        const result = await dbService.createLetter(letter)
+        console.log(result)
+        setIsCreateLetter(false)
+        setIsModal(false)
+    }
 
     // mapping letter data -> settingData
     useEffect(() => {
@@ -333,8 +348,18 @@ export default function Create({ type = 0 }) {
                         messageFocus={messageFocus}
                         setMessageFocus={setMessageFocus}
                         setLetterData={setLetterData}
+                        setIsModal={setIsModal}
                     />
                 </div>
+                {isModal && (
+                    <ConfirmModal
+                        sceneData={letter}
+                        size={previewSize}
+                        setIsModal={setIsModal}
+                        onCreateClick={onCreateClick}
+                        isCreateLetter={isCreateLetter}
+                    />
+                )}
             </div>
         </div>
     )
