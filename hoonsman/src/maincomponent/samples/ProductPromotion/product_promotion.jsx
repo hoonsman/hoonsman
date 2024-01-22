@@ -57,7 +57,9 @@ const convertJBDummyToSettingDataSP = (jbdummyData) => {
   return settingDataSP
 }
 
-const Promotion = () => {
+const Promotion = ({ size }) => {
+  const [width, height] = size.map((value) => `${value}px`)
+
   //사용 함수
   const transformedSettingDataSP = convertJBDummyToSettingDataSP(jbdummyData)
   const transformedJBDummyData = convertSettingDataSPToJBDummy(settingDataSP)
@@ -128,7 +130,11 @@ const Promotion = () => {
   }
 
   return (
-    <div className={styles.container} ref={containerRef}>
+    <div
+      className={styles.container}
+      ref={containerRef}
+      style={{ width, height }}
+    >
       <div className={`${styles.mainContainer} ${getAnimationClass('Comp1')}`}>
         <Comp1
           active={activeComp === 'Comp1'}
